@@ -1,0 +1,11 @@
+{"currentFile":null,"figmaRunning":true,"pluginOpen":false,"openFiles":[],
+"claude":{"installed":true,"connected":true,"loaded":0},"codex":{"installed":true,"connected":true,"loaded":2},
+"steps":[
+{"id":"platform","state":"ok","message":"macOS detected."},
+{"id":"figma","state":"ok","message":"Found."},
+{"id":"node","state":"ok","message":"ok"},
+{"id":"runtime","state":"ok","message":"ok"},
+{"id":"relay","state":"ok","message":"Running on port 3155."},
+{"id":"agent-claude","state":"ok","message":"Already connected."},
+{"id":"agent-codex","state":"ok","message":"Already connected."},
+{"id":"plugin","state":"ok","message":"Registered."}]}

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP variables: read, edit and export tokens with AI</title>
+<meta name="description" content="Let Claude Code or Codex read, create, bind and delete the variables in your open Figma file through FigmaMCP. To export tokens, the agent writes the file.">
+<link rel="canonical" href="https://figmamcp.dev/tools/variables">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP variables: read, edit and export tokens with AI">
+<meta property="og:description" content="Let Claude Code or Codex read, create, bind and delete the variables in your open Figma file through FigmaMCP. To export tokens, the agent writes the file.">
+<meta property="og:url" content="https://figmamcp.dev/tools/variables">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/tools/variables#webpage","url":"https://figmamcp.dev/tools/variables","name":"Figma MCP variables: read, edit and export tokens with AI","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/tools/variables#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/tools/variables#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://figmamcp.dev/tools"},{"@type":"ListItem","position":3,"name":"Figma MCP variables: read and edit your design tokens","item":"https://figmamcp.dev/tools/variables"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can Figma MCP read variables?","acceptedAnswer":{"@type":"Answer","text":"Yes. The agent lists the local variables and collections in your open file with variable_list. It can also read which variables a single layer uses."}},{"@type":"Question","name":"Can I export Figma variables to a JSON file?","acceptedAnswer":{"@type":"Answer","text":"FigmaMCP has no export tool for that. Your agent reads the variables, then writes the JSON file itself in your project. You choose the format and check the result."}},{"@type":"Question","name":"Does it see variables from a team library?","acceptedAnswer":{"@type":"Answer","text":"Not through variable_list, which returns local variables only. The agent can read a library variable from a layer that uses it."}},{"@type":"Question","name":"Can the agent delete a variable that layers use?","acceptedAnswer":{"@type":"Answer","text":"No. The delete is refused while layers still use the variable. The agent must rebind or clear those layers first."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/tools">Tools</a></li><li aria-current="page">Figma MCP variables: read and edit your design tokens</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP variables: read and edit your design tokens</h1>
+<p class="lede">With FigmaMCP, Claude Code or Codex can read the variables in your open Figma file, create and change them, bind them to layers, and delete them. There is no tokens-file export, but the agent can write one from what it reads. Reading variables is a good first job for an agent, because it changes nothing.</p>
+
+
+<h2>What the agent can do with variables</h2>
+<div class="tablewrap"><table>
+<caption class="sr">Variable jobs and the tools behind them</caption>
+<thead><tr>
+<th scope="col">Job</th>
+<th scope="col">Tool</th>
+<th scope="col">What happens</th>
+</tr></thead>
+<tbody>
+<tr><th scope="row">Read every variable</th><td><code>variable_list</code></td><td>Lists the local variables and collections in the open file.</td></tr>
+<tr><th scope="row">See what one layer uses</th><td><code>node_info</code> with <code>boundVariables</code></td><td>Returns the variables bound to that layer, so the agent can check a button before it changes it.</td></tr>
+<tr><th scope="row">Find where a variable is used</th><td><code>variable_list</code> with <code>includeConsumers</code></td><td>Scans one page or the whole document for the layers that use it. The scan is optional and off by default.</td></tr>
+<tr><th scope="row">Create a collection or variable</th><td><code>variable_manage</code></td><td>Creates it. A new variable needs its collection name and its scopes.</td></tr>
+<tr><th scope="row">Change a variable</th><td><code>variable_manage</code></td><td>Updates it. The agent must pass the variable&rsquo;s current name.</td></tr>
+<tr><th scope="row">Delete a variable or collection</th><td><code>variable_delete</code></td><td>Checks the whole file first. If a layer still uses the variable, the delete is refused.</td></tr>
+<tr><th scope="row">Make a layer follow a token</th><td><code>node_bind_variable</code></td><td>Binds the variable to a layer property, so the layer tracks the token.</td></tr>
+</tbody></table></div>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+
+<h2>Can Figma MCP read variables?</h2>
+<p class="measure">Yes. This is the first job most people give the agent. Ask Claude Code or Codex to list the variables in your file. It calls <code>variable_list</code> and answers from what Figma returns. You can also ask what a single layer is bound to.</p>
+<p class="measure">One limit matters. <code>variable_list</code> returns local variables only. Variables that come from a shared library do not appear in it. To use one, the agent reads it from a layer that already uses it.</p>
+
+<h2>Export variables to a tokens file</h2>
+<p class="measure">FigmaMCP has no export button and no tool that writes a tokens file. It does not export variables to JSON by itself. What works is this: your agent reads the variables with <code>variable_list</code>, then writes the file in your project with its own file tools. You choose the format. Ask for CSS custom properties, a JSON file or a theme object, and check the result against Figma before you commit it.</p>
+
+<h2>Ask in plain words</h2>
+<div class="tablewrap"><table>
+<caption class="sr">Example requests for variables</caption>
+<thead><tr>
+<th scope="col">You ask</th>
+<th scope="col">What the agent does</th>
+</tr></thead>
+<tbody>
+<tr><th scope="row">&ldquo;List every color variable in this file.&rdquo;</th><td>Reads the collections and variables, then summarizes them.</td></tr>
+<tr><th scope="row">&ldquo;Write our spacing variables to tokens.json.&rdquo;</th><td>Reads them, then writes the file in your repo. FigmaMCP only supplies the read.</td></tr>
+<tr><th scope="row">&ldquo;Add a variable called surface-raised to Colors.&rdquo;</th><td>Creates it in the named collection with the scopes it chooses. Review the scopes.</td></tr>
+<tr><th scope="row">&ldquo;Delete the old brand-blue variable.&rdquo;</th><td>Refused if layers still use it. The reply lists the consumers.</td></tr>
+<tr><th scope="row">&ldquo;Bind this card&rsquo;s fill to surface-raised.&rdquo;</th><td>Binds the variable. The fill must be solid or empty first.</td></tr>
+</tbody></table></div>
+
+<h2>Rules that apply</h2>
+<ul class="plain">
+<li><strong>The switch.</strong> Variable edits need the plugin&rsquo;s AI can edit this file switch to be on. With it off, the agent can only read variables.</li>
+<li><strong>Names must match.</strong> To change or delete a variable, the agent passes its current name. A wrong name is refused.</li>
+<li><strong>Scopes are explicit.</strong> A new variable needs its scopes set when it is created.</li>
+<li><strong>Deletes are guarded.</strong> A variable that layers still use is not deleted. If a page cannot be read, the delete is refused too.</li></ul>
+<p class="measure">See <a href="/tools">all FigmaMCP tools</a>, or <a href="/use-cases/edit-figma-with-ai">edit Figma with AI</a> for other jobs. If you want a whole token system, read <a href="/tools/design-system">Figma MCP design system</a>.</p>
+
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+
+<h2>Questions</h2><div class="faq"><details><summary>Can Figma MCP read variables?</summary><div class="ans">Yes. The agent lists the local variables and collections in your open file with variable_list. It can also read which variables a single layer uses.</div></details><details><summary>Can I export Figma variables to a JSON file?</summary><div class="ans">FigmaMCP has no export tool for that. Your agent reads the variables, then writes the JSON file itself in your project. You choose the format and check the result.</div></details><details><summary>Does it see variables from a team library?</summary><div class="ans">Not through variable_list, which returns local variables only. The agent can read a library variable from a layer that uses it.</div></details><details><summary>Can the agent delete a variable that layers use?</summary><div class="ans">No. The delete is refused while layers still use the variable. The agent must rebind or clear those layers first.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

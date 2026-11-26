@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP troubleshooting: fixes for FigmaMCP</title>
+<meta name="description" content="A hub of FigmaMCP troubleshooting pages: connection errors, refused edits, read-only files, and the plugin not showing in Figma.">
+<link rel="canonical" href="https://figmamcp.dev/troubleshooting">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP troubleshooting: fixes for FigmaMCP">
+<meta property="og:description" content="A hub of FigmaMCP troubleshooting pages: connection errors, refused edits, read-only files, and the plugin not showing in Figma.">
+<meta property="og:url" content="https://figmamcp.dev/troubleshooting">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Figma MCP troubleshooting: fixes for FigmaMCP">
+<meta name="twitter:description" content="A hub of FigmaMCP troubleshooting pages: connection errors, refused edits, read-only files, and the plugin not showing in Figma.">
+<meta name="twitter:image" content="https://figmamcp.dev/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/troubleshooting#webpage","url":"https://figmamcp.dev/troubleshooting","name":"Figma MCP troubleshooting: fixes for FigmaMCP","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/troubleshooting#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/troubleshooting#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Figma MCP troubleshooting","item":"https://figmamcp.dev/troubleshooting"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why does a retry give the same error?","acceptedAnswer":{"@type":"Answer","text":"FigmaMCP errors come from fixed rules inside the plugin. Change the condition first, for example open the plugin, turn on the edit switch or refresh the layer name with node_info."}},{"@type":"Question","name":"Do I need to reinstall when something fails?","acceptedAnswer":{"@type":"Answer","text":"Usually not. Check that your agent was restarted after setup, that the plugin is open in the file, and that AI can edit this file is on."}},{"@type":"Question","name":"What does partialMutation mean?","acceptedAnswer":{"@type":"Answer","text":"An error with details.partialMutation set to true means a change may have survived a failed step. Do not retry yet. Read whatChanged and before, check the IDs with node_info, and fix the state first."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">Figma MCP troubleshooting</li></ol></nav>
+<article class="wrap page">
+<h1>Figma MCP troubleshooting</h1>
+<p class="lede">Find what you see in the table below, then follow the fix. Most problems have one of three causes: the agent was started before setup, the plugin is not open in the file, or the file is set to read-only. If your agent returned an error code, the table lists it too.</p>
+
+<h2>Symptom to fix</h2>
+<p class="measure">FigmaMCP returns structured errors. Each one comes from a fixed rule, so a retry with the same input gives the same result. Change the condition first.</p>
+<div class="tablewrap"><table>
+<caption class="sr">FigmaMCP symptoms, error codes and recoveries</caption>
+<thead><tr><th scope="col">Symptom</th><th scope="col">Likely error code</th><th scope="col">What to do</th><th scope="col">Page</th></tr></thead>
+<tbody>
+<tr><th scope="row">The agent has no Figma tools</th><td>None</td><td>Restart Claude Code or Codex so it loads the tool.</td><td><a href="/troubleshooting/not-working">Not working</a></td></tr>
+<tr><th scope="row">FigmaMCP is missing from Plugins, Development</th><td>None</td><td>Open the FigmaMCP Mac app and click Add to Figma. Use the desktop app, not the browser.</td><td><a href="/troubleshooting/plugin-not-showing">Plugin not showing</a></td></tr>
+<tr><th scope="row">No plugin is connected</th><td><code>PLUGIN_PEER_UNAVAILABLE</code></td><td>Ask the user to open the plugin in the file, then retry or call <code>channel_join</code> with a link.</td><td><a href="/troubleshooting/not-working">Not working</a></td></tr>
+<tr><th scope="row">The agent asks which file</th><td><code>CHANNEL_NOT_BOUND</code></td><td>Call <code>channel_join</code> with a Figma link to the file the user means. <code>details.channels</code> lists the open files.</td><td><a href="/troubleshooting/not-working">Not working</a></td></tr>
+<tr><th scope="row">The agent reads but cannot edit</th><td><code>READ_ONLY_MODE</code></td><td>Inform the user. Only read tools work until the user turns on AI can edit this file in the plugin.</td><td><a href="/troubleshooting/not-working">Not working</a></td></tr>
+<tr><th scope="row">The target layer is outside the allowed area</th><td><code>OUTSIDE_SCOPE</code></td><td>Do not retry with the same ID. Pick a node inside the scope, or ask the user to reconnect with a broader scope.</td><td><a href="/is-figma-mcp-safe">Is it safe</a></td></tr>
+<tr><th scope="row">The layer name does not match</th><td><code>NAME_MISMATCH</code></td><td>Call <code>node_info</code> to refresh, then retry with the actual name.</td><td><a href="/troubleshooting/not-working">Not working</a></td></tr>
+<tr><th scope="row">Variable or style edits are refused</th><td><code>VARIABLE_EDITS_DISABLED</code>, <code>STYLE_EDITS_DISABLED</code></td><td>Inform the user. Ask them to reconnect with that editing enabled.</td><td><a href="/tools/variables">Variables</a></td></tr>
+<tr><th scope="row">The plugin closed during a command</th><td><code>PLUGIN_DISCONNECTED</code></td><td>Reopen the plugin. Check with <code>node_info</code> whether the edit applied before you repeat it.</td><td><a href="/troubleshooting/not-working">Not working</a></td></tr>
+<tr><th scope="row">The server and plugin versions differ</th><td><code>VERSION_MISMATCH</code></td><td>Server older: reconnect FigmaMCP in the AI app (Claude Code: <code>/mcp</code>) or start a new session. Plugin older: close and reopen the FigmaMCP panel.</td><td><a href="/troubleshooting/not-working">Not working</a></td></tr>
+<tr><th scope="row"><code>channel_join</code> waits, then fails</th><td><code>CONNECTION_NOT_READY</code></td><td>Open the FigmaMCP app and the plugin, then retry. Calling <code>page_info</code> also binds to the open plugin.</td><td><a href="/troubleshooting/not-working">Not working</a></td></tr>
+<tr><th scope="row">The plugin is open twice</th><td><code>PLUGIN_PEER_AMBIGUOUS</code></td><td>In Figma, close or disconnect the duplicate instance. Leave exactly one plugin connected.</td><td><a href="/troubleshooting/plugin-not-showing">Plugin not showing</a></td></tr>
+<tr><th scope="row">A variable delete is refused</th><td><code>VARIABLE_IN_USE</code></td><td>Read each consumer, clear or rebind it, then retry the exact deletion.</td><td><a href="/tools/variables">Variables</a></td></tr>
+<tr><th scope="row">An error says the edit may be half done</th><td><code>details.partialMutation: true</code></td><td>Do not retry yet. Read <code>details.whatChanged</code> and <code>details.before</code>, check the IDs with <code>node_info</code>, and reconcile first.</td><td><a href="/is-figma-mcp-safe">Is it safe</a></td></tr>
+</tbody></table></div>
+<p class="measure fine">A scope refusal can arrive as <code>UNKNOWN_ERROR</code> with an <code>Operation Denied</code> message, and <code>NAME_MISMATCH</code> arrives as <code>UNKNOWN_ERROR</code> with the text <code>nodeName does not match name of nodeId</code>. Match on the message, not only the code.</p>
+
+<h2>Where to start</h2>
+<p class="measure">Two pages go deeper: <a href="/troubleshooting/not-working">Figma MCP not working</a> for connection errors and refused edits, and <a href="/troubleshooting/plugin-not-showing">Plugin not showing in Figma</a> for a missing plugin. FigmaMCP runs only on macOS, needs the Figma desktop app and is not on Figma Community.</p>
+
+<h2>Still stuck?</h2>
+<p class="measure"><a href="https://github.com/MrCoder/figmamcp-releases/issues">File an issue</a> with your macOS and Figma app versions and the exact error. Do not include private design content.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<p class="measure fine">Related: <a href="/troubleshooting/not-working">Not working</a> · <a href="/troubleshooting/plugin-not-showing">Plugin not showing</a> · <a href="/docs/setup">Setup</a> · <a href="/how-figma-mcp-works">How it works</a></p>
+<h2>Questions</h2><div class="faq"><details><summary>Why does a retry give the same error?</summary><div class="ans">FigmaMCP errors come from fixed rules inside the plugin. Change the condition first, for example open the plugin, turn on the edit switch or refresh the layer name with node_info.</div></details><details><summary>Do I need to reinstall when something fails?</summary><div class="ans">Usually not. Check that your agent was restarted after setup, that the plugin is open in the file, and that AI can edit this file is on.</div></details><details><summary>What does partialMutation mean?</summary><div class="ans">An error with details.partialMutation set to true means a change may have survived a failed step. Do not retry yet. Read whatChanged and before, check the IDs with node_info, and fix the state first.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

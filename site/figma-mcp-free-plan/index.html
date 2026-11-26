@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP on the free plan: what you get and a local option</title>
+<meta name="description" content="What Figma allows for MCP on the free Starter plan as of 2026-11-22, why canvas writes need a paid plan, and how a free local tool fits in.">
+<link rel="canonical" href="https://figmamcp.dev/figma-mcp-free-plan">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP on the free plan: what you get and a local option">
+<meta property="og:description" content="What Figma allows for MCP on the free Starter plan as of 2026-11-22, why canvas writes need a paid plan, and how a free local tool fits in.">
+<meta property="og:url" content="https://figmamcp.dev/figma-mcp-free-plan">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/figma-mcp-free-plan#webpage","url":"https://figmamcp.dev/figma-mcp-free-plan","name":"Figma MCP on the free plan: what you get and a local option","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/figma-mcp-free-plan#breadcrumb"},"dateModified":"2026-11-25"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/figma-mcp-free-plan#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Figma MCP on the free plan","item":"https://figmamcp.dev/figma-mcp-free-plan"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can I use the Figma MCP server on the free Starter plan?","acceptedAnswer":{"@type":"Answer","text":"Figma's documentation says Starter has no Full or Dev seat. The seats that remain on a free plan are View and Collab, which get 20 calls per month. Checked November 22, 2026."}},{"@type":"Question","name":"Can an agent write to my canvas on a free plan?","acceptedAnswer":{"@type":"Answer","text":"Figma says write to canvas requires a Professional plan or above with edit access. It is free during beta and planned to become usage-based."}},{"@type":"Question","name":"Will FigmaMCP work on my free plan?","acceptedAnswer":{"@type":"Answer","text":"We have not tested every plan, and we will not guess. FigmaMCP uses a development plugin in the desktop app, so what matters is whether your account lets you run one in your file. Install the Mac app and try it on one file; it takes a few minutes."}},{"@type":"Question","name":"Is there a catch to &ldquo;free&rdquo;?","acceptedAnswer":{"@type":"Answer","text":"The cost is setup: macOS and the desktop app. With the Mac app there is nothing to import; without it, you open the plugin once per file and keep it open while your agent works."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">Figma MCP on the free plan</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP on the free plan</h1>
+<p class="lede">On the free Starter plan you cannot hold a Full or Dev seat, and those are the seats with a practical daily allowance. What is left is a View or Collab seat, which gets 20 Figma MCP read calls per month, and writing to the canvas needs a Professional plan or above. These are Figma&rsquo;s published terms as of November 22, 2026, and they may change.</p>
+
+<h2>Reading and writing, plan by plan</h2>
+<div class="tablewrap"><table>
+<caption class="sr">What the Figma MCP server allows by plan</caption>
+<thead><tr><th scope="col">Situation</th><th scope="col">Reading with Figma&rsquo;s MCP</th><th scope="col">Writing to canvas</th></tr></thead>
+<tbody>
+<tr><th scope="row">Starter, View or Collab seat</th><td>20 calls per month</td><td>Needs Professional or above with edit access</td></tr>
+<tr><th scope="row">Pro, Full or Dev seat</th><td>200 per day, 10 per minute</td><td>Allowed with edit access; free in beta, planned to become usage-based</td></tr>
+</tbody></table></div>
+<p class="fine">Sources: <a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">rate limits and access</a> and <a href="https://developers.figma.com/docs/figma-mcp-server/write-to-canvas">write to canvas</a>, checked November 22, 2026.</p>
+
+<h2>What 20 calls a month buys</h2>
+<p class="measure">Very little for an agent. Looking at one page and a handful of frames can use all 20. So on a free plan, Figma&rsquo;s hosted MCP server is best treated as a way to try reading a design, not as a daily working tool. The Starter plan limit and rate limit are on their own page: <a href="/figma-mcp-starter-plan">Figma MCP Starter plan limit</a>.</p>
+
+<h2>A local option</h2>
+<p class="measure">FigmaMCP is free. It does not use Figma&rsquo;s hosted MCP server. A small local server on your Mac talks to a plugin running inside the Figma desktop app, and your agent, Claude Code or Codex, talks to that server. Because it goes through the Plugin API on your own machine, Figma&rsquo;s MCP call allowance is not involved.</p>
+<p class="measure">Whether it runs for your account depends on Figma letting your account run a development plugin in your file. We have not verified every plan, so try it on one file before you plan around it.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<h2 id="how-to-use">How to try it on the free plan</h2>
+<p class="measure">Setup takes four steps and about five minutes, and none of it uses your 20 read calls.</p>
+<ol class="steps">
+<li><p><strong>Download the app and open it.</strong> <a href="/download">Download FigmaMCP for Mac</a>, open FigmaMCP.dmg and drag the app to Applications. Then open the app.</p></li>
+<li><p><strong>Click Add to Figma.</strong> The app&rsquo;s checklist checks for Figma, Claude Code and Codex. Click Add to Figma. Figma restarts once, and only if it was running and the plugin was missing.</p></li>
+<li><p><strong>Restart your agent.</strong> If Claude Code or Codex is running, quit it and start it again, so it loads the new tools.</p></li>
+<li><p><strong>Open the plugin in your file.</strong> Open the file in the Figma desktop app, then choose Plugins &rsaquo; Development &rsaquo; FigmaMCP. The panel shows the connected file. Its AI can edit this file switch must be on before your agent can edit.</p></li>
+</ol>
+<p class="measure">Then ask your agent for a read first. Paste this: &ldquo;List the text layers in the selected frame, with their font and size.&rdquo; A read cannot change the file, so it is a safe first test.</p>
+<figure class="step-shot narrow"><img src="/assets/figmamcp-plugin-connected.webp" width="800" height="990" loading="lazy" decoding="async" alt="FigmaMCP plugin panel in the Figma desktop app showing Connected, the AI can edit this file switch turned on, and 1 AI session connected"><figcaption>The FigmaMCP panel in Figma shows the connected file and the AI can edit this file switch.</figcaption></figure>
+<p class="measure">Full walkthrough: <a href="/tutorials/edit-figma-with-claude-code">Edit a Figma file with Claude Code in 5 minutes</a>.</p>
+
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+
+<h2>Questions</h2><div class="faq"><details><summary>Can I use the Figma MCP server on the free Starter plan?</summary><div class="ans">Figma&rsquo;s documentation says Starter has no Full or Dev seat. The seats that remain on a free plan are View and Collab, which get 20 calls per month. Checked November 22, 2026.</div></details><details><summary>Can an agent write to my canvas on a free plan?</summary><div class="ans">Figma says write to canvas requires a Professional plan or above with edit access. It is free during beta and planned to become usage-based.</div></details><details><summary>Will FigmaMCP work on my free plan?</summary><div class="ans">We have not tested every plan, and we will not guess. FigmaMCP uses a development plugin in the desktop app, so what matters is whether your account lets you run one in your file. Install the Mac app and try it on one file; it takes a few minutes.</div></details><details><summary>Is there a catch to &ldquo;free&rdquo;?</summary><div class="ans">The cost is setup: macOS and the desktop app. With the Mac app there is nothing to import; without it, you open the plugin once per file and keep it open while your agent works.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-25">2026-11-25</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

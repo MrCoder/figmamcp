@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Audit a Figma file with AI: find missing styles, bad names</title>
+<meta name="description" content="Have Claude Code or Codex read a Figma file and list unstyled layers, unnamed frames and missing variable bindings. Reads never change the file.">
+<link rel="canonical" href="https://figmamcp.dev/use-cases/figma-design-audit">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Audit a Figma file with AI: find missing styles, bad names">
+<meta property="og:description" content="Have Claude Code or Codex read a Figma file and list unstyled layers, unnamed frames and missing variable bindings. Reads never change the file.">
+<meta property="og:url" content="https://figmamcp.dev/use-cases/figma-design-audit">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/use-cases/figma-design-audit#webpage","url":"https://figmamcp.dev/use-cases/figma-design-audit","name":"Audit a Figma file with AI: find missing styles, bad names","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/use-cases/figma-design-audit#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/use-cases/figma-design-audit#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Use cases","item":"https://figmamcp.dev/use-cases"},{"@type":"ListItem","position":3,"name":"Audit a Figma file with AI","item":"https://figmamcp.dev/use-cases/figma-design-audit"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can an audit change my file?","acceptedAnswer":{"@type":"Answer","text":"No. Reads never change the file. Only annotation_set writes, and only if you ask for notes in the file."}},{"@type":"Question","name":"Can it read a very large file?","acceptedAnswer":{"@type":"Answer","text":"Large files take more calls. Ask for one page at a time."}},{"@type":"Question","name":"How do I know the audit covered every page?","acceptedAnswer":{"@type":"Answer","text":"Check coverage.complete in the result. If it is false, coverage.pageErrors names the pages that failed, and the findings do not cover them."}},{"@type":"Question","name":"Does it list styles and variables from shared libraries?","acceptedAnswer":{"@type":"Answer","text":"Not directly. style_list and variable_list return local items only. The agent finds library items through the layers that use them, with node_info."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/use-cases">Use cases</a></li><li aria-current="page">Audit a Figma file with AI</li></ol></nav>
+<article class="wrap page">
+<h1>Audit a Figma file with AI</h1>
+<p class="lede">FigmaMCP lets Claude Code or Codex audit a Figma file with reads only: unnamed frames, text with no style, hard-coded colors and components with no properties. Reads never change the file, so an audit is a safe first job. You can switch off edits while it runs. Notes are the only write, and they are optional.</p>
+<h2>What to ask for</h2>
+<div class="tablewrap"><table><caption class="sr">Audit requests</caption>
+<thead><tr><th scope="col">Question</th><th scope="col">Reads</th></tr></thead><tbody>
+<tr><th scope="row">Which layers are still named &ldquo;Frame 12&rdquo;?</th><td><code>page_info</code>, <code>node_info</code></td></tr>
+<tr><th scope="row">Which text uses no text style?</th><td><code>node_info</code>, <code>style_list</code></td></tr>
+<tr><th scope="row">Which fills are hard-coded, not variables?</th><td><code>node_info</code>, <code>variable_list</code></td></tr>
+<tr><th scope="row">Which components have no description or properties?</th><td><code>component_list</code></td></tr>
+</tbody></table></div>
+<h2>How the agent reads a file</h2>
+<p class="measure">FigmaMCP&rsquo;s <code>page_info</code> lists the pages, and with page IDs it returns each page&rsquo;s top-level layers, up to 25 pages per call. <code>node_info</code> reads layers and their children. You choose the properties, a filter and a depth. For an audit, useful properties are <code>boundVariables</code>, <code>fillStyleId</code>, <code>strokeStyleId</code>, <code>effectStyleId</code> and <code>textStyleId</code>. A layer with no style or no bound variable shows up as a finding.</p>
+<p class="measure"><code>style_list</code> returns the local paint, text, effect and grid styles. <code>variable_list</code> returns local variables and collections. With a variable ID and <code>includeConsumers</code>, it also lists which layers use that variable. <code>component_list</code> can filter by <code>local</code> or <code>remote</code>, and by page or whole document. Styles and variables from shared libraries do not appear in these lists. The agent finds them through a layer that uses them.</p>
+<h2>Check that the read was complete</h2>
+<p class="measure">A read that returns without an error can still be partial. FigmaMCP&rsquo;s multi-page reads return a <code>coverage</code> object. Read <code>coverage.complete</code> before you say that a page is clean. <code>coverage.pageErrors</code> names each page that failed and gives a reason.</p>
+<div class="tablewrap"><table><caption class="sr">Read errors in an audit</caption>
+<thead><tr><th scope="col">Code</th><th scope="col">Meaning</th><th scope="col">What to do</th></tr></thead><tbody>
+<tr><th scope="row"><code>PAGE_LOAD_FAILED</code></th><td>One page refused to load.</td><td>Retry once. If it fails again, continue with the other pages and report that page.</td></tr>
+<tr><th scope="row"><code>PAGE_SCAN_FAILED</code></th><td>The page loaded, but reading it failed.</td><td>Narrow the read to one page, one layer or fewer properties.</td></tr>
+<tr><th scope="row"><code>PAGE_LOAD_TIMEOUT</code></th><td>A page did not load in time.</td><td>Retry once, then continue without it and say so.</td></tr>
+<tr><th scope="row"><code>PAGE_NOT_FOUND</code></th><td>The page ID does not exist.</td><td>Get fresh IDs from <code>page_info</code>.</td></tr>
+</tbody></table></div>
+<h2>Write the findings into the file</h2>
+<p class="measure">The agent can report in chat. It can also write each finding as a native annotation with <code>annotation_set</code>. That tool needs the layer ID, the exact layer name and a Markdown label. This is a write, so the AI can edit this file switch must be on. Without it you get <code>READ_ONLY_MODE</code>. Annotations are appended. Run <code>annotation_list</code> first, so a second audit does not add the same note again.</p>
+<h2>A sensible order</h2>
+<ol>
+<li>Ask for one page at a time. Large files take many calls.</li>
+<li>Ask for a short report that groups findings by type.</li>
+<li>Fix what you agree with using <a href="/use-cases/bulk-edit-figma-layers">bulk edits</a>.</li>
+</ol>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<p class="measure fine">Related: <a href="/tools">All tools</a> · <a href="/tools/design-system">Design system</a> · <a href="/tools/variables">Variables</a></p>
+<h2>Questions</h2><div class="faq"><details><summary>Can an audit change my file?</summary><div class="ans">No. Reads never change the file. Only annotation_set writes, and only if you ask for notes in the file.</div></details><details><summary>Can it read a very large file?</summary><div class="ans">Large files take more calls. Ask for one page at a time.</div></details><details><summary>How do I know the audit covered every page?</summary><div class="ans">Check coverage.complete in the result. If it is false, coverage.pageErrors names the pages that failed, and the findings do not cover them.</div></details><details><summary>Does it list styles and variables from shared libraries?</summary><div class="ans">Not directly. style_list and variable_list return local items only. The agent finds library items through the layers that use them, with node_info.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

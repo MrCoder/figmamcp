@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Official Figma MCP vs FigmaMCP: 8 differences compared</title>
+<meta name="description" content="Compare Figma&#x27;s official server and the Figma desktop MCP server with FigmaMCP on 8 points: seats, call limits, canvas writes, price. Checked Nov 25, 2026.">
+<link rel="canonical" href="https://figmamcp.dev/compare/official-figma-mcp">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Official Figma MCP vs FigmaMCP: 8 differences compared">
+<meta property="og:description" content="Compare Figma&#x27;s official server and the Figma desktop MCP server with FigmaMCP on 8 points: seats, call limits, canvas writes, price. Checked Nov 25, 2026.">
+<meta property="og:url" content="https://figmamcp.dev/compare/official-figma-mcp">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/compare/official-figma-mcp#webpage","url":"https://figmamcp.dev/compare/official-figma-mcp","name":"Official Figma MCP vs FigmaMCP: 8 differences compared","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/compare/official-figma-mcp#breadcrumb"},"dateModified":"2026-11-25"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/compare/official-figma-mcp#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Compare","item":"https://figmamcp.dev/compare"},{"@type":"ListItem","position":3,"name":"Official Figma MCP compared with FigmaMCP","item":"https://figmamcp.dev/compare/official-figma-mcp"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Is FigmaMCP affiliated with Figma?", "acceptedAnswer": {"@type": "Answer", "text": "No. FigmaMCP is independent and is not endorsed by Figma, Inc."}}, {"@type": "Question", "name": "Can I use both?", "acceptedAnswer": {"@type": "Answer", "text": "They are separate servers. Avoid having two tools edit the same file at once."}}, {"@type": "Question", "name": "Does every Figma plan work with FigmaMCP?", "acceptedAnswer": {"@type": "Answer", "text": "FigmaMCP uses a development plugin in the desktop app. Whether your account can run one is up to Figma, and we have not tested every plan."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/compare">Compare</a></li><li aria-current="page">Official Figma MCP compared with FigmaMCP</li></ol></nav>
+<article class="wrap page"><h1>Official Figma MCP compared with FigmaMCP</h1>
+<p class="lede">Figma&rsquo;s official MCP server is first-party and has features FigmaMCP does not. FigmaMCP is a free local option for editing the file open on your Mac. FigmaMCP is not made by Figma. This comparison uses Figma&rsquo;s docs as of November 25, 2026.</p>
+
+<div class="tablewrap"><table>
+<caption class="sr">Official Figma MCP and FigmaMCP</caption>
+<thead><tr><th scope="col"></th><th scope="col">Figma&rsquo;s official server</th><th scope="col">FigmaMCP</th></tr></thead>
+<tbody>
+<tr><th scope="row">Made by</th><td>Figma</td><td>An independent developer</td></tr>
+<tr><th scope="row">Runs</th><td>Remote hosted, or through the desktop app</td><td>On your Mac, through a plugin in the desktop app</td></tr>
+<tr><th scope="row">Reads</th><td>Yes</td><td>Yes</td></tr>
+<tr><th scope="row">Edits the canvas</th><td>Remote server only, in beta; needs a Full seat outside drafts</td><td>Yes, in the open file</td></tr>
+<tr><th scope="row">Call limits</th><td>View or Collab seat: 20 a month. Pro Full or Dev: 200 a day, 10 a minute. Organization: 200 a day, 15 a minute. Enterprise: 600 a day, 20 a minute. Write tools are exempt</td><td>None from Figma&rsquo;s MCP server; it does not call it</td></tr>
+<tr><th scope="row">Platform</th><td>Many MCP clients</td><td>macOS with Claude Code or Codex</td></tr>
+<tr><th scope="row">Dev Mode features</th><td>Yes</td><td>No</td></tr>
+<tr><th scope="row">Price</th><td>Depends on your Figma plan; canvas writes are free in beta and planned to be usage-based</td><td>Free</td></tr>
+</tbody></table></div>
+<p class="fine">Sources: <a href="https://developers.figma.com/docs/figma-mcp-server/">overview</a>, <a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">rate limits</a>, <a href="https://developers.figma.com/docs/figma-mcp-server/write-to-canvas">write to canvas</a>. Checked November 25, 2026. These may change. See also <a href="/figma-mcp-rate-limit">Figma MCP rate limit by plan</a>.</p>
+
+<h2>Figma desktop MCP server and com.figma.mcp/mcp</h2>
+<p class="measure">The Figma desktop MCP server runs through the Figma desktop app, in Dev Mode. It reads the design and does not edit the canvas. Figma&rsquo;s remote server is the hosted one, and you may see it listed as <code>com.figma.mcp/mcp</code>. FigmaMCP is neither: it is a plugin server that reads and edits the file open on your Mac.</p>
+
+<h2>Which one to choose</h2>
+<ul class="plain"><li><strong>Official server:</strong> you need Figma&rsquo;s supported route, Dev Mode features, or a client other than Claude Code and Codex.</li><li><strong>FigmaMCP:</strong> you use a Mac and want your agent to read and edit the open file, with no token and a read-only switch.</li></ul>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<p class="measure">See also <a href="/compare/local-vs-remote">local and remote servers</a> and <a href="/figma-mcp-alternative">other alternatives</a>.</p>
+
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+<h2>Questions</h2><div class="faq"><details><summary>Is FigmaMCP affiliated with Figma?</summary><div class="ans">No. FigmaMCP is independent and is not endorsed by Figma, Inc.</div></details><details><summary>Can I use both?</summary><div class="ans">They are separate servers. Avoid having two tools edit the same file at once.</div></details><details><summary>Does every Figma plan work with FigmaMCP?</summary><div class="ans">FigmaMCP uses a development plugin in the desktop app. Whether your account can run one is up to Figma, and we have not tested every plan.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-25">2026-11-25</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

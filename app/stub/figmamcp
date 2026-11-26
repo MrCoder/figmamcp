@@ -1,0 +1,15 @@
+#!/bin/sh
+# Stub engine for tests and screenshots. Never touches the real machine.
+# FIGMAMCP_STUB_STATE: file holding the current answer (copied from scenarios/ by the caller).
+# `setup` replaces the state with scenarios/ready.json, like a successful setup.
+here="$(cd "$(dirname "$0")" && pwd)"; [ -d "$here/scenarios" ] || here="$here/.."
+state="${FIGMAMCP_STUB_STATE:-$here/scenarios/ready.json}"
+case "$1" in
+  status) echo "log line before json"; cat "$state" ;;
+  setup)
+    [ -n "$FIGMAMCP_STUB_STATE" ] && cp "$here/scenarios/ready.json" "$FIGMAMCP_STUB_STATE"
+    echo "$@" >> "${FIGMAMCP_STUB_LOG:-/dev/null}"
+    cat "$here/scenarios/ready.json" ;;
+  doctor) echo "FigmaMCP doctor (stub) for /Users/tester"; exit 4 ;;
+  *) echo "unknown command" >&2; exit 2 ;;
+esac

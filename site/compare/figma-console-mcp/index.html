@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma Console MCP vs FigmaMCP: setup, token and clients</title>
+<meta name="description" content="Compare Figma Console MCP with FigmaMCP: how each connects to Figma, whether a token is needed, supported clients and which to pick. Checked 2026-11-13.">
+<link rel="canonical" href="https://figmamcp.dev/compare/figma-console-mcp">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma Console MCP vs FigmaMCP: setup, token and clients">
+<meta property="og:description" content="Compare Figma Console MCP with FigmaMCP: how each connects to Figma, whether a token is needed, supported clients and which to pick. Checked 2026-11-13.">
+<meta property="og:url" content="https://figmamcp.dev/compare/figma-console-mcp">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/compare/figma-console-mcp#webpage","url":"https://figmamcp.dev/compare/figma-console-mcp","name":"Figma Console MCP vs FigmaMCP: setup, token and clients","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/compare/figma-console-mcp#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/compare/figma-console-mcp#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Compare","item":"https://figmamcp.dev/compare"},{"@type":"ListItem","position":3,"name":"Figma Console MCP compared with FigmaMCP","item":"https://figmamcp.dev/compare/figma-console-mcp"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does Figma Console MCP need a token?", "acceptedAnswer": {"@type": "Answer", "text": "Its README says local setups need a Figma personal access token, set as FIGMA_ACCESS_TOKEN. FigmaMCP needs no API token. Source: the Figma Console MCP README, checked 2026-11-13."}}, {"@type": "Question", "name": "Can Figma Console MCP edit a file?", "acceptedAnswer": {"@type": "Answer", "text": "Its README says it can create and modify designs in its local and cloud modes, and that the remote SSE mode cannot. Source: the Figma Console MCP README, checked 2026-11-13."}}, {"@type": "Question", "name": "Which clients does FigmaMCP support?", "acceptedAnswer": {"@type": "Answer", "text": "Claude Code and Codex, on a Mac. Figma Console MCP lists more clients in its README."}}, {"@type": "Question", "name": "Is FigmaMCP affiliated with southleft or Figma?", "acceptedAnswer": {"@type": "Answer", "text": "No. FigmaMCP is independent and is not endorsed by Figma, Inc."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/compare">Compare</a></li><li aria-current="page">Figma Console MCP compared with FigmaMCP</li></ol></nav>
+<article class="wrap page"><h1>Figma Console MCP compared with FigmaMCP</h1>
+<p class="lede">Both tools let an agent read and change a Figma file through a plugin. They differ in setup and reach. Figma Console MCP, a project by southleft, has a wide tool set, works with many MCP clients and needs a Figma access token for local setups. FigmaMCP is a free Mac app for Claude Code and Codex, and it needs no token. Facts about Figma Console MCP come from its own README, checked 2026-11-13.</p>
+
+<div class="tablewrap"><table>
+<caption class="sr">Figma Console MCP and FigmaMCP</caption>
+<thead><tr><th scope="col"></th><th scope="col">Figma Console MCP</th><th scope="col">FigmaMCP</th></tr></thead>
+<tbody>
+<tr><th scope="row">What it is</th><td>An MCP server for Figma; for its license, see its repository</td><td>A free Mac app with a local server and a Figma plugin</td></tr>
+<tr><th scope="row">Connects through</th><td>The Figma Desktop Bridge plugin, over WebSocket</td><td>A plugin in the Figma desktop app; the Mac app sets it up</td></tr>
+<tr><th scope="row">Access token</th><td>Local setups need a Figma personal access token (<code>FIGMA_ACCESS_TOKEN</code>)</td><td>No API token</td></tr>
+<tr><th scope="row">Clients</th><td>Any MCP client; README lists Claude Code, Cursor, Windsurf, Claude Desktop</td><td>Claude Code and Codex</td></tr>
+<tr><th scope="row">Reads and writes</th><td>Both; the remote SSE mode is read-only</td><td>Both, in the file open in Figma desktop</td></tr>
+<tr><th scope="row">Tool count</th><td>README lists 130 tools for local setups</td><td>See the <a href="/tools">tools page</a></td></tr>
+<tr><th scope="row">Platform</th><td>Local setups need Node.js 18+ and Figma Desktop; README covers macOS and Windows</td><td>macOS only</td></tr>
+<tr><th scope="row">Edit guardrails</th><td>Not covered here</td><td>An &ldquo;AI can edit this file&rdquo; switch; each edit names its target layer and the name must match</td></tr>
+</tbody></table></div>
+<p class="fine">Source: <a href="https://github.com/southleft/figma-console-mcp">Figma Console MCP README</a>, checked 2026-11-13. These may change.</p>
+
+<h2>Which one to choose</h2>
+<ul class="plain"><li><strong>Figma Console MCP:</strong> you use a client other than Claude Code or Codex, you are not on a Mac, or you want its larger tool set and cloud modes. Its README says remote SSE mode &ldquo;Cannot create or modify designs,&rdquo; so check which mode you need.</li><li><strong>FigmaMCP:</strong> you use a Mac with Claude Code or Codex and want no API token, no call quota from FigmaMCP, and a per-file switch for edits.</li></ul>
+<p>Both approaches work with the Figma desktop app. FigmaMCP reads and edits through a local server and a plugin, so there is nothing to put in an environment variable. Each edit must name its target layer, and the name has to match, which stops an agent from changing the wrong layer by accident. Batches are validated before they run, and failures come back as structured errors your agent can act on.</p>
+<p>If your team already uses Figma Console MCP and it works, there is no need to switch. Do not point two tools at the same file at once.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<p class="measure">Already using Figma Console MCP and looking for something else? Read the <a href="/alternatives/figma-console-mcp">Figma Console MCP alternative</a> page. See also <a href="/figma-mcp-alternative">other Figma MCP alternatives</a>, <a href="/compare/talk-to-figma-mcp">Talk to Figma MCP</a>, <a href="/tools/write">write tools</a> and <a href="/docs/setup">setup</a>.</p>
+
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+<h2>Questions</h2><div class="faq"><details><summary>Does Figma Console MCP need a token?</summary><div class="ans">Its README says local setups need a Figma personal access token, set as FIGMA_ACCESS_TOKEN. FigmaMCP needs no API token. Source: the Figma Console MCP README, checked 2026-11-13.</div></details><details><summary>Can Figma Console MCP edit a file?</summary><div class="ans">Its README says it can create and modify designs in its local and cloud modes, and that the remote SSE mode cannot. Source: the Figma Console MCP README, checked 2026-11-13.</div></details><details><summary>Which clients does FigmaMCP support?</summary><div class="ans">Claude Code and Codex, on a Mac. Figma Console MCP lists more clients in its README.</div></details><details><summary>Is FigmaMCP affiliated with southleft or Figma?</summary><div class="ans">No. FigmaMCP is independent and is not endorsed by Figma, Inc.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

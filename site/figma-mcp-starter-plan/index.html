@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP Starter plan limit: what it allows, a local option</title>
+<meta name="description" content="The Figma MCP Starter plan limit and rate limit as published by Figma, checked 2026-11-13, plus a free local tool for Claude Code and Codex on Mac.">
+<link rel="canonical" href="https://figmamcp.dev/figma-mcp-starter-plan">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP Starter plan limit: what it allows, a local option">
+<meta property="og:description" content="The Figma MCP Starter plan limit and rate limit as published by Figma, checked 2026-11-13, plus a free local tool for Claude Code and Codex on Mac.">
+<meta property="og:url" content="https://figmamcp.dev/figma-mcp-starter-plan">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/figma-mcp-starter-plan#webpage","url":"https://figmamcp.dev/figma-mcp-starter-plan","name":"Figma MCP Starter plan limit: what it allows, a local option","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/figma-mcp-starter-plan#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/figma-mcp-starter-plan#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Figma MCP Starter plan: limits and options","item":"https://figmamcp.dev/figma-mcp-starter-plan"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is the Figma MCP Starter plan limit?","acceptedAnswer":{"@type":"Answer","text":"Figma’s rate-limit page says a View or Collab seat gets up to 20 calls per month on every plan, including Starter. Its table lists no Full or Dev limit for Starter. Checked 2026-11-13."}},{"@type":"Question","name":"What is the Figma MCP Starter plan rate limit per minute?","acceptedAnswer":{"@type":"Answer","text":"Figma’s table gives a per-minute figure only for Full and Dev seats on Professional, Organization and Enterprise. For Starter it lists the monthly figure for View and Collab seats only."}},{"@type":"Question","name":"Does the Starter limit apply to writing?","acceptedAnswer":{"@type":"Answer","text":"Figma says the limits apply to tools that read data, and that tools which write to Figma files are exempt. Separately, Figma lists Professional, Education, Organization and Enterprise for writing to the canvas, and does not list Starter."}},{"@type":"Question","name":"Does FigmaMCP have a Starter limit?","acceptedAnswer":{"@type":"Answer","text":"FigmaMCP has no call quota of its own and does not call Figma’s MCP server. It works through a plugin in your Figma desktop app, so you need your existing access to the file, and edit access to edit."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">Figma MCP Starter plan: limits and options</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP Starter plan: limits and options</h1>
+<p class="lede">On the Figma Starter plan, a View or Collab seat gets up to 20 Figma MCP read calls per month. Figma&rsquo;s rate-limit table lists no Full or Dev seat limit for Starter, and Starter is not on the list of plans that can write to the canvas. Below are the details from Figma&rsquo;s docs, checked 2026-11-13, and a free local tool that does not use these calls.</p>
+
+<h2>What each Starter seat gets</h2>
+<div class="tablewrap"><table>
+<caption class="sr">What the official Figma MCP server allows on Starter and other plans</caption>
+<thead><tr><th scope="col">Seat or plan</th><th scope="col">What the official server allows</th><th scope="col">Source (checked 2026-11-13)</th></tr></thead>
+<tbody>
+<tr><th scope="row">Starter, View or Collab seat</th><td>Up to 20 read calls per month</td><td><a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">rate limits and access</a></td></tr>
+<tr><th scope="row">Starter, Full or Dev seat</th><td>No limit is listed; Figma&rsquo;s table shows none for Starter</td><td><a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">rate limits and access</a></td></tr>
+<tr><th scope="row">Starter, desktop server</th><td>Figma lists a Dev or Full seat on Professional, Education, Organization, Government or Enterprise; Starter is not in that list</td><td><a href="https://developers.figma.com/docs/figma-mcp-server/">server overview</a></td></tr>
+<tr><th scope="row">Starter, writing to the canvas</th><td>Figma lists Professional, Education, Organization and Enterprise; Starter is not in that list</td><td><a href="https://developers.figma.com/docs/figma-mcp-server/write-to-canvas">write to canvas</a></td></tr>
+<tr><th scope="row">Professional, Full or Dev seat</th><td>Up to 200 per day, 10 per minute</td><td><a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">rate limits and access</a></td></tr>
+<tr><th scope="row">Enterprise</th><td>Up to 600 per day, 20 per minute</td><td><a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">rate limits and access</a></td></tr>
+</tbody></table></div>
+<p class="fine">Figma&rsquo;s pages are the authority and they may change. Figma says the limits apply to tools that read data from Figma, and that tools which write to Figma files are exempt from them.</p>
+
+<h2>What the Starter rate limit means in practice</h2>
+<p class="measure">Twenty calls a month is a small allowance for an agent. An agent that explores a design before it acts can make several read calls for one task. That is why a Starter seat is a way to try reading a design with the official server, and not a basis for a daily workflow. Figma&rsquo;s page says that to get higher limits you move to a Professional, Organization or Enterprise plan with a Full or Dev seat. That is a plan decision for you and your team.</p>
+
+<h2>A separate free local tool</h2>
+<p class="measure">FigmaMCP is a free Mac app and it is not made by Figma. It works with Claude Code and Codex only, on macOS, and it needs the Figma desktop app. The Mac app adds the plugin to Figma and connects Claude Code and Codex. It needs no API token.</p>
+<p class="measure">FigmaMCP reads and edits the file open in Figma desktop through a local server and a plugin. It has no call quota of its own, and it does not use Figma&rsquo;s MCP server. You need whatever access you already have to the file in Figma, and edit access to edit. We have not tested every plan, so try it on one file before you plan around it.</p>
+<p class="measure">The plugin has an &ldquo;AI can edit this file&rdquo; switch. Each edit names its target layer, and errors come back in a structured form.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<h2 id="how-to-use">How to try FigmaMCP on a Starter file</h2>
+<p class="measure">Testing it on one Starter file takes four steps and about five minutes.</p>
+<ol class="steps">
+<li><p><strong>Download the app and open it.</strong> <a href="/download">Download FigmaMCP for Mac</a>, open FigmaMCP.dmg and drag the app to Applications. Then open the app.</p></li>
+<li><p><strong>Click Add to Figma.</strong> The app&rsquo;s checklist checks for Figma, Claude Code and Codex. Click Add to Figma. Figma restarts once, and only if it was running and the plugin was missing.</p></li>
+<li><p><strong>Restart your agent.</strong> If Claude Code or Codex is running, quit it and start it again, so it loads the new tools.</p></li>
+<li><p><strong>Open the plugin in your file.</strong> Open the file in the Figma desktop app, then choose Plugins &rsaquo; Development &rsaquo; FigmaMCP. The panel shows the connected file. Its AI can edit this file switch must be on before your agent can edit.</p></li>
+</ol>
+<p class="measure">Then ask your agent for a read first. Paste this: &ldquo;List the text layers in the selected frame, with their font and size.&rdquo; A read cannot change the file, so it is a safe first test.</p>
+<figure class="step-shot"><img src="/assets/figmamcp-result.webp" width="1200" height="794" loading="lazy" decoding="async" alt="A pricing card in Figma with auto layout, rounded corners and a shadow, and named layers Plan Name, Price, Description and CTA Button"><figcaption>The result of one request on a sample file: a card with auto layout, rounded corners, a shadow and named layers, built by Claude Code through FigmaMCP.</figcaption></figure>
+<p class="measure">Full walkthrough: <a href="/tutorials/edit-figma-with-claude-code">Edit a Figma file with Claude Code in 5 minutes</a>.</p>
+
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+
+<h2>Read next</h2>
+<ul class="plain">
+<li><a href="/figma-mcp-free-plan">Figma MCP on the free plan</a></li>
+<li><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a></li>
+<li><a href="/figma-mcp-without-dev-mode">Figma MCP without Dev Mode</a></li>
+<li><a href="/pricing">Pricing</a></li>
+</ul>
+<h2>Questions</h2><div class="faq"><details><summary>What is the Figma MCP Starter plan limit?</summary><div class="ans">Figma&rsquo;s rate-limit page says a View or Collab seat gets up to 20 calls per month on every plan, including Starter. Its table lists no Full or Dev limit for Starter. Checked 2026-11-13.</div></details><details><summary>What is the Figma MCP Starter plan rate limit per minute?</summary><div class="ans">Figma&rsquo;s table gives a per-minute figure only for Full and Dev seats on Professional, Organization and Enterprise. For Starter it lists the monthly figure for View and Collab seats only.</div></details><details><summary>Does the Starter limit apply to writing?</summary><div class="ans">Figma says the limits apply to tools that read data, and that tools which write to Figma files are exempt. Separately, Figma lists Professional, Education, Organization and Enterprise for writing to the canvas, and does not list Starter.</div></details><details><summary>Does FigmaMCP have a Starter limit?</summary><div class="ans">FigmaMCP has no call quota of its own and does not call Figma&rsquo;s MCP server. It works through a plugin in your Figma desktop app, so you need your existing access to the file, and edit access to edit.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

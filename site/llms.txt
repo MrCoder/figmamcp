@@ -1,0 +1,94 @@
+# FigmaMCP
+
+> Free and local. FigmaMCP lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota. macOS only for now.
+
+FigmaMCP is a Mac app with a local MCP server and a plugin for the Figma desktop app. Your agent calls tools on the local server; the plugin reads and edits the file you have open. It does not call Figma's MCP server, so it needs no Figma API token and does not use Figma's MCP call allowance. Every edit must name its target exactly, a batch with one invalid item changes nothing, and locked layers are refused. It is free today; pricing may be decided later. It supports Claude Code and Codex on macOS 14 or later, with the Figma desktop app (not the browser).
+
+- Home page: https://figmamcp.dev/
+- Download for Mac: https://figmamcp.dev/download
+- Releases and issues: https://github.com/MrCoder/figmamcp-releases
+
+## Start here
+
+- [Setup for Mac](https://figmamcp.dev/docs/setup): Download the app, open it, follow the checklist, restart Claude Code or Codex, then ask for an edit.
+- [Figma MCP tutorials: step-by-step guides for AI agents](https://figmamcp.dev/tutorials): Four step-by-step FigmaMCP tutorials for Claude Code and Codex: a first edit, a design QA pass, a written spec turned into frames, and clean layer names.
+- [Edit a Figma file with Claude Code in 5 minutes](https://figmamcp.dev/tutorials/edit-figma-with-claude-code): A step-by-step tutorial with a demo video: install the Mac app, check the plugin switch, then ask for a first read and a first edit.
+- [Run a design QA pass on a Figma file with an AI agent](https://figmamcp.dev/tutorials/design-qa-figma-file): Copy the figma-design-qa skill, then the agent scores one frame on six categories, fixes the lowest ones and repeats until each scores 9 or more. Worked example: 1.7 to 10.0 in three rounds.
+- [Turn a written spec into Figma frames with an AI agent](https://figmamcp.dev/tutorials/spec-to-figma-frames): Give Claude Code or Codex a written screen spec, and it builds the screen in your open Figma file: auto layout, one frame per section and clearly named layers.
+- [Rename Figma layers with an AI agent](https://figmamcp.dev/tutorials/rename-figma-layers): Let Claude Code or Codex rename the layers of a Figma frame: it proposes a naming map, waits for your yes, then renames each layer and checks the result.
+- [What is a Figma MCP server?](https://figmamcp.dev/what-is-figma-mcp): A plain explanation of how an AI agent reads or edits Figma files through the Model Context Protocol, and the main types of server.
+- [How FigmaMCP works](https://figmamcp.dev/how-figma-mcp-works): Your agent calls tools on a local server, and a plugin in the Figma desktop app reads and edits your open file.
+- [How FigmaMCP is built](https://figmamcp.dev/how-figmamcp-is-built): The FigmaMCP architecture for agent builders: agent, local MCP server, relay and Figma plugin; why the plugin checks scope, names and batches; and real bugs fixed on the way.
+- [Can Claude edit Figma files? Yes, with a local plugin](https://figmamcp.dev/can-claude-edit-figma): Claude Code can read and change a live Figma file through FigmaMCP: frames, text, components, styles and variables, with no call quota.
+- [Pricing](https://figmamcp.dev/pricing): FigmaMCP costs nothing today; how that compares with Figma's published MCP limits.
+
+## Clients
+
+- [Claude Code](https://figmamcp.dev/integrations/claude-code): Connect Claude Code to the Figma desktop app on your Mac, with no API token and no call quota.
+- [Codex](https://figmamcp.dev/integrations/codex): The Mac app sets Codex up to read and edit the Figma file you have open.
+- [Integrations](https://figmamcp.dev/integrations): The clients supported today. Other clients are not supported yet.
+
+## Tools
+
+- [Tools list](https://figmamcp.dev/tools): All FigmaMCP tools by group: reading pages and layers, creating and editing layers, components, styles, variables and prototypes.
+- [What the agent can write](https://figmamcp.dev/tools/write): Frames, shapes, text, components, instances, styles, variables and auto layout, with safety checks.
+- [Figma MCP components: build components and variants with AI](https://figmamcp.dev/tools/components): Create components, component sets and properties, and change instances in a live Figma file from Claude Code or Codex, with FigmaMCP and no call quota.
+- [Figma MCP auto layout: set it with Claude Code or Codex](https://figmamcp.dev/tools/auto-layout): Turn on auto layout and set direction, spacing, padding and alignment in a live Figma file from Claude Code or Codex, with FigmaMCP and no call quota.
+- [Figma MCP variables: read, edit and export tokens with AI](https://figmamcp.dev/tools/variables): How Figma MCP variables work in FigmaMCP: Claude Code or Codex reads, creates, binds and deletes variables in your open file. Export means the agent writes it.
+- [Figma MCP design system: build one with Claude Code or Codex](https://figmamcp.dev/tools/design-system): How a Figma MCP design system works in FigmaMCP: Claude Code or Codex creates variables, styles, components and variants in your open file. You set the rules.
+- [Figma MCP prototype: read and edit prototype reactions](https://figmamcp.dev/tools/prototype): Read and update prototype interactions in Figma from Claude Code or Codex: list and change reactions, and write annotations in your open file, with FigmaMCP.
+- [Figma MCP export image: render any layer to PNG, SVG or PDF](https://figmamcp.dev/tools/export): How Figma MCP export image works in FigmaMCP: the agent renders a layer to PNG, JPG, SVG or PDF with node_export_visual. Read-only, at a scale you choose.
+- [Is it safe?](https://figmamcp.dev/is-figma-mcp-safe): The checks FigmaMCP runs before it edits: scope, names, batches, locked layers.
+
+## Use cases
+
+- [Use cases](https://figmamcp.dev/use-cases): What agents do in Figma with FigmaMCP.
+- [Edit Figma with AI](https://figmamcp.dev/use-cases/edit-figma-with-ai): Bulk renames, text changes, new layouts and token binding from Claude Code or Codex.
+- [Design to code](https://figmamcp.dev/use-cases/design-to-code): The agent reads layers, tokens and a picture of the design, then writes the code itself. FigmaMCP does not generate code.
+- [Figma MCP code to canvas: build frames from code with AI](https://figmamcp.dev/use-cases/code-to-design): Figma MCP code to canvas with FigmaMCP: Claude Code or Codex reads your code and builds frames, text and shapes in Figma. There is no HTML importer.
+- [Bulk edit Figma layers with AI: rename, restyle, swap text](https://figmamcp.dev/use-cases/bulk-edit-figma-layers): Rename layers, change text and apply styles across many layers at once from Claude Code or Codex, with checks before anything changes.
+- [Audit a Figma file with AI: find missing styles, bad names](https://figmamcp.dev/use-cases/figma-design-audit): Have Claude Code or Codex read a Figma file and list unstyled layers, unnamed frames and missing variable bindings. Reads never change the file.
+
+## Compare
+
+- [Comparisons](https://figmamcp.dev/compare): FigmaMCP and the other ways to connect an agent to Figma.
+- [Official Figma MCP vs FigmaMCP](https://figmamcp.dev/compare/official-figma-mcp): Seats, call limits, canvas writes and setup.
+- [Local vs remote Figma MCP](https://figmamcp.dev/compare/local-vs-remote): Figma's remote server, its desktop server, and a local plugin server such as FigmaMCP.
+- [Figwright vs FigmaMCP](https://figmamcp.dev/compare/figwright): A free server with a public repository next to FigmaMCP: install, Node, edit limits and platform.
+- [Figma Console MCP vs FigmaMCP: setup, token and clients](https://figmamcp.dev/compare/figma-console-mcp): Compare Figma Console MCP with FigmaMCP: how each connects to Figma, whether a token is needed, supported clients and which to pick. Checked 2026-11-13.
+- [Framelink Figma MCP vs FigmaMCP: read-only context or edits](https://figmamcp.dev/compare/framelink): Compare Framelink Figma MCP (Figma-Context-MCP) with FigmaMCP: token, what it reads, whether it edits, and when to choose each. Sources checked 2026-11-13.
+- [Talk to Figma MCP vs FigmaMCP: plugin, relay and setup](https://figmamcp.dev/compare/talk-to-figma-mcp): Compare Talk to Figma MCP (cursor-talk-to-figma-mcp) with FigmaMCP: relay, channel codes, clients and setup. Sources checked 2026-11-13.
+- [Figma MCP vs Figma API: tokens, rate limits and which to use](https://figmamcp.dev/compare/figma-api): Figma MCP vs Figma API: how access tokens and REST rate limits work, and when a local tool like FigmaMCP fits instead. Figma docs checked 2026-11-13.
+- [Figma Code Connect vs FigmaMCP: different jobs, one workflow](https://figmamcp.dev/compare/code-connect): Figma MCP vs Code Connect: Code Connect links code components to Dev Mode; FigmaMCP edits the open Figma file. Figma docs checked 2026-11-13.
+- [Figma Make vs Figma MCP: generating a design or editing one](https://figmamcp.dev/compare/figma-make): Figma Make generates apps and prototypes from prompts inside Figma. Figma MCP connects your own agent to a file. How they differ.
+- [Figma MCP rate limit by plan](https://figmamcp.dev/figma-mcp-rate-limit): Figma's MCP limits by plan; they apply to read tools and write tools are exempt. Includes a checker that marks each official Figma MCP tool as counted or exempt and totals planned calls against a plan's limit.
+- [Figma MCP limit reached](https://figmamcp.dev/figma-mcp-limit-reached): Figma's published call limits by seat and plan, and a local option that does not use that quota.
+
+## Help
+
+- [Troubleshooting](https://figmamcp.dev/troubleshooting): Connection errors, refused edits, read-only files, and the plugin not showing in Figma.
+- [Figma MCP not working? 14 symptoms with fixes](https://figmamcp.dev/troubleshooting/not-working): Figma MCP not working or not connecting in Claude Code or Codex? Look up your symptom or error code, such as READ_ONLY_MODE, and get its cause and fix.
+- [FigmaMCP plugin not showing in Figma: how to find it](https://figmamcp.dev/troubleshooting/plugin-not-showing): Where the FigmaMCP plugin appears in the Figma desktop app, and what to check when Plugins, Development does not list it.
+- [Changelog](https://figmamcp.dev/changelog): Release notes by version, with a link to each release.
+- [Is the source public?](https://figmamcp.dev/figma-mcp-source): The source code is private; the Mac app and its releases are published with checksums. FigmaMCP is a fork of figma-edit-mcp by Neo Product LLC.
+- [Privacy](https://figmamcp.dev/privacy): What FigmaMCP counts (site visits, plugin loads, tool-call counts with a random install ID, and Mixpanel usage events sent without IP addresses), how to turn the usage events off, and what it does not collect (no file names or keys, no design content).
+
+## Optional
+
+- [Figma MCP alternatives](https://figmamcp.dev/figma-mcp-alternative): FigmaMCP compared with Framelink, figma-console-mcp and cursor-talk-to-figma.
+- [Figma Console MCP alternative](https://figmamcp.dev/alternatives/figma-console-mcp): For Figma Console MCP users who want setup done for them on a Mac.
+- [Talk to Figma MCP alternative](https://figmamcp.dev/alternatives/talk-to-figma-mcp): For cursor-talk-to-figma-mcp users who want no relay to start and no channel to join.
+- [Framelink alternative](https://figmamcp.dev/alternatives/framelink): For Framelink users who want their agent to edit the Figma file, not only read it.
+- [Figma MCP on the free plan](https://figmamcp.dev/figma-mcp-free-plan): What Figma allows for MCP on the free Starter plan, and a free local tool.
+- [Figma MCP Starter plan limit: what it allows, a local option](https://figmamcp.dev/figma-mcp-starter-plan): The Figma MCP Starter plan limit and rate limit as published by Figma, checked 2026-11-13, plus a free local tool for Claude Code and Codex on Mac.
+- [Figma MCP without Dev Mode: seat needs and a local option](https://figmamcp.dev/figma-mcp-without-dev-mode): Figma MCP without Dev Mode or a Dev seat: what the official server needs on each seat, checked 2026-11-13, and a free local tool for Claude Code and Codex.
+- [Figma MCP write to canvas](https://figmamcp.dev/figma-mcp-write-to-canvas): Figma's terms for canvas writes, and a local plugin route.
+- [Figma MCP on Windows](https://figmamcp.dev/figma-mcp-windows): FigmaMCP is macOS only for now; options on Windows.
+- [Figma MCP in Cursor](https://figmamcp.dev/figma-mcp-cursor): Cursor can use Figma's own MCP server; FigmaMCP is a local editing option for Claude Code and Codex.
+- Pricing page in other languages: [日本語](https://figmamcp.dev/ja/pricing), [简体中文](https://figmamcp.dev/zh/pricing)
+- Setup guide in other languages: [日本語](https://figmamcp.dev/ja/docs/setup), [简体中文](https://figmamcp.dev/zh/docs/setup)
+- What is a Figma MCP server page in other languages: [日本語](https://figmamcp.dev/ja/what-is-figma-mcp), [简体中文](https://figmamcp.dev/zh/what-is-figma-mcp)
+- Figma MCP not working page in other languages: [日本語](https://figmamcp.dev/ja/troubleshooting/not-working), [简体中文](https://figmamcp.dev/zh/troubleshooting/not-working)
+- Edit a Figma file with Claude Code tutorial in other languages: [日本語](https://figmamcp.dev/ja/tutorials/edit-figma-with-claude-code), [简体中文](https://figmamcp.dev/zh/tutorials/edit-figma-with-claude-code)
+- Figma MCP rate limit page in other languages: [日本語](https://figmamcp.dev/ja/figma-mcp-rate-limit), [简体中文](https://figmamcp.dev/zh/figma-mcp-rate-limit)
+- Homepage in other languages: [简体中文](https://figmamcp.dev/zh), [繁體中文](https://figmamcp.dev/zh-hant), [日本語](https://figmamcp.dev/ja), [한국어](https://figmamcp.dev/ko), [Deutsch](https://figmamcp.dev/de), [Français](https://figmamcp.dev/fr), [Polski](https://figmamcp.dev/pl), [Українська](https://figmamcp.dev/uk)

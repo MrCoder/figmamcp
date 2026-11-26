@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP comparison: FigmaMCP and the other options</title>
+<meta name="description" content="Figma MCP comparison pages: official Figma MCP, local vs remote servers, Figma Console MCP, Framelink, the Figma API, Talk to Figma MCP and Code Connect.">
+<link rel="canonical" href="https://figmamcp.dev/compare">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP comparison: FigmaMCP and the other options">
+<meta property="og:description" content="Figma MCP comparison pages: official Figma MCP, local vs remote servers, Figma Console MCP, Framelink, the Figma API, Talk to Figma MCP and Code Connect.">
+<meta property="og:url" content="https://figmamcp.dev/compare">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/compare#webpage","url":"https://figmamcp.dev/compare","name":"Figma MCP comparison: FigmaMCP and the other options","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/compare#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/compare#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Figma MCP comparison","item":"https://figmamcp.dev/compare"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">Figma MCP comparison</li></ol></nav>
+<article class="wrap page">
+<h1>Figma MCP comparison</h1>
+<p class="lede">Start here if you are choosing how to connect Claude Code or Codex to Figma. FigmaMCP is one option: a free Mac app that reads and edits the file open in the Figma desktop app, with no call quota. The pages below compare it with Figma&rsquo;s own MCP server, the REST API and other tools, and each one says when the other tool is the better pick.</p>
+<h2>Comparison pages</h2>
+<p class="measure">Each comparison page puts FigmaMCP next to one other tool. The facts about the other tool come from its own README or documentation, with the date we checked them and a link to the source.</p>
+<div class="tablewrap"><table>
+<caption class="sr">FigmaMCP comparison pages</caption>
+<thead><tr><th scope="col">Page</th><th scope="col">When to read it</th></tr></thead>
+<tbody>
+<tr><th scope="row"><a href="/compare/official-figma-mcp">Official Figma MCP</a></th><td>You want to know what Figma&rsquo;s own server offers and needs</td></tr>
+<tr><th scope="row"><a href="/compare/local-vs-remote">Local and remote servers</a></th><td>You are choosing between a server on your machine and a hosted one</td></tr>
+<tr><th scope="row"><a href="/figma-mcp-alternative">Figma MCP alternatives</a></th><td>You want the wider list of options</td></tr>
+<tr><th scope="row"><a href="/compare/figma-console-mcp">Figma Console MCP</a></th><td>You are looking at Figma Console MCP</td></tr>
+<tr><th scope="row"><a href="/compare/figwright">Figwright</a></th><td>You are looking at Figwright, a free server with a public repository</td></tr>
+<tr><th scope="row"><a href="/compare/framelink">Framelink</a></th><td>You are looking at Framelink</td></tr>
+<tr><th scope="row"><a href="/compare/figma-api">Figma API</a></th><td>You are thinking of the REST API with a token</td></tr>
+<tr><th scope="row"><a href="/compare/talk-to-figma-mcp">Talk to Figma MCP</a></th><td>You are looking at Talk to Figma MCP</td></tr>
+<tr><th scope="row"><a href="/compare/code-connect">Code Connect</a></th><td>You want to know how Code Connect relates to an MCP server</td></tr>
+<tr><th scope="row"><a href="/compare/figma-make">Figma Make</a></th><td>You want to know how Figma Make differs from an agent that edits your file</td></tr>
+</tbody></table></div>
+<h2>Alternative pages</h2>
+<p class="measure">The alternative pages answer a different question from the comparison pages. A comparison page puts FigmaMCP next to one tool, fact by fact. An alternative page is for people who already use that tool and want something else: it says what the tool asks of you, what FigmaMCP does differently, and when the tool you have is still the better pick.</p>
+<div class="tablewrap"><table>
+<caption class="sr">FigmaMCP alternative pages</caption>
+<thead><tr><th scope="col">Page</th><th scope="col">When to read it</th></tr></thead>
+<tbody>
+<tr><th scope="row"><a href="/alternatives/figma-console-mcp">Figma Console MCP alternative</a></th><td>You use Figma Console MCP and want setup done for you on a Mac</td></tr>
+<tr><th scope="row"><a href="/alternatives/talk-to-figma-mcp">Talk to Figma MCP alternative</a></th><td>You use cursor-talk-to-figma-mcp and want no relay to start and no channel to join</td></tr>
+<tr><th scope="row"><a href="/alternatives/framelink">Framelink alternative</a></th><td>You use Framelink to read designs and now want your agent to edit them too</td></tr>
+</tbody></table></div>
+<h2>Pick by what you need</h2>
+<p class="measure">FigmaMCP is one of several routes from an AI agent to Figma. The right one depends on your platform, your agent and whether the agent must change the file or only read it. This table points to the page that answers each case.</p>
+<div class="tablewrap"><table>
+<caption class="sr">Which comparison page answers which need</caption>
+<thead><tr><th scope="col">What you need</th><th scope="col">Read first</th></tr></thead>
+<tbody>
+<tr><th scope="row">Your agent must create and change layers in the open file</th><td><a href="/figma-mcp-write-to-canvas">Write to the canvas</a>, then <a href="/tools/write">write tools</a></td></tr>
+<tr><th scope="row">Your agent only reads designs to write code</th><td><a href="/compare/framelink">Framelink</a> and <a href="/compare/official-figma-mcp">Official Figma MCP</a></td></tr>
+<tr><th scope="row">You hit a call limit on a Figma plan</th><td><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a> and <a href="/figma-mcp-rate-limit">Figma MCP rate limit by plan</a></td></tr>
+<tr><th scope="row">You are on Windows or Linux</th><td><a href="/figma-mcp-windows">Figma MCP on Windows</a></td></tr>
+<tr><th scope="row">You want no hosted server between your agent and Figma</th><td><a href="/compare/local-vs-remote">Local and remote servers</a></td></tr>
+<tr><th scope="row">You want to script Figma without an agent</th><td><a href="/compare/figma-api">Figma API</a></td></tr>
+</tbody></table></div>
+<h2>How FigmaMCP comparisons are written</h2>
+<p class="measure">We follow three rules on these pages. Facts about another tool come from that tool&rsquo;s own README or documentation, with the date we checked and a link, and they may change after that date. Each page says when the other tool is the better pick, not only when FigmaMCP is. And each page states FigmaMCP&rsquo;s own limits plainly.</p>
+<h2>FigmaMCP limits to weigh</h2>
+<p class="measure">FigmaMCP works on macOS with Claude Code and Codex only, and needs the Figma desktop app. FigmaMCP is not on Figma Community; the Mac app installs the plugin for you. FigmaMCP does not include Dev Mode features. See <a href="/figma-mcp-without-dev-mode">Figma MCP without Dev Mode</a> for what each seat needs and a local option.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/can-claude-edit-figma">Can Claude edit Figma</a><a href="/is-figma-mcp-safe">Is it safe</a><a href="/figma-mcp-cursor">Cursor</a><a href="/figma-mcp-windows">Windows</a><a href="/compare/figma-make">Figma Make</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

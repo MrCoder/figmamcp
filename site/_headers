@@ -1,0 +1,37 @@
+/*
+  Strict-Transport-Security: max-age=15552000
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: DENY
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), interest-cohort=()
+  Content-Security-Policy: default-src 'none'; media-src 'self'; img-src 'self' https://*.google-analytics.com https://*.googletagmanager.com; style-src 'self'; script-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://cloudflareinsights.com; base-uri 'none'; form-action 'self'; frame-ancestors 'none'
+
+/p.gif
+  Cache-Control: no-store, no-cache, max-age=0
+  Content-Type: image/gif
+
+/style.css
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/app.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/rate-limit-checker.js
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/favicon.svg
+  Cache-Control: public, max-age=86400
+
+/og.png
+  Cache-Control: public, max-age=86400
+
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=3600
+
+/figmamcp-cheat-sheet.pdf
+  Content-Type: application/pdf
+  Cache-Control: public, max-age=86400
+
+/assets/*
+  Cache-Control: public, max-age=604800

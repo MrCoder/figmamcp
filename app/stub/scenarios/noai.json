@@ -1,0 +1,7 @@
+{"steps":[
+{"id":"platform","state":"ok","message":"macOS detected."},
+{"id":"figma","state":"ok","message":"Found."},
+{"id":"agent-claude","state":"skip","message":"not found"},
+{"id":"agent-codex","state":"skip","message":"not found"},
+{"id":"agent-manual","state":"skip","message":"Neither claude nor codex was found."},
+{"id":"plugin","state":"todo","message":"later"}]}

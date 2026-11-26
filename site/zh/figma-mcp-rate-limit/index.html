@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP 速率限制：各方案调用限额一览</title>
+<meta name="description" content="按方案整理 Figma MCP 速率限制（2026-11-22 核实）。限额只针对读取工具，写入 Figma 文件的工具不计入。">
+<link rel="canonical" href="https://figmamcp.dev/zh/figma-mcp-rate-limit">
+<link rel="alternate" hreflang="en" href="https://figmamcp.dev/figma-mcp-rate-limit">
+<link rel="alternate" hreflang="ja" href="https://figmamcp.dev/ja/figma-mcp-rate-limit">
+<link rel="alternate" hreflang="zh-CN" href="https://figmamcp.dev/zh/figma-mcp-rate-limit">
+<link rel="alternate" hreflang="x-default" href="https://figmamcp.dev/figma-mcp-rate-limit">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP 速率限制：各方案调用限额一览">
+<meta property="og:description" content="按方案整理 Figma MCP 速率限制（2026-11-22 核实）。限额只针对读取工具，写入 Figma 文件的工具不计入。">
+<meta property="og:url" content="https://figmamcp.dev/zh/figma-mcp-rate-limit">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"一个免费的本地 MCP 服务器和配套应用，让 Claude Code 或 Codex 读取并编辑 Figma 桌面版里打开的文件，没有调用次数配额。","url":"https://figmamcp.dev/zh","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/zh/figma-mcp-rate-limit#webpage","url":"https://figmamcp.dev/zh/figma-mcp-rate-limit","name":"Figma MCP 速率限制：各方案调用限额一览","inLanguage":"zh-CN","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/zh/figma-mcp-rate-limit#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/zh/figma-mcp-rate-limit#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://figmamcp.dev/zh"},{"@type":"ListItem","position":2,"name":"Figma MCP 速率限制","item":"https://figmamcp.dev/zh/figma-mcp-rate-limit"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Figma MCP 的速率限制是多少？","acceptedAnswer":{"@type":"Answer","text":"取决于席位和方案。截至 2026-11-22，Figma 公布的限额是：View 或 Collab 席位在任何方案下每月最多 20 次；Full 或 Dev 席位在 Professional 方案下每天最多 200 次、每分钟 10 次，在 Organization 方案下每天 200 次、每分钟 15 次，在 Enterprise 方案下每天 600 次、每分钟 20 次。"}},{"@type":"Question","name":"Figma MCP 的写入调用计入限额吗？","acceptedAnswer":{"@type":"Answer","text":"不计入。Figma 表示，限额适用于从 Figma 读取数据的工具，有些工具不计入，其中包括写入 Figma 文件的工具。来源：Figma 的 rate limits and access 页面，2026-11-22 核实。"}},{"@type":"Question","name":"哪些调用会碰到限额？","acceptedAnswer":{"@type":"Answer","text":"读取工具，例如 get_design_context、get_metadata 和 get_screenshot。Agent 在编辑之前查看设计，首先用到的就是这些。"}},{"@type":"Question","name":"FigmaMCP 有调用次数限制吗？","acceptedAnswer":{"@type":"Answer","text":"FigmaMCP 没有自己的调用次数配额，也不调用 Figma 的 MCP 服务器。它通过 Figma 桌面版里的插件工作，所以你需要已有的文件访问权限，编辑则需要编辑权限。"}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/zh" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">对比</a><a href="/zh#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-rate-limit" hreflang="en" lang="en">English</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/zh">首页</a></li><li aria-current="page">Figma MCP 速率限制</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP 速率限制（按方案）</h1>
+<p class="fine lang-switch"><strong>语言：</strong> <a href="/figma-mcp-rate-limit" hreflang="en" lang="en">English</a> · 简体中文 · <a href="/ja/figma-mcp-rate-limit" hreflang="ja" lang="ja">日本語</a></p>
+<p class="lede">Figma 官方的 MCP 服务器会限制一个账号能发起多少次调用。限额针对的是从 Figma 读取数据的工具；有些工具不计入，其中包括写入 Figma 文件的工具。本页按方案列出 Figma 公布的限额（2026-11-22 核实），并说明这对 Agent 处理设计意味着什么。</p>
+
+<h2>各方案的限额</h2>
+<div class="tablewrap"><table>
+<caption class="sr">按席位和方案划分的 Figma MCP 服务器读取调用限额</caption>
+<thead><tr><th scope="col">席位和方案</th><th scope="col">读取调用限额</th><th scope="col">实际影响</th></tr></thead>
+<tbody>
+<tr><th scope="row">View 或 Collab 席位，任何方案（包括 Starter）</th><td>每月最多 20 次</td><td>Agent 读一个页面和几个框架，就可能在一次会话里用完整个月的额度</td></tr>
+<tr><th scope="row">Professional，Full 或 Dev 席位</th><td>每天最多 200 次，每分钟 10 次</td><td>即使当天还剩很多，一分钟内的第 11 次读取调用也会超出限额</td></tr>
+<tr><th scope="row">Organization，Full 或 Dev 席位</th><td>每天最多 200 次，每分钟 15 次</td><td>和 Professional 一样，只是每分钟多 5 次</td></tr>
+<tr><th scope="row">Enterprise，Full 或 Dev 席位</th><td>每天最多 600 次，每分钟 20 次</td><td>公布的额度中最高的一档，但仍然是有上限的</td></tr>
+<tr><th scope="row">Education 方案</th><td>与 Professional 的 Full 或 Dev 席位相同：每天 200 次，每分钟 10 次</td><td>依据 Figma 的页面</td></tr>
+<tr><th scope="row">Starter，Full 或 Dev 席位</th><td>每月最多 20 次</td><td>Figma 的表格在这一格显示为短横线，同一页面的升级建议则写明 Starter 方案每月 20 次</td></tr>
+</tbody></table></div>
+<p class="fine">来源：<a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">Figma 开发者文档：MCP server rate limits and access</a>，2026-11-22 核实。Figma 可能会调整这些数字，以 Figma 的页面为准。</p>
+
+<h2>哪些计入，哪些不计入</h2>
+<div class="tablewrap"><table>
+<caption class="sr">哪些 Figma MCP 工具计入限额</caption>
+<thead><tr><th scope="col">工具类型</th><th scope="col">是否计入限额</th><th scope="col">示例</th></tr></thead>
+<tbody>
+<tr><th scope="row">从 Figma 读取数据</th><td>是</td><td><code>get_design_context</code>、<code>get_metadata</code>、<code>get_screenshot</code></td></tr>
+<tr><th scope="row">写入 Figma 文件</th><td>否，不计入</td><td>写入 Figma 文件的工具；Figma 的页面点名 <code>add_code_connect_map</code>、<code>create_new_file</code> 和 <code>generate_figma_design</code> 不计入，读取账号信息的 <code>whoami</code> 也不计入</td></tr>
+</tbody></table></div>
+<p>Figma 还说明，消耗 Figma AI 点数的操作，例如生成图片或向 Figma Make 发送提示，不计入 MCP 速率限制。<a href="#checker">下方的计算器</a>列出了每个工具。</p>
+<p>写入画布另有条款，与速率限制无关：方案和编辑权限见 <a href="/figma-mcp-write-to-canvas">write to canvas</a>（英文）。</p>
+
+<h2 id="checker">Figma MCP 速率限制计算器</h2>
+<p class="measure">下表列出 Figma 官方 MCP 服务器的每个工具：Figma 把它归为读取工具还是写入工具，以及它的调用是否计入速率限制。读取工具计入。写入工具不计入；<code>whoami</code> 虽是读取工具，但 Figma 点名它不计入。官方服务器可以写入 Figma 文件，只是这些调用不占用额度。开启 JavaScript 后，选择你的方案和席位，填入预计的调用次数，计算器会合计计入限额的调用。</p>
+<p class="fine">依据 Figma 的 <a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">rate limits and access</a> 和 <a href="https://developers.figma.com/docs/figma-mcp-server/tools-and-prompts/">tools and prompts</a> 页面，2026-11-22 核实。未列入：Figma 自己调用的 3 个 Code Connect 工具、Weave 工具和唯一的 MCP 提示，因为 Figma 的工具索引没有把它们归为读取或写入。</p>
+<div id="rl-checker" class="checker" hidden>
+<label for="rl-plan">你的方案和席位</label>
+<select id="rl-plan">
+<option value="view" data-row="View 或 Collab 席位，任何方案（包括 Starter）" data-limit="20" data-period="month">View 或 Collab 席位，任何方案：每月 20 次</option>
+<option value="starter" data-row="Starter，Full 或 Dev 席位" data-limit="20" data-period="month">Starter 方案，Full 或 Dev 席位：每月 20 次</option>
+<option value="professional" data-row="Professional，Full 或 Dev 席位" data-limit="200" data-period="day" data-minute="10">Professional，Full 或 Dev 席位：每天 200 次，每分钟 10 次</option>
+<option value="organization" data-row="Organization，Full 或 Dev 席位" data-limit="200" data-period="day" data-minute="15">Organization，Full 或 Dev 席位：每天 200 次，每分钟 15 次</option>
+<option value="enterprise" data-row="Enterprise，Full 或 Dev 席位" data-limit="600" data-period="day" data-minute="20">Enterprise，Full 或 Dev 席位：每天 600 次，每分钟 20 次</option>
+<option value="education" data-row="Education 方案" data-limit="200" data-period="day" data-minute="10">Education 方案：每天 200 次，每分钟 10 次</option>
+</select>
+<p class="fine">在“调用次数”一列填入每<span data-rl-period>月</span>的调用次数。限额于 2026-11-22 在<a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">Figma 的页面</a>核实。</p>
+</div>
+<div class="tablewrap"><table id="rl-tools">
+<caption class="sr">Figma 官方 MCP 服务器工具：读取还是写入，调用是否计入速率限制</caption>
+<thead><tr><th scope="col">工具</th><th scope="col">读取或写入</th><th scope="col">速率限制</th></tr></thead>
+<tbody>
+<tr data-tool="download_assets" data-kind="read" data-counts="yes"><th scope="row"><code>download_assets</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="export_video" data-kind="read" data-counts="yes"><th scope="row"><code>export_video</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="get_code_connect_map" data-kind="read" data-counts="yes"><th scope="row"><code>get_code_connect_map</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="get_comments" data-kind="read" data-counts="yes"><th scope="row"><code>get_comments</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="get_design_context" data-kind="read" data-counts="yes"><th scope="row"><code>get_design_context</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="get_figjam" data-kind="read" data-counts="yes"><th scope="row"><code>get_figjam</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="get_generative_plugin" data-kind="read" data-counts="yes"><th scope="row"><code>get_generative_plugin</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="get_libraries" data-kind="read" data-counts="yes"><th scope="row"><code>get_libraries</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="get_metadata" data-kind="read" data-counts="yes"><th scope="row"><code>get_metadata</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="get_motion_context" data-kind="read" data-counts="yes"><th scope="row"><code>get_motion_context</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="get_screenshot" data-kind="read" data-counts="yes"><th scope="row"><code>get_screenshot</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="get_shader" data-kind="read" data-counts="yes"><th scope="row"><code>get_shader</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="get_variable_defs" data-kind="read" data-counts="yes"><th scope="row"><code>get_variable_defs</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="list_file_shaders" data-kind="read" data-counts="yes"><th scope="row"><code>list_file_shaders</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="list_generative_plugins" data-kind="read" data-counts="yes"><th scope="row"><code>list_generative_plugins</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="list_shaders" data-kind="read" data-counts="yes"><th scope="row"><code>list_shaders</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="search_design_system" data-kind="read" data-counts="yes"><th scope="row"><code>search_design_system</code></th><td>读取</td><td>计入限额</td></tr>
+<tr data-tool="whoami" data-kind="read" data-counts="no"><th scope="row"><code>whoami</code></th><td>读取</td><td>不计入：Figma 点名</td></tr>
+<tr data-tool="add_code_connect_map" data-kind="write" data-counts="no"><th scope="row"><code>add_code_connect_map</code></th><td>写入</td><td>不计入：Figma 点名</td></tr>
+<tr data-tool="create_generative_plugin" data-kind="write" data-counts="no"><th scope="row"><code>create_generative_plugin</code></th><td>写入</td><td>不计入：写入工具，限额只针对读取工具</td></tr>
+<tr data-tool="create_new_file" data-kind="write" data-counts="no"><th scope="row"><code>create_new_file</code></th><td>写入</td><td>不计入：Figma 点名</td></tr>
+<tr data-tool="create_shader" data-kind="write" data-counts="no"><th scope="row"><code>create_shader</code></th><td>写入</td><td>不计入：写入工具，限额只针对读取工具</td></tr>
+<tr data-tool="generate_diagram" data-kind="write" data-counts="no"><th scope="row"><code>generate_diagram</code></th><td>写入</td><td>不计入：写入工具，限额只针对读取工具</td></tr>
+<tr data-tool="generate_figma_design" data-kind="write" data-counts="no"><th scope="row"><code>generate_figma_design</code></th><td>写入</td><td>不计入：Figma 点名</td></tr>
+<tr data-tool="generate_image" data-kind="write" data-counts="no"><th scope="row"><code>generate_image</code></th><td>写入</td><td>不计入：写入工具，限额只针对读取工具</td></tr>
+<tr data-tool="generate_vector_illustration" data-kind="write" data-counts="no"><th scope="row"><code>generate_vector_illustration</code></th><td>写入</td><td>不计入：写入工具，限额只针对读取工具</td></tr>
+<tr data-tool="html_to_figma" data-kind="write" data-counts="no"><th scope="row"><code>html_to_figma</code></th><td>写入</td><td>不计入：写入工具，限额只针对读取工具</td></tr>
+<tr data-tool="send_code_to_figma" data-kind="write" data-counts="no"><th scope="row"><code>send_code_to_figma</code></th><td>写入</td><td>不计入：写入工具，限额只针对读取工具</td></tr>
+<tr data-tool="update_generative_plugin" data-kind="write" data-counts="no"><th scope="row"><code>update_generative_plugin</code></th><td>写入</td><td>不计入：写入工具，限额只针对读取工具</td></tr>
+<tr data-tool="update_shader" data-kind="write" data-counts="no"><th scope="row"><code>update_shader</code></th><td>写入</td><td>不计入：写入工具，限额只针对读取工具</td></tr>
+<tr data-tool="upload_assets" data-kind="write" data-counts="no"><th scope="row"><code>upload_assets</code></th><td>写入</td><td>不计入：写入工具，限额只针对读取工具</td></tr>
+<tr data-tool="use_figma" data-kind="write" data-counts="no"><th scope="row"><code>use_figma</code></th><td>写入</td><td>不计入：写入工具，限额只针对读取工具</td></tr>
+</tbody></table></div>
+<output id="rl-result" class="rl-result" for="rl-plan" aria-live="polite" hidden></output>
+
+<h2>实际意味着什么</h2>
+<ul class="plain"><li>Agent 的工作中，碰到限额的是“看”的部分。一个任务如果先读页面，再读其中的框架，再读文字和样式，在改动任何东西之前就已经用掉了读取调用。</li><li>以写入为主的任务用不了多少额度；以读取为主的任务很快就会用完。</li><li>如果达到限额，可以让 Agent 减少读取、缩小范围：指定一个框架，而不是整个文件。其他办法见 <a href="/figma-mcp-limit-reached">Figma MCP limit reached</a>（英文）页面。</li></ul>
+
+<h2>FigmaMCP 有什么不同</h2>
+<p>FigmaMCP 是一个 Mac App，包含一个本地服务器和 Figma 桌面版里的一个插件。你的 Agent 和本地服务器通信，插件在你的 Mac 上通过 Figma 的 Plugin API 读取和编辑打开的文件。它不调用 Figma 的 MCP 服务器，所以 Figma 的 MCP 速率限制与它的工作方式无关，FigmaMCP 自己也没有调用次数配额。</p>
+<p>这并不意味着 Figma 的所有规则都不适用。你的账号能否在文件里运行开发版插件，由 Figma 决定，我们也没有测试过每一种方案。在据此做计划之前，先在一个文件上试一试。另见 <a href="/compare/official-figma-mcp">Official Figma MCP vs FigmaMCP</a>（英文）和<a href="/zh/pricing">价格</a>。</p>
+<p class="cta"><a class="btn" href="/download">下载 Mac 版</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14 及以上 · Intel 和 Apple 芯片 · 约 155 MB</span></p>
+<aside class="note"><h2>使用前须知</h2><ul>
+<li>目前仅支持 macOS。</li>
+<li>需要 Figma 桌面版，不能在浏览器中运行。</li>
+<li>FigmaMCP 不在 Figma Community 上，由 Mac App 替你安装插件。</li>
+<li>如果不授予辅助功能权限，请在每个文件中打开一次插件（Plugins、Development、FigmaMCP），并在 Agent 编辑期间保持打开。</li>
+<li>Figma 自身的功能（例如 Dev Mode）不包含在内。</li></ul></aside>
+<h2>常见问题</h2><div class="faq"><details><summary>Figma MCP 的速率限制是多少？</summary><div class="ans">取决于席位和方案。截至 2026-11-22，Figma 公布的限额是：View 或 Collab 席位在任何方案下每月最多 20 次；Full 或 Dev 席位在 Professional 方案下每天最多 200 次、每分钟 10 次，在 Organization 方案下每天 200 次、每分钟 15 次，在 Enterprise 方案下每天 600 次、每分钟 20 次。</div></details><details><summary>Figma MCP 的写入调用计入限额吗？</summary><div class="ans">不计入。Figma 表示，限额适用于从 Figma 读取数据的工具，有些工具不计入，其中包括写入 Figma 文件的工具。来源：Figma 的 rate limits and access 页面，2026-11-22 核实。</div></details><details><summary>哪些调用会碰到限额？</summary><div class="ans">读取工具，例如 <code>get_design_context</code>、<code>get_metadata</code> 和 <code>get_screenshot</code>。Agent 在编辑之前查看设计，首先用到的就是这些。</div></details><details><summary>FigmaMCP 有调用次数限制吗？</summary><div class="ans">FigmaMCP 没有自己的调用次数配额，也不调用 Figma 的 MCP 服务器。它通过 Figma 桌面版里的插件工作，所以你需要已有的文件访问权限，编辑则需要编辑权限。</div></details></div>
+<p class="measure fine updated">最后更新：<time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP 免费。它是 Neo Product LLC 的 <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> 的分支。</p>
+<p>FigmaMCP 不隶属于 Figma，也未获得其认可。Figma 是 Figma, Inc. 的商标。</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/zh/pricing">价格</a><a href="/zh/docs/setup">安装</a><a href="/zh/tutorials/edit-figma-with-claude-code">教程</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/zh/what-is-figma-mcp">什么是 Figma MCP</a><a href="/zh/figma-mcp-rate-limit">速率限制</a><a href="/zh/troubleshooting/not-working">故障排查</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a><a href="/" hreflang="en" lang="en">English</a></p>
+</div></footer>
+<img class="px" src="/p.gif?l=zh" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+<script src="/rate-limit-checker.js" defer></script>
+</body></html>

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FigmaMCP plugin not showing in Figma: how to find it</title>
+<meta name="description" content="Where the FigmaMCP plugin appears in the Figma desktop app, and what to check when Plugins, Development does not list it.">
+<link rel="canonical" href="https://figmamcp.dev/troubleshooting/plugin-not-showing">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="FigmaMCP plugin not showing in Figma: how to find it">
+<meta property="og:description" content="Where the FigmaMCP plugin appears in the Figma desktop app, and what to check when Plugins, Development does not list it.">
+<meta property="og:url" content="https://figmamcp.dev/troubleshooting/plugin-not-showing">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/troubleshooting/plugin-not-showing#webpage","url":"https://figmamcp.dev/troubleshooting/plugin-not-showing","name":"FigmaMCP plugin not showing in Figma: how to find it","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/troubleshooting/plugin-not-showing#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/troubleshooting/plugin-not-showing#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Troubleshooting","item":"https://figmamcp.dev/troubleshooting"},{"@type":"ListItem","position":3,"name":"FigmaMCP plugin not showing in Figma","item":"https://figmamcp.dev/troubleshooting/plugin-not-showing"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why is it not on Figma Community?","acceptedAnswer":{"@type":"Answer","text":"It runs as a development plugin installed by the Mac app. It is not listed there."}},{"@type":"Question","name":"Do I need to open it in every file?","acceptedAnswer":{"@type":"Answer","text":"Without Accessibility permission, yes: open it once per file and keep it open while the agent edits."}},{"@type":"Question","name":"Can I use the plugin in Figma in the browser?","acceptedAnswer":{"@type":"Answer","text":"No. A development plugin needs the Figma desktop app."}},{"@type":"Question","name":"Will adding the plugin change my Figma settings?","acceptedAnswer":{"@type":"Answer","text":"The app adds the plugin to Figma’s settings.json and keeps the original as settings.json.figmamcp-backup."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/troubleshooting">Troubleshooting</a></li><li aria-current="page">FigmaMCP plugin not showing in Figma</li></ol></nav>
+<article class="wrap page">
+<h1>FigmaMCP plugin not showing in Figma</h1>
+<p class="lede">FigmaMCP is not on Figma Community, so searching there finds nothing. After the Mac app installs it, FigmaMCP appears under Plugins &rsaquo; Development &rsaquo; FigmaMCP in the Figma desktop app. If that menu is empty, check the app, the install and Figma itself, in this order.</p>
+
+<h2>Where the FigmaMCP plugin lives</h2>
+<p class="measure">FigmaMCP runs as a development plugin, not a Community plugin. The Mac app adds it to Figma&rsquo;s plugin list. You then open it from the Plugins menu, then Development, then FigmaMCP, in a design file. The Figma desktop app is required. A development plugin does not run in the browser.</p>
+
+<h2>Check in this order</h2>
+<div class="tablewrap"><table><caption class="sr">Plugin not showing: symptom and what to do</caption>
+<thead><tr><th scope="col">Symptom</th><th scope="col">What to do</th></tr></thead><tbody>
+<tr><th scope="row">Searched Figma Community</th><td>FigmaMCP is not there. Open Plugins, Development, FigmaMCP in a design file.</td></tr>
+<tr><th scope="row">Using Figma in the browser</th><td>Use the desktop app. A development plugin does not run in the browser.</td></tr>
+<tr><th scope="row">Development menu is empty</th><td>Open the FigmaMCP Mac app, click Add to Figma, then reopen the file.</td></tr>
+<tr><th scope="row">You installed while Figma was running</th><td>Let Figma restart. The plugin appears when Figma starts again.</td></tr>
+<tr><th scope="row">Plugin opens but the agent cannot see it</th><td>The agent may return <code>PLUGIN_PEER_UNAVAILABLE</code>. Open the plugin in the file you want edited, then retry. See <a href="/troubleshooting/not-working">Figma MCP not working</a>.</td></tr>
+<tr><th scope="row">The plugin is open in two Figma tabs</th><td>The second copy is refused (<code>PLUGIN_PEER_AMBIGUOUS</code>) and the message shows in the plugin panel. Close or disconnect the duplicate and leave one open.</td></tr>
+</tbody></table></div>
+
+<h2>What the Mac app installs</h2>
+<p class="measure">The FigmaMCP Mac app registers the plugin for you. It adds the FigmaMCP development plugin to Figma&rsquo;s <code>settings.json</code> in <code>~/Library/Application Support/Figma</code>, and it saves the original as <code>settings.json.figmamcp-backup</code> next to it. It writes this while Figma is closed. If Figma was running and the plugin was missing, the app restarts Figma once. The <a href="/docs/setup#changes">setup page</a> lists every other file the installer writes.</p>
+
+<h2>If you did not allow Accessibility</h2>
+<p class="measure">FigmaMCP can open the plugin for your agent if you allow Accessibility. Without that permission, you open the plugin yourself once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits. Each file needs its own open plugin, and the agent can only reach files where it is open.</p>
+
+<h2>Remove and re-add the plugin</h2>
+<p class="measure">To reset a plugin that does not behave, choose Plugins, Development, Manage plugins in development in Figma, and remove FigmaMCP. Then open the FigmaMCP Mac app and click Add to Figma again. This changes only the plugin entry. If you want a full uninstall, follow the steps on the <a href="/docs/setup#uninstall">setup page</a>.</p>
+
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+<p class="measure fine">Related: <a href="/docs/setup">Setup</a> · <a href="/troubleshooting/not-working">Not working</a> · <a href="/how-figma-mcp-works">How it works</a> · <a href="/troubleshooting">Troubleshooting hub</a></p>
+<h2>Questions</h2><div class="faq"><details><summary>Why is it not on Figma Community?</summary><div class="ans">It runs as a development plugin installed by the Mac app. It is not listed there.</div></details><details><summary>Do I need to open it in every file?</summary><div class="ans">Without Accessibility permission, yes: open it once per file and keep it open while the agent edits.</div></details><details><summary>Can I use the plugin in Figma in the browser?</summary><div class="ans">No. A development plugin needs the Figma desktop app.</div></details><details><summary>Will adding the plugin change my Figma settings?</summary><div class="ans">The app adds the plugin to Figma&rsquo;s settings.json and keeps the original as settings.json.figmamcp-backup.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma to code MCP: turn a design into code with your agent</title>
+<meta name="description" content="Figma to code with an MCP server: FigmaMCP lets your agent read layers, tokens and a picture of a frame, then the agent writes the code. FigmaMCP writes none.">
+<link rel="canonical" href="https://figmamcp.dev/use-cases/design-to-code">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma to code MCP: turn a design into code with your agent">
+<meta property="og:description" content="Figma to code with an MCP server: FigmaMCP lets your agent read layers, tokens and a picture of a frame, then the agent writes the code. FigmaMCP writes none.">
+<meta property="og:url" content="https://figmamcp.dev/use-cases/design-to-code">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/use-cases/design-to-code#webpage","url":"https://figmamcp.dev/use-cases/design-to-code","name":"Figma to code MCP: turn a design into code with your agent","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/use-cases/design-to-code#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/use-cases/design-to-code#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Use cases","item":"https://figmamcp.dev/use-cases"},{"@type":"ListItem","position":3,"name":"Figma to code MCP: the agent reads, then writes the code","item":"https://figmamcp.dev/use-cases/design-to-code"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does FigmaMCP generate code?","acceptedAnswer":{"@type":"Answer","text":"No. It reads the design. Your agent, Claude Code or Codex, writes the code with its own file tools. You choose the language and framework in your request."}},{"@type":"Question","name":"Can I paste a Figma link for a frame?","acceptedAnswer":{"@type":"Answer","text":"Yes. The layer ID in a Figma URL is accepted as it is. The file still has to be open in the Figma desktop app."}},{"@type":"Question","name":"Does it use Figma Dev Mode?","acceptedAnswer":{"@type":"Answer","text":"No. Features that belong to Figma itself, such as Dev Mode, are not included."}},{"@type":"Question","name":"Can the agent read my design tokens?","acceptedAnswer":{"@type":"Answer","text":"Yes. It reads local variables with variable_list and the variables a layer uses with node_info."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/use-cases">Use cases</a></li><li aria-current="page">Figma to code MCP: the agent reads, then writes the code</li></ol></nav>
+<article class="wrap page"><h1>Figma to code MCP: the agent reads, then writes the code</h1>
+<p class="lede">FigmaMCP does not write code. It lets Claude Code or Codex read the design in your open Figma file: the layers, the variables and a picture of the frame. Then the agent writes the code in your project with its own tools.</p>
+
+
+<h2>What FigmaMCP gives the agent</h2>
+<p class="measure">FigmaMCP gives your agent two ways to read a design: the layer data and a picture. The agent needs both.</p>
+<div class="tablewrap"><table>
+<caption class="sr">What the agent reads for design to code</caption>
+<thead><tr>
+<th scope="col">It needs</th>
+<th scope="col">Tool</th>
+<th scope="col">What it gets</th>
+</tr></thead>
+<tbody>
+<tr><th scope="row">The layer tree</th><td><code>page_info</code>, <code>node_info</code></td><td>Pages, layers, names and types. Ask for only the properties it needs, such as size, fills or text.</td></tr>
+<tr><th scope="row">Text content</th><td><code>node_info</code> with a text filter</td><td>The words in every text layer of a frame.</td></tr>
+<tr><th scope="row">Design tokens</th><td><code>variable_list</code>, <code>node_info</code> with <code>boundVariables</code></td><td>Local variables, and the variables a layer is bound to.</td></tr>
+<tr><th scope="row">How it looks</th><td><code>node_export_visual</code></td><td>A PNG or SVG of the layer.</td></tr>
+<tr><th scope="row">Layout</th><td><code>node_info</code></td><td>Auto layout and size properties, when the agent asks for them.</td></tr>
+</tbody></table></div>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+
+<h2>From frame to code, step by step</h2>
+<ol class="steps"><li><h3>Open the file</h3><p>Open it in the Figma desktop app. You can paste a link to a layer. The server accepts the layer ID from a Figma URL as it is.</p></li><li><h3>Name the target</h3><p>Ask for one frame, not the whole file. Say which framework you use and where the code should go.</p></li><li><h3>The agent reads</h3><p>It reads the layer tree, the tokens and a picture of the frame.</p></li><li><h3>The agent writes</h3><p>It writes the code in your repo with its own file tools.</p></li><li><h3>You compare</h3><p>Run the code and compare it with the design. Ask the agent to export the frame again if it needs a second look.</p></li></ol>
+
+<h2>Why read the tokens, not just the picture</h2>
+<p class="measure">A picture shows a blue button. The layer data can show which variable that blue is bound to. Code can then use the variable name instead of a copied hex value. Ask the agent to read the bindings first, and to say when a layer has none. Local variables come from <code>variable_list</code>. Variables from a shared library are read from the layer that uses them.</p>
+
+<h2>Example requests</h2>
+<div class="tablewrap"><table>
+<caption class="sr">Example design to code requests</caption>
+<thead><tr>
+<th scope="col">You ask</th>
+<th scope="col">What the agent does</th>
+</tr></thead>
+<tbody>
+<tr><th scope="row">&ldquo;Build this card as a React component.&rdquo;</th><td>Reads the card, then writes the component file. Your agent picks the structure.</td></tr>
+<tr><th scope="row">&ldquo;Use our variables for color and spacing.&rdquo;</th><td>Reads the bound variables on each layer and uses their names in the code.</td></tr>
+<tr><th scope="row">&ldquo;List all text in this screen.&rdquo;</th><td>Reads the text layers, so the copy can go into a file or a translation table.</td></tr>
+<tr><th scope="row">&ldquo;Show me the frame, then write the CSS.&rdquo;</th><td>Exports a picture first, then writes styles from what it read.</td></tr>
+</tbody></table></div>
+
+<h2>What to check</h2>
+<p class="measure">Review the code like a colleague&rsquo;s work. FigmaMCP does not run or test it. It also does not use Figma&rsquo;s Dev Mode. To link code components to Dev Mode, Figma has Code Connect; see <a href="/compare/code-connect">Code Connect vs FigmaMCP</a>. For the reverse direction, see <a href="/use-cases/code-to-design">code to design</a>. To read variables on their own, see <a href="/tools/variables">Figma MCP variables</a>. For setup, see <a href="/docs/setup">Figma MCP setup</a>, and for Claude Code see <a href="/integrations/claude-code">Figma MCP for Claude Code</a>.</p>
+
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+
+<h2>Questions</h2><div class="faq"><details><summary>Does FigmaMCP generate code?</summary><div class="ans">No. It reads the design. Your agent, Claude Code or Codex, writes the code with its own file tools. You choose the language and framework in your request.</div></details><details><summary>Can I paste a Figma link for a frame?</summary><div class="ans">Yes. The layer ID in a Figma URL is accepted as it is. The file still has to be open in the Figma desktop app.</div></details><details><summary>Does it use Figma Dev Mode?</summary><div class="ans">No. Features that belong to Figma itself, such as Dev Mode, are not included.</div></details><details><summary>Can the agent read my design tokens?</summary><div class="ans">Yes. It reads local variables with variable_list and the variables a layer uses with node_info.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

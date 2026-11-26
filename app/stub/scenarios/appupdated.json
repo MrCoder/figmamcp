@@ -1,0 +1,51 @@
+{
+  "currentFile": "Checkout flow",
+  "figmaRunning": true,
+  "steps": [
+    {
+      "id": "platform",
+      "state": "ok",
+      "message": "macOS detected."
+    },
+    {
+      "id": "figma",
+      "state": "ok",
+      "message": "Found."
+    },
+    {
+      "id": "node",
+      "state": "ok",
+      "message": "ok"
+    },
+    {
+      "id": "runtime",
+      "state": "todo",
+      "message": "Copy FigmaMCP 0.1.9 to ~/.figmamcp/versions/0.1.9 and point ~/.figmamcp/current at it."
+    },
+    {
+      "id": "relay",
+      "state": "todo",
+      "message": "Restart the FigmaMCP relay so it runs the new files."
+    },
+    {
+      "id": "agent-claude",
+      "state": "ok",
+      "message": "Already connected."
+    },
+    {
+      "id": "agent-codex",
+      "state": "ok",
+      "message": "Already connected."
+    },
+    {
+      "id": "plugin",
+      "state": "ok",
+      "message": "Registered."
+    },
+    {
+      "id": "skill",
+      "state": "todo",
+      "message": "Install the FigmaMCP skill for Claude Code and Codex."
+    }
+  ]
+}

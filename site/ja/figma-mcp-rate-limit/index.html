@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP レート制限：プラン別の上限と対象</title>
+<meta name="description" content="Figma MCP レート制限をプラン別に整理（2026-11-22確認）。上限の対象は読み取りツールで、Figmaファイルに書き込むツールは対象外です。">
+<link rel="canonical" href="https://figmamcp.dev/ja/figma-mcp-rate-limit">
+<link rel="alternate" hreflang="en" href="https://figmamcp.dev/figma-mcp-rate-limit">
+<link rel="alternate" hreflang="ja" href="https://figmamcp.dev/ja/figma-mcp-rate-limit">
+<link rel="alternate" hreflang="zh-CN" href="https://figmamcp.dev/zh/figma-mcp-rate-limit">
+<link rel="alternate" hreflang="x-default" href="https://figmamcp.dev/figma-mcp-rate-limit">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP レート制限：プラン別の上限と対象">
+<meta property="og:description" content="Figma MCP レート制限をプラン別に整理（2026-11-22確認）。上限の対象は読み取りツールで、Figmaファイルに書き込むツールは対象外です。">
+<meta property="og:url" content="https://figmamcp.dev/ja/figma-mcp-rate-limit">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"無料でローカルに動作する MCP サーバーと専用アプリ。Claude Code や Codex が Figma デスクトップアプリで開いているファイルを読み取り・編集できるようにします。呼び出し回数の上限はありません。","url":"https://figmamcp.dev/ja","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/ja/figma-mcp-rate-limit#webpage","url":"https://figmamcp.dev/ja/figma-mcp-rate-limit","name":"Figma MCP レート制限：プラン別の上限と対象","inLanguage":"ja","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/ja/figma-mcp-rate-limit#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/ja/figma-mcp-rate-limit#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://figmamcp.dev/ja"},{"@type":"ListItem","position":2,"name":"Figma MCP レート制限","item":"https://figmamcp.dev/ja/figma-mcp-rate-limit"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Figma MCP のレート制限はどれくらいですか？","acceptedAnswer":{"@type":"Answer","text":"シートとプランによります。2026-11-22時点で、Figmaは View または Collab シートについて全プランで月20回まで、Full または Dev シートについて Professional で1日200回・1分あたり10回、Organization で1日200回・1分あたり15回、Enterprise で1日600回・1分あたり20回までとしています。"}},{"@type":"Question","name":"Figma MCP の書き込み呼び出しは上限に数えられますか？","acceptedAnswer":{"@type":"Answer","text":"いいえ。Figmaによると、上限はFigmaからデータを読み取るツールに適用され、Figmaファイルに書き込むツールなど一部のツールは対象外です。出典：Figmaの rate limits and access ページ（2026-11-22確認）。"}},{"@type":"Question","name":"どの呼び出しが上限にかかりますか？","acceptedAnswer":{"@type":"Answer","text":"読み取りツールです。たとえば get_design_context、get_metadata、get_screenshot です。編集する前にデザインを確認するエージェントは、まずこれらを使います。"}},{"@type":"Question","name":"FigmaMCPに呼び出し回数の上限はありますか？","acceptedAnswer":{"@type":"Answer","text":"FigmaMCP独自の呼び出し回数の上限はなく、FigmaのMCPサーバーも呼び出しません。Figmaデスクトップアプリ内のプラグインを通じて動くため、ファイルへの既存のアクセス権が必要で、編集するには編集権限が必要です。"}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/ja" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">比較</a><a href="/ja#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-rate-limit" hreflang="en" lang="en">English</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/ja">ホーム</a></li><li aria-current="page">Figma MCP レート制限</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP レート制限（プラン別）</h1>
+<p class="fine lang-switch"><strong>言語：</strong> <a href="/figma-mcp-rate-limit" hreflang="en" lang="en">English</a> · <a href="/zh/figma-mcp-rate-limit" hreflang="zh-CN" lang="zh-CN">简体中文</a> · 日本語</p>
+<p class="lede">Figma公式のMCPサーバーには、アカウントごとの呼び出し回数の上限があります。上限の対象は、Figmaからデータを読み取るツールです。Figmaファイルに書き込むツールなど、一部のツールは対象外です。このページでは、Figmaが公表しているプラン別の上限（2026-11-22確認）と、それがエージェントによるデザイン作業で何を意味するかをまとめます。</p>
+
+<h2>プラン別の上限</h2>
+<div class="tablewrap"><table>
+<caption class="sr">シートとプラン別の、Figma MCP サーバーの読み取り呼び出しの上限</caption>
+<thead><tr><th scope="col">シートとプラン</th><th scope="col">読み取り呼び出しの上限</th><th scope="col">実際の目安</th></tr></thead>
+<tbody>
+<tr><th scope="row">View または Collab シート、全プラン（Starter を含む）</th><td>月20回まで</td><td>ページを1つと数個のフレームを読むだけのエージェントでも、1回のセッションで1か月分を使い切ることがあります</td></tr>
+<tr><th scope="row">Professional、Full または Dev シート</th><td>1日200回、1分あたり10回まで</td><td>1日の残りが十分あっても、1分以内の11回目の読み取り呼び出しは上限を超えます</td></tr>
+<tr><th scope="row">Organization、Full または Dev シート</th><td>1日200回、1分あたり15回まで</td><td>Professional と同じ形で、1分あたり5回多い枠です</td></tr>
+<tr><th scope="row">Enterprise、Full または Dev シート</th><td>1日600回、1分あたり20回まで</td><td>公表されている中で最も多い枠ですが、上限であることに変わりはありません</td></tr>
+<tr><th scope="row">Education プラン</th><td>Professional の Full または Dev シートと同じ：1日200回、1分あたり10回</td><td>Figmaのページによる</td></tr>
+<tr><th scope="row">Starter、Full または Dev シート</th><td>月20回まで</td><td>Figmaの表ではこの欄がダッシュになっていますが、同じページのアップグレード案内では Starter プランを月20回としています</td></tr>
+</tbody></table></div>
+<p class="fine">出典：<a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">Figma開発者ドキュメント「MCP server rate limits and access」</a>（2026-11-22確認）。数値は変わる可能性があり、正式な情報はFigmaのページです。</p>
+
+<h2>上限に含まれるもの、含まれないもの</h2>
+<div class="tablewrap"><table>
+<caption class="sr">どの Figma MCP ツールが上限に含まれるか</caption>
+<thead><tr><th scope="col">ツールの種類</th><th scope="col">上限に含まれるか</th><th scope="col">例</th></tr></thead>
+<tbody>
+<tr><th scope="row">Figmaからデータを読み取る</th><td>はい</td><td><code>get_design_context</code>、<code>get_metadata</code>、<code>get_screenshot</code></td></tr>
+<tr><th scope="row">Figmaファイルに書き込む</th><td>いいえ、対象外</td><td>Figmaファイルに書き込むツール。Figmaのページは <code>add_code_connect_map</code>、<code>create_new_file</code>、<code>generate_figma_design</code> を対象外として挙げており、アカウント情報を読み取る <code>whoami</code> も対象外です</td></tr>
+</tbody></table></div>
+<p>Figmaによると、画像の生成やFigma Makeへのプロンプト送信など、Figma AIクレジットを使う操作もMCPのレート制限には数えられません。<a href="#checker">下のチェッカー</a>にすべてのツールを載せています。</p>
+<p>キャンバスへの書き込みには、レート制限とは別の条件があります。プランと編集権限については<a href="/figma-mcp-write-to-canvas">write to canvas</a>（英語）をご覧ください。</p>
+
+<h2 id="checker">Figma MCP レート制限チェッカー</h2>
+<p class="measure">この表は、Figma公式MCPサーバーの各ツールについて、Figmaが読み取りツールと書き込みツールのどちらとしているか、そしてその呼び出しがレート制限に数えられるかを示します。読み取りツールは数えられます。書き込みツールは対象外で、Figmaが対象外と名指ししている読み取りツールの <code>whoami</code> も同様です。公式サーバーはFigmaファイルに書き込めます。ただ、その呼び出しが枠を消費しないというだけです。JavaScriptが有効なら、プランとシートを選んで予定している呼び出し回数を入力すると、上限に含まれる呼び出しをチェッカーが合計します。</p>
+<p class="fine">出典：Figmaの<a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">rate limits and access</a>と<a href="https://developers.figma.com/docs/figma-mcp-server/tools-and-prompts/">tools and prompts</a>のページ（2026-11-22確認）。Figma自身が呼び出す Code Connect ツール3つ、Weave ツール、MCPプロンプト1つは、Figmaのツール一覧で読み取り・書き込みのどちらにも分類されていないため載せていません。</p>
+<div id="rl-checker" class="checker" hidden>
+<label for="rl-plan">プランとシート</label>
+<select id="rl-plan">
+<option value="view" data-row="View または Collab シート、全プラン（Starter を含む）" data-limit="20" data-period="month">View または Collab シート、全プラン：月20回</option>
+<option value="starter" data-row="Starter、Full または Dev シート" data-limit="20" data-period="month">Starter プラン、Full または Dev シート：月20回</option>
+<option value="professional" data-row="Professional、Full または Dev シート" data-limit="200" data-period="day" data-minute="10">Professional、Full または Dev シート：1日200回、1分あたり10回</option>
+<option value="organization" data-row="Organization、Full または Dev シート" data-limit="200" data-period="day" data-minute="15">Organization、Full または Dev シート：1日200回、1分あたり15回</option>
+<option value="enterprise" data-row="Enterprise、Full または Dev シート" data-limit="600" data-period="day" data-minute="20">Enterprise、Full または Dev シート：1日600回、1分あたり20回</option>
+<option value="education" data-row="Education プラン" data-limit="200" data-period="day" data-minute="10">Education プラン：1日200回、1分あたり10回</option>
+</select>
+<p class="fine">「呼び出し回数」の列に、1<span data-rl-period>か月</span>あたりの回数を入力してください。上限は2026-11-22に<a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">Figmaのページ</a>で確認しました。</p>
+</div>
+<div class="tablewrap"><table id="rl-tools">
+<caption class="sr">Figma公式MCPサーバーのツール：読み取りか書き込みか、呼び出しがレート制限に数えられるか</caption>
+<thead><tr><th scope="col">ツール</th><th scope="col">読み取り／書き込み</th><th scope="col">レート制限</th></tr></thead>
+<tbody>
+<tr data-tool="download_assets" data-kind="read" data-counts="yes"><th scope="row"><code>download_assets</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="export_video" data-kind="read" data-counts="yes"><th scope="row"><code>export_video</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="get_code_connect_map" data-kind="read" data-counts="yes"><th scope="row"><code>get_code_connect_map</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="get_comments" data-kind="read" data-counts="yes"><th scope="row"><code>get_comments</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="get_design_context" data-kind="read" data-counts="yes"><th scope="row"><code>get_design_context</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="get_figjam" data-kind="read" data-counts="yes"><th scope="row"><code>get_figjam</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="get_generative_plugin" data-kind="read" data-counts="yes"><th scope="row"><code>get_generative_plugin</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="get_libraries" data-kind="read" data-counts="yes"><th scope="row"><code>get_libraries</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="get_metadata" data-kind="read" data-counts="yes"><th scope="row"><code>get_metadata</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="get_motion_context" data-kind="read" data-counts="yes"><th scope="row"><code>get_motion_context</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="get_screenshot" data-kind="read" data-counts="yes"><th scope="row"><code>get_screenshot</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="get_shader" data-kind="read" data-counts="yes"><th scope="row"><code>get_shader</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="get_variable_defs" data-kind="read" data-counts="yes"><th scope="row"><code>get_variable_defs</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="list_file_shaders" data-kind="read" data-counts="yes"><th scope="row"><code>list_file_shaders</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="list_generative_plugins" data-kind="read" data-counts="yes"><th scope="row"><code>list_generative_plugins</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="list_shaders" data-kind="read" data-counts="yes"><th scope="row"><code>list_shaders</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="search_design_system" data-kind="read" data-counts="yes"><th scope="row"><code>search_design_system</code></th><td>読み取り</td><td>上限に含まれる</td></tr>
+<tr data-tool="whoami" data-kind="read" data-counts="no"><th scope="row"><code>whoami</code></th><td>読み取り</td><td>対象外：Figmaが名指し</td></tr>
+<tr data-tool="add_code_connect_map" data-kind="write" data-counts="no"><th scope="row"><code>add_code_connect_map</code></th><td>書き込み</td><td>対象外：Figmaが名指し</td></tr>
+<tr data-tool="create_generative_plugin" data-kind="write" data-counts="no"><th scope="row"><code>create_generative_plugin</code></th><td>書き込み</td><td>対象外：書き込みツール（上限の対象は読み取りツール）</td></tr>
+<tr data-tool="create_new_file" data-kind="write" data-counts="no"><th scope="row"><code>create_new_file</code></th><td>書き込み</td><td>対象外：Figmaが名指し</td></tr>
+<tr data-tool="create_shader" data-kind="write" data-counts="no"><th scope="row"><code>create_shader</code></th><td>書き込み</td><td>対象外：書き込みツール（上限の対象は読み取りツール）</td></tr>
+<tr data-tool="generate_diagram" data-kind="write" data-counts="no"><th scope="row"><code>generate_diagram</code></th><td>書き込み</td><td>対象外：書き込みツール（上限の対象は読み取りツール）</td></tr>
+<tr data-tool="generate_figma_design" data-kind="write" data-counts="no"><th scope="row"><code>generate_figma_design</code></th><td>書き込み</td><td>対象外：Figmaが名指し</td></tr>
+<tr data-tool="generate_image" data-kind="write" data-counts="no"><th scope="row"><code>generate_image</code></th><td>書き込み</td><td>対象外：書き込みツール（上限の対象は読み取りツール）</td></tr>
+<tr data-tool="generate_vector_illustration" data-kind="write" data-counts="no"><th scope="row"><code>generate_vector_illustration</code></th><td>書き込み</td><td>対象外：書き込みツール（上限の対象は読み取りツール）</td></tr>
+<tr data-tool="html_to_figma" data-kind="write" data-counts="no"><th scope="row"><code>html_to_figma</code></th><td>書き込み</td><td>対象外：書き込みツール（上限の対象は読み取りツール）</td></tr>
+<tr data-tool="send_code_to_figma" data-kind="write" data-counts="no"><th scope="row"><code>send_code_to_figma</code></th><td>書き込み</td><td>対象外：書き込みツール（上限の対象は読み取りツール）</td></tr>
+<tr data-tool="update_generative_plugin" data-kind="write" data-counts="no"><th scope="row"><code>update_generative_plugin</code></th><td>書き込み</td><td>対象外：書き込みツール（上限の対象は読み取りツール）</td></tr>
+<tr data-tool="update_shader" data-kind="write" data-counts="no"><th scope="row"><code>update_shader</code></th><td>書き込み</td><td>対象外：書き込みツール（上限の対象は読み取りツール）</td></tr>
+<tr data-tool="upload_assets" data-kind="write" data-counts="no"><th scope="row"><code>upload_assets</code></th><td>書き込み</td><td>対象外：書き込みツール（上限の対象は読み取りツール）</td></tr>
+<tr data-tool="use_figma" data-kind="write" data-counts="no"><th scope="row"><code>use_figma</code></th><td>書き込み</td><td>対象外：書き込みツール（上限の対象は読み取りツール）</td></tr>
+</tbody></table></div>
+<output id="rl-result" class="rl-result" for="rl-plan" aria-live="polite" hidden></output>
+
+<h2>作業で何が起きるか</h2>
+<ul class="plain"><li>エージェントの作業のうち上限にかかるのは「見る」部分です。ページを読み、次にそのフレーム、さらにテキストやスタイルを読む作業は、何かを変更する前に読み取り呼び出しを使います。</li><li>主に書き込む作業は枠をあまり使いません。主に読み取る作業は、すぐに枠を使います。</li><li>上限に達したら、読み取りを少なく、狭い範囲にするようエージェントに頼んでください。ファイル全体ではなく、1つのフレームを指定します。そのほかの方法は<a href="/figma-mcp-limit-reached">Figma MCP limit reached</a>（英語）のページにまとめています。</li></ul>
+
+<h2>FigmaMCPとの違い</h2>
+<p>FigmaMCPは、ローカルサーバーと、Figmaデスクトップアプリ内のプラグインからなるMacアプリです。エージェントはローカルサーバーと通信し、プラグインがMac上でFigmaのPlugin APIを通じて開いているファイルを読み取り・編集します。FigmaのMCPサーバーは呼び出さないため、FigmaのMCPレート制限はこの仕組みに関係しません。また、FigmaMCP独自の呼び出し回数の上限もありません。</p>
+<p>ただし、Figmaのルールがすべてなくなるわけではありません。あなたのアカウントでファイルに開発用プラグインを実行できるかどうかはFigmaが決めることで、私たちはすべてのプランを試したわけではありません。これを前提に計画を立てる前に、まず1つのファイルで試してください。<a href="/compare/official-figma-mcp">Official Figma MCP vs FigmaMCP</a>（英語）と<a href="/ja/pricing">料金</a>もご覧ください。</p>
+<p class="cta"><a class="btn" href="/download">Macにダウンロード</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14以上 · Intel / Apple Silicon対応 · 約155 MB</span></p>
+<aside class="note"><h2>最初に知っておきたいこと</h2><ul>
+<li>現在はmacOS専用です。</li>
+<li>Figmaデスクトップアプリが必要です。ブラウザ版では動きません。</li>
+<li>FigmaMCPはFigma Communityにはありません。Macアプリがプラグインをインストールします。</li>
+<li>アクセシビリティを許可しない場合は、ファイルごとに一度プラグインを開き（Plugins、Development、FigmaMCP）、エージェントが編集している間は開いたままにしてください。</li>
+<li>Dev ModeなどFigma自体の機能は含まれません。</li></ul></aside>
+<h2>よくある質問</h2><div class="faq"><details><summary>Figma MCP のレート制限はどれくらいですか？</summary><div class="ans">シートとプランによります。2026-11-22時点で、Figmaは View または Collab シートについて全プランで月20回まで、Full または Dev シートについて Professional で1日200回・1分あたり10回、Organization で1日200回・1分あたり15回、Enterprise で1日600回・1分あたり20回までとしています。</div></details><details><summary>Figma MCP の書き込み呼び出しは上限に数えられますか？</summary><div class="ans">いいえ。Figmaによると、上限はFigmaからデータを読み取るツールに適用され、Figmaファイルに書き込むツールなど一部のツールは対象外です。出典：Figmaの rate limits and access ページ（2026-11-22確認）。</div></details><details><summary>どの呼び出しが上限にかかりますか？</summary><div class="ans">読み取りツールです。たとえば <code>get_design_context</code>、<code>get_metadata</code>、<code>get_screenshot</code> です。編集する前にデザインを確認するエージェントは、まずこれらを使います。</div></details><details><summary>FigmaMCPに呼び出し回数の上限はありますか？</summary><div class="ans">FigmaMCP独自の呼び出し回数の上限はなく、FigmaのMCPサーバーも呼び出しません。Figmaデスクトップアプリ内のプラグインを通じて動くため、ファイルへの既存のアクセス権が必要で、編集するには編集権限が必要です。</div></details></div>
+<p class="measure fine updated">最終更新：<time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCPは無料です。Neo Product LLCによる<a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a>のフォークです。</p>
+<p>Figma, Inc.とは提携・承認関係にありません。FigmaはFigma, Inc.の商標です。</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/ja/pricing">料金</a><a href="/ja/docs/setup">セットアップ</a><a href="/ja/tutorials/edit-figma-with-claude-code">チュートリアル</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/ja/what-is-figma-mcp">Figma MCPとは</a><a href="/ja/figma-mcp-rate-limit">レート制限</a><a href="/ja/troubleshooting/not-working">トラブルシューティング</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a><a href="/" hreflang="en" lang="en">English</a></p>
+</div></footer>
+<img class="px" src="/p.gif?l=ja" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+<script src="/rate-limit-checker.js" defer></script>
+</body></html>

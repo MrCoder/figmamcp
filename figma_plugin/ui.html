@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>FigmaMCP</title>
+  <style>
+    /* Colours come from Figma's theme variables (showUI themeColors: true),
+       so the panel follows Figma's light and dark theme by itself. */
+    html,
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 11px;
+      line-height: 16px;
+      letter-spacing: 0.005em;
+      color: var(--figma-color-text);
+      background: var(--figma-color-bg);
+    }
+
+    #panel {
+      padding: 12px 16px 12px 16px;
+    }
+
+    .status {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .dot {
+      flex: none;
+      width: 8px;
+      height: 8px;
+      margin-top: 4px;
+      border-radius: 50%;
+      background: var(--figma-color-bg-tertiary);
+    }
+
+    .dot.connected {
+      background: var(--figma-color-bg-success);
+    }
+
+    .dot.connecting {
+      background: var(--figma-color-bg-warning);
+    }
+
+    .dot.unreachable,
+    .dot.error {
+      background: var(--figma-color-bg-danger);
+    }
+
+    .status-text {
+      min-width: 0;
+    }
+
+    #status-title {
+      font-weight: 600;
+    }
+
+    #status-detail,
+    .note,
+    #update-banner {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      padding: 6px 8px;
+      border-radius: 4px;
+      background: var(--figma-color-bg-brand-tertiary);
+      color: var(--figma-color-text);
+    }
+    #update-banner a { color: var(--figma-color-text-brand); flex: 1; }
+    #update-banner button { border: none; background: none; cursor: pointer; color: inherit; padding: 0 2px; }
+
+    #version {
+      color: var(--figma-color-text-secondary);
+    }
+
+    #status-detail {
+      overflow-wrap: anywhere;
+    }
+
+    .divider {
+      height: 1px;
+      margin: 12px -16px;
+      background: var(--figma-color-border);
+    }
+
+    .switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    /* Figma-style switch */
+    #ai-can-edit {
+      appearance: none;
+      -webkit-appearance: none;
+      flex: none;
+      position: relative;
+      width: 24px;
+      height: 14px;
+      margin: 0;
+      border-radius: 7px;
+      background: var(--figma-color-bg-tertiary);
+      border: 1px solid var(--figma-color-border-strong);
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+
+    #ai-can-edit::after {
+      content: "";
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--figma-color-icon-secondary);
+    }
+
+    #ai-can-edit:checked {
+      background: var(--figma-color-bg-brand);
+      border-color: var(--figma-color-bg-brand);
+    }
+
+    #ai-can-edit:checked::after {
+      left: 11px;
+      background: var(--figma-color-icon-onbrand);
+    }
+
+    #ai-can-edit:focus-visible {
+      outline: 1px solid var(--figma-color-border-selected);
+      outline-offset: 1px;
+    }
+
+    .note {
+      margin-top: 6px;
+    }
+
+    /* First-run line: lead, then the prompt to paste into the AI app. */
+    #first-run {
+      display: block;
+    }
+    #first-run.restart {
+      background: var(--figma-color-bg-warning-tertiary, var(--figma-color-bg-brand-tertiary));
+    }
+    #first-run .prompt-row {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+      margin-top: 4px;
+    }
+    #first-prompt {
+      flex: 1;
+      min-width: 0;
+      font-weight: 600;
+      user-select: text;
+      -webkit-user-select: text;
+      cursor: text;
+    }
+    #first-prompt-copy {
+      flex: none;
+      border: 1px solid var(--figma-color-border);
+      border-radius: 4px;
+      background: var(--figma-color-bg);
+      color: var(--figma-color-text);
+      font: inherit;
+      padding: 0 6px;
+      cursor: pointer;
+    }
+
+    /* One row per connected AI session: client app and session name, then times. */
+    #ai-sessions {
+      display: block;
+    }
+
+    #ai-sessions-count {
+      color: var(--figma-color-text-secondary);
+    }
+
+    .session-row {
+      margin-top: 4px;
+      min-width: 0;
+    }
+
+    .session-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .session-meta {
+      font-size: 10px;
+      color: var(--figma-color-text-secondary);
+    }
+
+    #progress {
+      margin-top: 12px;
+    }
+
+    .progress-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    #progress-message {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #progress-percentage {
+      flex: none;
+      color: var(--figma-color-text-secondary);
+    }
+
+    .bar {
+      height: 4px;
+      margin-top: 6px;
+      border-radius: 2px;
+      background: var(--figma-color-bg-tertiary);
+      overflow: hidden;
+    }
+
+    #progress-bar {
+      width: 0%;
+      height: 100%;
+      background: var(--figma-color-bg-brand);
+      transition: width 0.2s;
+    }
+
+    #progress.failed #progress-bar {
+      background: var(--figma-color-bg-danger);
+    }
+
+    #version {
+      margin-top: 12px;
+      font-size: 10px;
+      color: var(--figma-color-text-tertiary);
+    }
+
+    .status-text {
+      flex: 1;
+    }
+
+    #btn-collapse {
+      flex: none;
+      width: 20px;
+      height: 20px;
+      margin: -2px -6px 0 0;
+      padding: 0;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--figma-color-icon-secondary);
+      cursor: pointer;
+      font: inherit;
+      line-height: 20px;
+    }
+
+    #btn-collapse:hover {
+      background: var(--figma-color-bg-hover);
+    }
+
+    /* Collapsed: one line with the status dot and a short status text. */
+    #pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      /* Wide enough that Figma's window title still reads "FigmaMCP". */
+      min-width: 192px;
+      max-width: 220px;
+      height: 28px;
+      padding: 0 10px;
+      box-sizing: border-box;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    #pill .dot {
+      margin-top: 0;
+    }
+
+    #pill-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #pill:hover #pill-text {
+      color: var(--figma-color-text);
+    }
+
+    .dot.working {
+      background: var(--figma-color-bg-brand);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="panel">
+    <div class="status">
+      <span id="status-dot" class="dot connecting"></span>
+      <div class="status-text">
+        <div id="status-title">Connecting…</div>
+        <div id="status-detail"></div>
+      </div>
+      <button id="btn-collapse" title="Collapse to a small status bar" aria-label="Collapse">&#8211;</button>
+    </div>
+
+    <div class="divider"></div>
+
+    <label class="switch-row">
+      <span>AI can edit this file</span>
+      <input type="checkbox" role="switch" id="ai-can-edit" checked />
+    </label>
+    <div id="rights-note" class="note hidden">AI can read this file but not change it</div>
+    <div id="ai-sessions" class="note hidden"></div>
+
+    <div id="first-run" class="note hidden"></div>
+
+    <div id="progress" class="hidden">
+      <div class="progress-line">
+        <span id="progress-message"></span>
+        <span id="progress-percentage">0%</span>
+      </div>
+      <div class="bar">
+        <div id="progress-bar"></div>
+      </div>
+    </div>
+
+    <div id="update-banner" class="hidden" role="status">
+      <a id="update-link" href="https://figmamcp.dev/download" target="_blank" rel="noopener"></a>
+      <button id="update-dismiss" type="button" aria-label="Dismiss">×</button>
+    </div>
+    <div id="version"></div>
+  </div>
+
+  <div id="pill" class="hidden" role="button" tabindex="0" title="Show FigmaMCP">
+    <span id="pill-dot" class="dot connecting"></span>
+    <span id="pill-text">Connecting…</span>
+  </div>
+
+  <script>
+    const state = {
+      connected: false,
+      socket: null,
+      serverPort: 3155,
+      portIndex: 0,
+      pendingRequests: new Map(),
+      channel: null,
+      fileKey: null,
+      fileName: null,
+      // The document root id: with it the connection covers the whole file.
+      rootId: null,
+      autoConnectTried: false,
+      // What this connection grants AI: "whole" or "read-only".
+      connectedRights: "read-only",
+      // AI sessions in this channel, by relay peer id:
+      // { app, label, connectedAt, lastActiveAt }. Shown in the panel only;
+      // never sent anywhere.
+      aiPeers: new Map(),
+      sessionsTimer: null,
+      reconnectAfterClose: false,
+      activeRequestId: null,
+      pendingScopeRequest: null,
+      scopeReadyTimer: null,
+      pluginVersion: "unknown",
+      // Random per plugin window; never stored.
+      pluginSession: Math.random().toString(36).slice(2, 14).padEnd(12, "0"),
+      // "connecting", "connected", "unreachable" or "error".
+      view: "connecting",
+      retryTimer: null,
+      unloading: false,
+      lastSize: "",
+      // "full" or "pill". anchored: once collapsed, the window sits bottom-right.
+      mode: "full",
+      userOpened: false,
+      anchored: false,
+      collapseTimer: null,
+      progressShown: false,
+      progressFailed: false,
+      progressHideTimer: null,
+      // First-run line: is an AI app with FigmaMCP loaded present (see nextAiPresence).
+      aiPresent: false,
+      aiWaitOver: false,
+      aiWaitTimer: null,
+    };
+
+    // The local service uses the first free one of these; find it by trying each.
+    const PORTS = [3155, 3156, 3157, 3158];
+    // Bound on the Q11 handshake: plugin main must echo `scope-ready` for the
+    // pending request within this window. Without a bound, a lost or never-sent
+    // acknowledgement leaves the UI at "Connecting…" forever.
+    const SCOPE_READY_TIMEOUT_MS = 5000;
+    // When the relay is not there, try again this often.
+    const RETRY_MS = 3000;
+    const PANEL_WIDTH = 280;
+
+    function clearPendingScopeRequest() {
+      if (state.scopeReadyTimer !== null) {
+        clearTimeout(state.scopeReadyTimer);
+        state.scopeReadyTimer = null;
+      }
+      state.pendingScopeRequest = null;
+    }
+
+    const panel = document.getElementById("panel");
+    const editSwitch = document.getElementById("ai-can-edit");
+    const statusDot = document.getElementById("status-dot");
+    const statusTitle = document.getElementById("status-title");
+    const statusDetail = document.getElementById("status-detail");
+    const rightsNote = document.getElementById("rights-note");
+    const aiSessions = document.getElementById("ai-sessions");
+    const firstRunNote = document.getElementById("first-run");
+    const progressContainer = document.getElementById("progress");
+    const progressBar = document.getElementById("progress-bar");
+    const progressMessage = document.getElementById("progress-message");
+    const progressPercentage = document.getElementById("progress-percentage");
+    const pill = document.getElementById("pill");
+    const pillDot = document.getElementById("pill-dot");
+    const pillText = document.getElementById("pill-text");
+
+    pill.addEventListener("click", () => panelEvent("pill-click"));
+    pill.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        panelEvent("pill-click");
+      }
+    });
+    document.getElementById("btn-collapse").addEventListener("click", () => panelEvent("collapse-click"));
+    document.getElementById("update-dismiss").addEventListener("click", () => {
+      document.getElementById("update-banner").classList.add("hidden");
+      reportSize();
+    });
+
+    // The panel never scrolls: it tells Figma how tall its content is, and
+    // main.ts resizes the window to fit. Call after every change to the content.
+    function reportSize() {
+      const collapsed = state.mode === "pill";
+      const height = Math.ceil((collapsed ? pill.offsetHeight : panel.offsetHeight) || 0);
+      const width = collapsed ? Math.ceil(pill.offsetWidth || 0) : PANEL_WIDTH;
+      if (!(height > 0) || !(width > 0)) return;
+      const key = width + "x" + height + (state.anchored ? "@br" : "");
+      if (key === state.lastSize) return;
+      state.lastSize = key;
+      parent.postMessage({
+        pluginMessage: { type: "resize-ui", width, height, anchor: state.anchored ? "bottom-right" : undefined },
+      }, "*");
+    }
+
+    // PANEL-MODE-START
+    // Full panel or small status pill. Problems always open the full panel;
+    // a panel the user opened by hand stays open until they collapse it.
+    function nextPanelMode(mode, event, userOpened) {
+      switch (event) {
+        case "problem":
+                case "progress-error":
+        case "pill-click":
+          return "full";
+        case "collapse-click":
+          return "pill";
+        case "connected-settled":
+          return userOpened ? mode : "pill";
+        default:
+          return mode;
+      }
+    }
+    // PANEL-MODE-END
+
+    // SESSION-ROWS-START
+    // Text for one connected-session row. Pure, so the panel test can run it.
+    function sessionRowText(peer, nowMs) {
+      const app = peer && typeof peer.app === "string" && peer.app ? peer.app : "AI session";
+      const label = peer && typeof peer.label === "string" ? peer.label : "";
+      const pad = (n) => (n < 10 ? "0" : "") + n;
+      const clock = (ms) => {
+        const d = new Date(ms);
+        return pad(d.getHours()) + ":" + pad(d.getMinutes());
+      };
+      const ago = (ms) => {
+        const s = Math.max(0, Math.floor((nowMs - ms) / 1000));
+        if (s < 60) return "just now";
+        if (s < 3600) return Math.floor(s / 60) + " min ago";
+        return "at " + clock(ms);
+      };
+      let meta = typeof peer.connectedAt === "number" ? "Connected " + clock(peer.connectedAt) : "Connected";
+      if (typeof peer.lastActiveAt === "number") meta += " · active " + ago(peer.lastActiveAt);
+      return { name: label ? app + " · " + label : app, meta };
+    }
+    // SESSION-ROWS-END
+
+    // FIRST-RUN-START
+    // One example prompt, only while connected and before the first successful tool call in this install.
+    // aiPresent: the relay said an AI app with FigmaMCP loaded is running (its hello).
+    // aiWaitOver: connected long enough that the relay's catch-up notice would have arrived.
+    // A running Claude Code or Codex reads its MCP settings only at start, so "no AI app"
+    // after setup almost always means it has to be quit and opened again.
+    const FIRST_PROMPT = "Use FigmaMCP to list the frames on this page and suggest clearer names.";
+    function firstRunHint(s) {
+      if (!s || !s.connected || s.firstRunPending !== true) return null;
+      if (!s.aiPresent && s.aiWaitOver) {
+        return {
+          lead: "No AI app has FigmaMCP loaded yet. Quit Claude Code or Codex, open it again, then ask:",
+          prompt: FIRST_PROMPT,
+          restart: true,
+        };
+      }
+      return { lead: s.aiPresent ? "Your AI app is connected. Ask it:" : "Ask your AI app:", prompt: FIRST_PROMPT, restart: false };
+    }
+    function nextAiPresence(p, event) {
+      if (event === "ai-present") return { aiPresent: true, aiWaitOver: !!p.aiWaitOver };
+      if (event === "wait-over") return { aiPresent: !!p.aiPresent, aiWaitOver: true };
+      if (event === "disconnected") return { aiPresent: false, aiWaitOver: false };
+      return { aiPresent: !!p.aiPresent, aiWaitOver: !!p.aiWaitOver };
+    }
+    // FIRST-RUN-END
+
+    // After connecting, wait this long for the relay's "An MCP client is connected"
+    // catch-up before saying that no AI app has FigmaMCP loaded.
+    const AI_WAIT_MS = 4000;
+
+    function applyAiPresence(event) {
+      const next = nextAiPresence(state, event);
+      state.aiPresent = next.aiPresent;
+      state.aiWaitOver = next.aiWaitOver;
+      if (event === "disconnected" && state.aiWaitTimer !== null) {
+        clearTimeout(state.aiWaitTimer);
+        state.aiWaitTimer = null;
+      }
+      if (event === "connected" && !state.aiWaitOver && state.aiWaitTimer === null) {
+        state.aiWaitTimer = setTimeout(() => {
+          state.aiWaitTimer = null;
+          applyAiPresence("wait-over");
+        }, AI_WAIT_MS);
+      }
+      renderFirstRun();
+      reportSize();
+    }
+
+    // After connecting, wait this long before collapsing to the pill.
+    const COLLAPSE_AFTER_MS = 3000;
+
+    function panelEvent(event) {
+      if (event === "pill-click") state.userOpened = true;
+      if (event === "collapse-click") state.userOpened = false;
+      const mode = nextPanelMode(state.mode, event, state.userOpened);
+      if (mode === "pill") state.anchored = true;
+      if (mode === state.mode) return;
+      state.mode = mode;
+      show(panel, mode === "full");
+      show(pill, mode === "pill");
+      renderPill();
+      reportSize();
+    }
+
+    function scheduleCollapse() {
+      // Keep the panel open while the first-run hint is showing, so it can be read.
+      if (firstRunHint(state)) { cancelCollapse(); return; }
+      if (state.collapseTimer !== null) clearTimeout(state.collapseTimer);
+      state.collapseTimer = setTimeout(() => {
+        state.collapseTimer = null;
+        if (state.connected) panelEvent("connected-settled");
+      }, COLLAPSE_AFTER_MS);
+    }
+
+    function cancelCollapse() {
+      if (state.collapseTimer !== null) clearTimeout(state.collapseTimer);
+      state.collapseTimer = null;
+    }
+
+    // The pill keeps the status visible: same dot colours, and a short text.
+    function renderPill() {
+      const working = state.progressShown && !state.progressFailed;
+      let text;
+      if (state.view === "connected") {
+        text = working ? "Working " + progressPercentage.textContent : (state.fileName || "Connected");
+        if (!editSwitch.checked) text += " · read-only";
+      } else {
+        text = statusTitle.textContent;
+      }
+      pillText.textContent = text;
+      pillDot.className = "dot " + (state.view === "connected" && working ? "working" : state.view);
+      const sessions = state.connected && state.sessionNames && state.sessionNames.length > 0
+        ? "\n" + state.sessionNames.join("\n")
+        : "";
+      pill.title = statusTitle.textContent + (statusDetail.textContent ? ": " + statusDetail.textContent : "") +
+        "." + sessions + "\nClick to open.";
+      if (state.mode === "pill") reportSize();
+    }
+
+    function show(element, visible) {
+      if (visible) element.classList.remove("hidden");
+      else element.classList.add("hidden");
+    }
+
+    function connectedDetail() {
+      if (!state.fileKey) return "Tell the AI this code: " + state.channel;
+      return state.fileName || "This file";
+    }
+
+    // One place that draws the panel. kind: connecting, connected, unreachable, error.
+    function setView(kind, detailOverride) {
+      state.view = kind;
+      const wasConnected = state.connected;
+      state.connected = kind === "connected";
+      // The plugin checks the file name for renames only while connected.
+      if (state.connected !== wasConnected) {
+        parent.postMessage({ pluginMessage: { type: "watch-file-name", on: state.connected } }, "*");
+      }
+      statusDot.className = "dot " + kind;
+      if (kind === "connected") {
+        statusTitle.textContent = "Connected";
+        statusDetail.textContent = connectedDetail();
+      } else if (kind === "unreachable") {
+        statusTitle.textContent = "FigmaMCP isn't running";
+        statusDetail.textContent = "Open the FigmaMCP app, then this reconnects by itself.";
+      } else if (kind === "error") {
+        statusTitle.textContent = "Can't connect";
+        statusDetail.textContent = detailOverride || "Trying again.";
+      } else {
+        statusTitle.textContent = "Connecting…";
+        statusDetail.textContent = "";
+      }
+      if (!state.connected) state.aiPeers.clear();
+      if (state.connected !== wasConnected) applyAiPresence(state.connected ? "connected" : "disconnected");
+      renderSessions();
+      renderRightsNote();
+      renderFirstRun();
+      if (kind === "connected") scheduleCollapse();
+      else cancelCollapse();
+      if (kind === "unreachable" || kind === "error") panelEvent("problem");
+      renderPill();
+      reportSize();
+    }
+
+    // Built with textContent only. The prompt is selectable, and Copy puts it on the clipboard.
+    function renderFirstRun() {
+      const hint = firstRunHint(state);
+      firstRunNote.replaceChildren();
+      if (hint && hint.restart) firstRunNote.classList.add("restart");
+      else firstRunNote.classList.remove("restart");
+      if (hint) {
+        const lead = document.createElement("div");
+        lead.textContent = hint.lead;
+        const row = document.createElement("div");
+        row.className = "prompt-row";
+        const prompt = document.createElement("div");
+        prompt.id = "first-prompt";
+        prompt.textContent = hint.prompt;
+        const copy = document.createElement("button");
+        copy.type = "button";
+        copy.id = "first-prompt-copy";
+        copy.textContent = "Copy";
+        copy.addEventListener("click", () => {
+          copy.textContent = copyText(hint.prompt) ? "Copied" : "Select it";
+          setTimeout(() => { copy.textContent = "Copy"; }, 2000);
+        });
+        row.append(prompt, copy);
+        firstRunNote.append(lead, row);
+      }
+      show(firstRunNote, !!hint);
+    }
+
+    // Figma's plugin frame does not grant the async Clipboard API, so copy through a selected textarea.
+    function copyText(text) {
+      const area = document.createElement("textarea");
+      area.value = text;
+      area.setAttribute("readonly", "");
+      area.style.position = "fixed";
+      area.style.opacity = "0";
+      document.body.appendChild(area);
+      area.select();
+      let ok = false;
+      try { ok = document.execCommand("copy"); } catch (_) { ok = false; }
+      area.remove();
+      return ok;
+    }
+
+    // Labels are arbitrary text (session titles): build rows with textContent only.
+    function renderSessions() {
+      const n = state.connected ? state.aiPeers.size : 0;
+      aiSessions.replaceChildren();
+      const names = [];
+      if (n > 0) {
+        const count = document.createElement("div");
+        count.id = "ai-sessions-count";
+        count.textContent = n + (n === 1 ? " AI session connected" : " AI sessions connected");
+        aiSessions.appendChild(count);
+        const nowMs = Date.now();
+        const peers = [...state.aiPeers.values()].sort((a, b) => (a.connectedAt || 0) - (b.connectedAt || 0));
+        for (const peer of peers) {
+          const text = sessionRowText(peer, nowMs);
+          names.push(text.name);
+          const row = document.createElement("div");
+          row.className = "session-row";
+          const name = document.createElement("div");
+          name.className = "session-name";
+          name.textContent = text.name;
+          name.title = text.name;
+          const meta = document.createElement("div");
+          meta.className = "session-meta";
+          meta.textContent = text.meta;
+          row.append(name, meta);
+          aiSessions.appendChild(row);
+        }
+      }
+      state.sessionNames = names;
+      show(aiSessions, n > 0);
+      // Keep "active 2 min ago" current while rows are shown.
+      if (n > 0 && state.sessionsTimer === null) {
+        state.sessionsTimer = setInterval(renderSessions, 30000);
+      } else if (n === 0 && state.sessionsTimer !== null) {
+        clearInterval(state.sessionsTimer);
+        state.sessionsTimer = null;
+      }
+      renderPill();
+      reportSize();
+    }
+
+    function upsertPeer(peerId, data) {
+      const known = state.aiPeers.get(peerId) || { app: "", label: "", connectedAt: Date.now() };
+      const client = data && data.client && typeof data.client === "object" ? data.client : null;
+      if (client) {
+        if (typeof client.app === "string") known.app = client.app;
+        if (typeof client.label === "string") known.label = client.label;
+      }
+      if (data && typeof data.connectedAt === "number") known.connectedAt = data.connectedAt;
+      state.aiPeers.set(peerId, known);
+    }
+
+    function renderRightsNote() {
+      show(rightsNote, !editSwitch.checked);
+      renderPill();
+    }
+
+    function scheduleRetry() {
+      if (state.retryTimer !== null || state.unloading) return;
+      state.retryTimer = setTimeout(() => {
+        state.retryTimer = null;
+        if (!state.socket && !state.pendingScopeRequest && !state.connected) startConnect();
+      }, RETRY_MS);
+    }
+
+    // Connect to the relay
+    function connectToServer(port) {
+      try {
+        if (state.connected && state.socket) return;
+
+        state.serverPort = port;
+        const socket = new WebSocket(`ws://localhost:${port}`);
+        state.socket = socket;
+
+        let failure = null;
+        let opened = false;
+        socket.onopen = () => {
+          opened = true;
+          if (!state.channel) {
+            state.channel = state.fileKey || generateChannelName();
+          }
+          socket.send(
+            JSON.stringify({
+              type: "join",
+              channel: state.channel.trim(),
+              clientType: "plugin",
+              pluginVersion: state.pluginVersion,
+              // Lets the relay list this plugin by file name for agents that have no link.
+              ...(state.fileName ? { fileName: state.fileName } : {}),
+              // Usage events are sent by the local relay; it uses the random install ID as the
+              // Mixpanel distinct_id, and the window ID so a reconnect is not counted as a new open.
+              ...(validInstallId() ? { installId: state.installId } : {}),
+              pluginSession: state.pluginSession,
+              maxMcpPeers: 4,
+            })
+          );
+        };
+
+        socket.onmessage = (event) => {
+          try {
+            const data = JSON.parse(event.data);
+
+            if (data.type === "system") {
+              if (typeof data.peerId === "string" && data.message === "A user has left the channel") {
+                state.aiPeers.delete(data.peerId);
+                renderSessions();
+                parent.postMessage({ pluginMessage: { type: "peer-left", peerId: data.peerId } }, "*");
+              }
+              if (typeof data.peerId === "string" && data.message === "A new user has joined the channel") {
+                upsertPeer(data.peerId, data);
+                renderSessions();
+                // Fallback for an older relay that only ever sends this once a peer
+                // actually joins this channel (see the "An MCP client is connected"
+                // branch below, which fires sooner on a current relay).
+                state.mcpSeen = true;
+                sendConnectedPixel();
+                applyAiPresence("ai-present");
+              }
+              if (typeof data.peerId === "string" && data.message === "Client updated" && state.aiPeers.has(data.peerId)) {
+                upsertPeer(data.peerId, data);
+                renderSessions();
+              }
+              // The relay's own presence signal: an MCP server said hello, with no
+              // channel chosen yet, so no tool has been or can yet be called.
+              if (data.message === "An MCP client is connected") {
+                state.mcpSeen = true;
+                sendConnectedPixel();
+                applyAiPresence("ai-present");
+              }
+              // Successfully joined channel
+              if (data.message && data.message.result) {
+                setView("connected");
+                parent.postMessage(
+                  {
+                    pluginMessage: {
+                      type: "notify",
+                      message: `Connected to MCP server on port ${port} in channel: ${data.channel}`,
+                    },
+                  },
+                  "*"
+                );
+              }
+            } else if (data.type === "join_error") {
+              failure = typeof data.message === "string"
+                ? data.message
+                : "The relay refused the plugin.";
+              console.error("Join failed", data.code, failure);
+              setView("error", failure);
+              socket.close();
+              return;
+            } else if (data.type === "error") {
+              failure = `${data.message}`;
+              console.error("Error:", data.message);
+              setView("error", failure);
+              socket.close();
+              return;
+            }
+
+            handleSocketMessage(data);
+          } catch (error) {
+            console.error("Error parsing message:", error);
+          }
+        };
+
+        socket.onclose = () => {
+          state.connected = false;
+          state.socket = null;
+
+          if (!opened) state.portIndex = (state.portIndex + 1) % PORTS.length;
+          if (failure) {
+            setView("error", failure);
+          } else if (!state.reconnectAfterClose) {
+            // Relay stopped, restarted or never ran: show it, keep trying.
+            setView("unreachable");
+          }
+          if (state.reconnectAfterClose) {
+            state.reconnectAfterClose = false;
+            startConnect();
+          } else {
+            scheduleRetry();
+          }
+        };
+
+        socket.onerror = (error) => {
+          // onclose follows and draws the state.
+          console.error("WebSocket error:", error);
+        };
+      } catch (error) {
+        console.error("Connection error:", error);
+        setView("unreachable");
+        scheduleRetry();
+      }
+    }
+
+    function disconnectFromServer() {
+      clearPendingScopeRequest();
+      if (state.socket) {
+        const socket = state.socket;
+        socket.close();
+        if (state.socket === socket) state.socket = null;
+        state.connected = false;
+      }
+    }
+
+    // Handle messages from the WebSocket
+    async function handleSocketMessage(payload) {
+      const data = payload.message;
+
+      // If it's a response to a previous request
+      if (data.id && state.pendingRequests.has(data.id)) {
+        const { resolve, reject } = state.pendingRequests.get(data.id);
+        state.pendingRequests.delete(data.id);
+
+        if (data.error) {
+          reject(new Error(data.error));
+        } else {
+          resolve(data.result);
+        }
+        return;
+      }
+
+      // If it's a new command
+      if (data.command) {
+        const commandPeer = typeof payload.mcpPeerId === "string" ? state.aiPeers.get(payload.mcpPeerId) : null;
+        if (commandPeer && data.command !== "get_connect_payload") {
+          commandPeer.lastActiveAt = Date.now();
+          renderSessions();
+        }
+        try {
+          state.activeRequestId = data.id;
+          // Send the command to the plugin code
+          parent.postMessage(
+            {
+              pluginMessage: {
+                type: "execute-command",
+                id: data.id,
+                command: data.command,
+                params: data.params,
+                peerId: typeof payload.mcpPeerId === "string" ? payload.mcpPeerId : null,
+              },
+            },
+            "*"
+          );
+        } catch (error) {
+          sendErrorResponse(
+            data.id,
+            error.message || "Error executing command"
+          );
+        }
+      }
+    }
+
+    // Send a command to the WebSocket server
+    async function sendCommand(command, params) {
+      return new Promise((resolve, reject) => {
+        if (!state.connected || !state.socket) {
+          reject(new Error("Not connected to server"));
+          return;
+        }
+
+        const id = generateId();
+        state.pendingRequests.set(id, { resolve, reject });
+
+        state.socket.send(
+          JSON.stringify({
+            id,
+            type: "message",
+            channel: state.channel,
+            message: {
+              id,
+              command,
+              params,
+            },
+          })
+        );
+
+        // Set timeout to reject the promise after 30 seconds
+        setTimeout(() => {
+          if (state.pendingRequests.has(id)) {
+            state.pendingRequests.delete(id);
+            reject(new Error("Request timed out"));
+          }
+        }, 30000);
+      });
+    }
+
+    // Send success response back to WebSocket
+    function sendSuccessResponse(id, result) {
+      if (!state.connected || !state.socket) {
+        console.error("Cannot send response: socket not connected");
+        return;
+      }
+
+      state.socket.send(
+        JSON.stringify({
+          id,
+          type: "message",
+          channel: state.channel,
+          message: {
+            id,
+            result,
+          },
+        })
+      );
+    }
+
+    // Send error response back to WebSocket
+    function sendErrorResponse(id, errorMessage) {
+      if (!state.connected || !state.socket) {
+        console.error("Cannot send error response: socket not connected");
+        return;
+      }
+
+      state.socket.send(
+        JSON.stringify({
+          id,
+          type: "message",
+          channel: state.channel,
+          message: {
+            id,
+            error: errorMessage,
+            result: {}
+          },
+        })
+      );
+    }
+
+    // Helper to generate unique IDs
+    function generateId() {
+      return (
+        Date.now().toString(36) + Math.random().toString(36).substr(2, 5)
+      );
+    }
+
+    // Best effort: a counting failure must never stop the plugin from connecting.
+    // Owner decision 2026-11-17: the load count carries one random ID per Figma install
+    // (figma.clientStorage), so distinct installs can be counted. Nothing about the person or file.
+    function sendLoadPixel(version, installId) {
+      if (state.loadPixelSent) return;
+      state.loadPixelSent = true;
+      const id = typeof installId === "string" && /^[0-9a-f]{16}$/.test(installId) ? installId : "";
+      try {
+        new Image().src = `https://figmamcp.dev/p.gif?v=${encodeURIComponent(version)}&i=${id}`;
+        const cid = id || `${Math.floor(Math.random() * 2147483647)}.${Math.floor(Date.now() / 1000)}`;
+        new Image().src = `https://www.google-analytics.com/g/collect?v=2&tid=G-EV24W7HFMP&cid=${cid}&sid=${Math.floor(Date.now() / 1000)}&en=plugin_load&ep.plugin_version=${encodeURIComponent(version)}&_ee=1`;
+      } catch (_) {}
+    }
+
+    // One pixel per plugin session, the moment the relay reports an MCP client
+    // present — before any tool is called, usually before it has even picked a
+    // channel (autoBind only joins on the first real tool call). Distinguishes
+    // "opened, no client" (the load pixel) from "client connected" from "client
+    // called a tool" (the usage pixel).
+    // Called both when a peer/presence signal arrives and when the install ID
+    // arrives late (same race the load pixel already handles): whichever
+    // happens second fires it.
+    function sendConnectedPixel() {
+      if (state.connectedPixelSent || !state.mcpSeen) return;
+      if (!state.pluginVersion || state.pluginVersion === "unknown") return;
+      const id = typeof state.installId === "string" && /^[0-9a-f]{16}$/.test(state.installId) ? state.installId : "";
+      if (!id) return;
+      state.connectedPixelSent = true;
+      try {
+        new Image().src = `https://figmamcp.dev/c.gif?v=${encodeURIComponent(state.pluginVersion)}&i=${id}`;
+      } catch (_) {}
+    }
+
+    // Owner decision 2026-11-18: batched counts of tool calls (tool name, ok/error). No file content.
+    // Once the pixel has loaded, the plugin drops the report from its saved outbox; until then it is re-sent on the next start.
+    function sendUsagePixel(query, ackId) {
+      const id = typeof state.installId === "string" && /^[0-9a-f]{16}$/.test(state.installId) ? state.installId : "";
+      if (!id || !state.pluginVersion || typeof query !== "string" || !/^[A-Za-z0-9_=&:,]{1,2000}$/.test(query)) return;
+      try {
+        const img = new Image();
+        if (typeof ackId === "string") img.onload = () => parent.postMessage({ pluginMessage: { type: "usage-sent", id: ackId } }, "*");
+        img.src = `https://figmamcp.dev/u.gif?v=${encodeURIComponent(state.pluginVersion)}&i=${id}&${query}`;
+      } catch (_) {}
+    }
+
+    // <update-check>
+    function compareVersions(a, b) {
+      const pa = String(a).split(".").map(Number), pb = String(b).split(".").map(Number);
+      for (let i = 0; i < 3; i++) {
+        const d = (pa[i] || 0) - (pb[i] || 0);
+        if (d) return d;
+      }
+      return 0;
+    }
+    function updateBannerText(running, latest, lang) {
+      const v = latest && typeof latest.version === "string" ? latest.version : "";
+      if (!/^\d+\.\d+\.\d+$/.test(v) || compareVersions(running, v) >= 0) return null;
+      return /^zh/i.test(lang || "")
+        ? "新版本 " + v + " 已发布 — 前往 figmamcp.dev 下载"
+        : "New version " + v + " available — download at figmamcp.dev";
+    }
+    // </update-check>
+
+    // Best effort: a failed check shows nothing. Dismissal lasts for this plugin session.
+    function checkForUpdate(running) {
+      if (state.updateChecked) return;
+      state.updateChecked = true;
+      try {
+        fetch("https://figmamcp.dev/latest.json", { cache: "no-store" })
+          .then((r) => (r.ok ? r.json() : null))
+          .then((latest) => {
+            const text = updateBannerText(running, latest, navigator.language);
+            if (!text) return;
+            document.getElementById("update-link").textContent = text;
+            document.getElementById("update-banner").classList.remove("hidden");
+            reportSize();
+          })
+          .catch(() => {});
+      } catch (_) {}
+    }
+
+    function generateChannelName() {
+      const characters = "abcdefghjkmnoprstuvxyz023456789";
+      let result = "";
+      for (let i = 0; i < 4; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * characters.length)
+        );
+      }
+      return result;
+    }
+
+    // Ask plugin main to commit the rights, then open the socket on its
+    // acknowledgement. Whole-file defaults: with AI editing on, the scope is
+    // the document root and Variables and Styles follow it.
+    function startConnect() {
+      const readOnly = !editSwitch.checked;
+      const wholeFile = !readOnly && !!state.rootId;
+      const requestId = generateId();
+      state.connectedRights = wholeFile ? "whole" : "read-only";
+
+      clearPendingScopeRequest();
+      state.pendingScopeRequest = { requestId, port: PORTS[state.portIndex] };
+      state.scopeReadyTimer = setTimeout(() => {
+        // Only abandon THIS request: a newer one supersedes it.
+        if (!state.pendingScopeRequest || state.pendingScopeRequest.requestId !== requestId) return;
+        clearPendingScopeRequest();
+        setView("error", "The plugin did not respond. Trying again.");
+        scheduleRetry();
+      }, SCOPE_READY_TIMEOUT_MS);
+      // A retry keeps showing why we are retrying instead of flickering.
+      if (state.view !== "unreachable" && state.view !== "error") setView("connecting");
+
+      parent.postMessage({
+        pluginMessage: {
+          type: "set-scope",
+          requestId,
+          scopeNodeId: wholeFile ? state.rootId : null,
+          scopeNodeType: wholeFile ? "DOCUMENT" : null,
+          additionalScopeLinks: [],
+          allowEditVariable: wholeFile,
+          allowEditStyle: wholeFile,
+        },
+      }, "*");
+    }
+
+    // The switch applies at once. Sessions rejoin by themselves on their next call.
+    editSwitch.addEventListener("change", () => {
+      renderRightsNote();
+      reportSize();
+      if (state.socket) {
+        state.reconnectAfterClose = true;
+        disconnectFromServer();
+        // disconnectFromServer closes the socket, whose onclose reconnects.
+      } else if (state.pendingScopeRequest || state.autoConnectTried) {
+        startConnect();
+      }
+    });
+
+    // Draw the progress block while an operation runs, and remove it after.
+    function updateProgressUI(progressData) {
+      if (state.progressHideTimer !== null) {
+        clearTimeout(state.progressHideTimer);
+        state.progressHideTimer = null;
+      }
+      const progress = progressData.progress || 0;
+      progressBar.style.width = `${progress}%`;
+      progressPercentage.textContent = `${progress}%`;
+      progressMessage.textContent = progressData.message || "Working…";
+      state.progressShown = true;
+      state.progressFailed = progressData.status === "error";
+      if (progressData.status === "error") progressContainer.classList.add("failed");
+      else progressContainer.classList.remove("failed");
+      show(progressContainer, true);
+      if (progressData.status === "completed" || progressData.status === "error") {
+        state.progressHideTimer = setTimeout(() => {
+          state.progressHideTimer = null;
+          show(progressContainer, false);
+          state.progressShown = false;
+          renderPill();
+          reportSize();
+        }, progressData.status === "error" ? 3000 : 1000);
+      }
+      if (progressData.status === "error") panelEvent("progress-error");
+      renderPill();
+      reportSize();
+    }
+
+    // Send operation progress update to server
+    function sendProgressUpdateToServer(progressData) {
+      if (!state.connected || !state.socket) {
+        console.error("Cannot send progress update: socket not connected");
+        return;
+      }
+
+      state.socket.send(
+        JSON.stringify({
+          id: progressData.requestId || state.activeRequestId || progressData.commandId,
+          type: "progress_update",
+          channel: state.channel,
+          message: {
+            id: progressData.requestId || state.activeRequestId || progressData.commandId,
+            type: "progress_update",
+            data: progressData
+          }
+        })
+      );
+    }
+
+    // Open the plugin and it connects, once. The file key names the channel so
+    // agents find it without a code; without a key a short code is shown.
+    function maybeAutoConnect() {
+      if (!state.autoConnectTried && !state.connected && !state.pendingScopeRequest) {
+        state.autoConnectTried = true;
+        startConnect();
+      }
+    }
+
+    function validInstallId() {
+      return typeof state.installId === "string" && /^[0-9a-f]{16}$/.test(state.installId);
+    }
+
+    // Tell the relay about this file: a rename, or that the user is working in it (so it is listed first).
+    function sendPluginStatus(fields) {
+      if (!state.connected || !state.socket) return;
+      try {
+        state.socket.send(JSON.stringify({ type: "plugin_status", ...fields }));
+      } catch (_e) {
+        // Socket closing; the next join carries the current name anyway.
+      }
+    }
+    let lastActiveSent = 0;
+    function reportActive() {
+      const now = Date.now();
+      if (now - lastActiveSent < 3000) return;
+      lastActiveSent = now;
+      sendPluginStatus({ active: true });
+    }
+    if (typeof window.addEventListener === "function") window.addEventListener("focus", reportActive);
+    if (typeof document.addEventListener === "function") {
+      document.addEventListener("visibilitychange", () => {
+        if (document.visibilityState === "visible") reportActive();
+      });
+    }
+
+    // Listen for messages from the plugin code
+    window.onmessage = (event) => {
+      const message = event.data.pluginMessage;
+      if (!message) return;
+
+      switch (message.type) {
+        case "plugin-version":
+          state.pluginVersion = message.version;
+          if (state.pendingInstallId !== undefined) sendLoadPixel(message.version, state.pendingInstallId);
+          // The load is counted when main.ts sends "install-id" (null if storage failed).
+          state.fileKey = typeof message.fileKey === "string" && message.fileKey ? message.fileKey : null;
+          state.fileName = typeof message.fileName === "string" ? message.fileName : null;
+          state.rootId = typeof message.rootId === "string" && message.rootId ? message.rootId : null;
+          document.getElementById("version").textContent = "Version " + message.version;
+          checkForUpdate(message.version);
+          reportSize();
+          maybeAutoConnect();
+          break;
+        case "file-name":
+          // The file was renamed: show the new name and tell the relay, so the AI and the Mac app see it.
+          state.fileName = typeof message.fileName === "string" ? message.fileName : null;
+          if (state.connected) setView("connected");
+          sendPluginStatus({ fileName: state.fileName || "" });
+          break;
+        case "install-id":
+          state.installId = typeof message.installId === "string" ? message.installId : "";
+          if (state.pluginVersion && state.pluginVersion !== "unknown") sendLoadPixel(state.pluginVersion, message.installId);
+          else state.pendingInstallId = message.installId === undefined ? null : message.installId;
+          sendConnectedPixel();
+          // The ID can arrive after the join; the relay holds usage events until it has it.
+          if (validInstallId()) sendPluginStatus({ installId: state.installId });
+          break;
+        case "usage":
+          sendUsagePixel(message.query, message.id);
+          break;
+        case "first-run":
+          state.firstRunPending = message.pending === true;
+          renderFirstRun();
+          if (!state.firstRunPending && state.connected) scheduleCollapse();
+          reportSize();
+          break;
+        case "file-active":
+          reportActive();
+          break;
+        case "scope-ready": {
+          const pending = state.pendingScopeRequest;
+          if (!pending || message.requestId !== pending.requestId) {
+            break;
+          }
+
+          // Consume the acknowledgement (and cancel its timeout) before opening
+          // the socket so a duplicate cannot create a second connection.
+          clearPendingScopeRequest();
+          state.pluginVersion = message.pluginVersion;
+          connectToServer(pending.port);
+          break;
+        }
+        case "scope-rejected": {
+          const pendingRejected = state.pendingScopeRequest;
+          if (!pendingRejected || message.requestId !== pendingRejected.requestId) {
+            break;
+          }
+          clearPendingScopeRequest();
+          setView("error", message.reason);
+          scheduleRetry();
+          break;
+        }
+        case "command-result":
+          sendSuccessResponse(message.id, message.result);
+          state.activeRequestId = null;
+          break;
+        case "command-error":
+          sendErrorResponse(message.id, message.error);
+          state.activeRequestId = null;
+          break;
+        case "command_progress":
+          updateProgressUI(message);
+          sendProgressUpdateToServer(message);
+          break;
+      }
+    };
+
+    // Ensure socket is closed when plugin window is closed
+    window.addEventListener("beforeunload", () => {
+      state.unloading = true;
+      disconnectFromServer();
+    });
+
+    // Fonts and theme can change the height after first paint.
+    if (typeof ResizeObserver !== "undefined") {
+      new ResizeObserver(() => reportSize()).observe(panel);
+    }
+    reportSize();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,233 @@
+name: CI
+
+on:
+  # claude/figma-mcp-product-cce01c is where product and site work lands before
+  # main. Until 2026-11-19 only main was listed, so PRs into that branch ran no checks.
+  push:
+    branches: [ main, claude/figma-mcp-product-cce01c ]
+  pull_request:
+    branches: [ main, claude/figma-mcp-product-cce01c ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.0
+
+      # Self-hosted runners have no preinstalled Node; Pack and the smoke test need npm.
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Run tests
+        run: bun test
+
+      - name: Build all
+        run: bun run build:all
+
+      - name: Verify plugin bundle is up to date with its sources
+        run: bun run check:plugin
+
+      - name: Verify plugin type safety
+        run: bun run check:types:plugin
+
+      - name: Verify script type safety
+        run: bun run check:types:scripts
+
+      - name: Verify suppression comments
+        run: bun run check:suppressions
+
+      - name: Verify version synchronization
+        run: bun run check:versions
+
+      - name: Verify generated files are up to date with their sources
+        run: bun run check:generated
+
+      - name: Pack
+        run: npm pack
+
+      - name: Bin-resolution smoke test
+        run: |
+          mkdir scratch
+          cd scratch
+          npm init -y
+          npm install --no-save ../figmamcp-*.tgz
+          npx figmamcp --version
+          npx figmamcp-relay --version
+
+      - name: Upload tarball
+        uses: actions/upload-artifact@v4
+        with:
+          name: package-tarball
+          path: figmamcp-*.tgz
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Markdown Link Check
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Individual academic PDF hosts (chalmers.se, upv.es, sciencedirect.com,
+          # uni-saarland.de, ...) intermittently reject or time out GitHub Actions
+          # runner IPs even though the cited PDFs are live. Retry with a longer
+          # timeout for that general flakiness. earlbarr.com is excluded outright:
+          # it reliably times out from runner IPs on every retry (confirmed
+          # reachable, 200 OK, from a non-runner network), so retrying it is futile.
+          # sciencedirect.com is excluded too: it answers runner IPs with 400 Bad
+          # Request on some runs (same commit passed on the push run, failed on
+          # the pull_request run), so the check is flaky, not the links.
+          # eceasst.org and se.cs.uni-saarland.de timed out from both the GCP runner
+          # and a laptop on 2026-11-21 (EVIDENCE.md citations), so they are excluded too.
+          # figmamcp.dev/download is excluded so CI runs do not count as downloads in the site counter.
+          args: >-
+            --accept 200..=204,403,429,500..=504
+            --exclude-loopback
+            --exclude '^https://figmamcp\.dev/download'
+            --exclude '^https://github\.com/MrCoder/figmamcp(/|$)'
+            --exclude 'https?://earlbarr\.com/'
+            --exclude 'https?://(www\.)?sciencedirect\.com/'
+            --exclude 'https?://eceasst\.org/'
+            --exclude 'https?://www\.se\.cs\.uni-saarland\.de/'
+            --timeout 20
+            --retry-wait-time 5
+            --max-retries 3
+            '*.md'
+
+  node-smoke:
+    needs: build-and-test
+    name: node-smoke (${{ matrix.os }}, node ${{ matrix.node }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # macOS and Windows legs need GitHub-hosted runners; on GCP only Linux runs.
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        node: [20, 'lts/*']
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Download tarball
+        uses: actions/download-artifact@v4
+        with:
+          name: package-tarball
+          path: .
+
+      - name: Install tarball into scratch
+        shell: bash
+        run: |
+          mkdir scratch
+          cd scratch
+          # Write both deps into package.json and install in one pass.
+          # Two separate --no-save installs would prune each other; a single
+          # mixed-spec --no-save install confuses npm 11 into re-resolving the
+          # local tarball from the registry.
+          # Pin to the exact freshly-built tarball — a stale figmamcp-*.tgz
+          # may also be present (e.g. checked into the repo), so a glob is unsafe.
+          VERSION=$(node -p "require('../package.json').version")
+          TARBALL="../figmamcp-${VERSION}.tgz"
+          cat > package.json <<EOF
+          {
+            "name": "scratch",
+            "version": "1.0.0",
+            "private": true,
+            "dependencies": {
+              "figmamcp": "file:$TARBALL",
+              "ws": "^8"
+            }
+          }
+          EOF
+          npm install
+
+      - name: Bin --version (Node only)
+        shell: bash
+        working-directory: scratch
+        run: |
+          npx figmamcp --version
+          npx figmamcp-relay --version
+
+      - name: Socket boot smoke test
+        shell: bash
+        working-directory: scratch
+        run: node ../scripts/smoke-socket.mjs
+
+      - name: MCP server boot smoke test
+        shell: bash
+        working-directory: scratch
+        run: node ../scripts/smoke-mcp.mjs
+
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      publish: ${{ steps.filter.outputs.publish }}
+    # Private repositories give the token no pull request access by default,
+    # and paths-filter reads the changed files through the API.
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            publish:
+              - 'package.json'
+              - 'tsup.config.ts'
+              - 'figma_plugin/build.js'
+              - 'scripts/integrate.sh'
+              # The release workflow itself. Without this, a PR that changes
+              # ONLY publish.yml gets no publish validation at all — which is
+              # how the v2.3.3 release shipped a workflow that tagged, published
+              # nothing, and uploaded no MCPB bundle.
+              - '.github/workflows/publish.yml'
+
+  dry-run-publish:
+    runs-on: ubuntu-latest
+    needs: [build-and-test, changes]
+    if: needs.changes.outputs.publish == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      # The next two steps MIRROR publish.yml's toolchain setup, in the same
+      # order, and exist to make a release-runtime break fail a PR instead of a
+      # release. v2.3.3 died on the npm upgrade below (npm 12 requires Node
+      # >=22.22.2; publish.yml pinned Node 20), and nothing in CI ran either
+      # step, so the tag published nothing and CI stayed green.
+      #
+      # KEEP THESE PINS IN SYNC WITH publish.yml. They are duplicated across two
+      # workflow files; a divergence silently restores the gap this closes.
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+
+      - name: Upgrade npm (mirrors publish.yml — the step that broke v2.3.3)
+        run: npm install -g npm@^12
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.3.0
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Dry Run Publish
+        run: npm publish --dry-run

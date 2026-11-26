@@ -1,0 +1,242 @@
+{
+  "manifest_version": "0.2",
+  "name": "figmamcp",
+  "display_name": "FigmaMCP",
+  "version": "0.1.25",
+  "icon": "icon.png",
+  "description": "Read, create, and modify Figma designs programmatically via MCP, empowering AI to execute Figma changes safer, cleaner, and faster.",
+  "long_description": "Connect AI assistants to Figma via Model Context Protocol to read designs, create and modify elements, and manage design systems programmatically.\n\nThis plugin empowers your AI assistant to become an active design co-pilot, executing updates and modifications Safer, Cleaner, and Faster than manual entry. By offloading repetitive, error-prone manual operations to automated systems, designers are freed to focus entirely on creative decision-making and product strategy.\n\n### Core Principles\n\n* **🛡️ Safer**: The server enforces robust programmatic checks and validations that exceed the Figma Desktop app's default protections. For instance, it prevents deleting variables currently in use to avoid dangling references. By validating all writes against a locked editable scope and strict name checks before execution, it protects files from human error and AI hallucinations.\n\n* **✨ Cleaner**: System-driven, programmatic operations guarantee that no layers, text nodes, or components are skipped or forgotten during complex updates. Every design file stays consistent and conforms exactly to your design system.\n\n* **⚡ Faster**: Bulk edits like propagating instance overrides, batch-updating copy, or restructuring auto-layout frames are handled via high-performance APIs. Hours of tedious, click-heavy manual work are completed in seconds.\n\n### How it Works (Prerequisites)\nThis server runs locally on your machine. To operate, it requires:\n1. The Figma Desktop App to be open.\n2. The `FigmaMCP` plugin to be active on the file you want to modify (listening on local port `3155`).",
+  "author": {
+    "name": "MrCoder",
+    "url": "https://figmamcp.dev"
+  },
+  "homepage": "https://figmamcp.dev",
+  "support": "https://github.com/MrCoder/figmamcp-releases/issues",
+  "server": {
+    "type": "node",
+    "entry_point": "dist/server.js",
+    "mcp_config": {
+      "command": "node",
+      "args": [
+        "${__dirname}/dist/server.js",
+        "--host",
+        "${user_config.host}",
+        "--port",
+        "${user_config.port}"
+      ],
+      "env": {}
+    }
+  },
+  "user_config": {
+    "host": {
+      "type": "string",
+      "title": "WebSocket Host",
+      "description": "Host the MCP server uses to reach the Figma plugin",
+      "default": "localhost",
+      "required": false
+    },
+    "port": {
+      "type": "number",
+      "title": "WebSocket Port",
+      "description": "Port the MCP server uses to reach the Figma plugin",
+      "default": 3055,
+      "required": false
+    }
+  },
+  "keywords": [
+    "design automation",
+    "figma plugin",
+    "figma design"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MrCoder/figmamcp-releases"
+  },
+  "tools_generated": false,
+  "tools": [
+    {
+      "name": "page_info",
+      "description": "List the document's pages; no args → all pages (no children), or pass `pageIds` → those pages with their top-level children. Batch ≤25 ids/call. Inspect `coverage`: a failed page is omitted with a structured `pageErrors` row while other pages still return."
+    },
+    {
+      "name": "node_info",
+      "description": "Read one or more nodes — recursive subtree traversal with `properties` selection, `filter`, and `maxDepth`. Returns only the requested properties (incl. resolved `boundVariables`/`explicitVariableModes`) under each node's `properties` key. A node whose containing page could not be read is listed in `pageFailedNodes` with that page's ID, and the page's structured reason is in `coverage.pageErrors` — other pages still return normally. The workhorse read; start here before any write."
+    },
+    {
+      "name": "node_transform",
+      "description": "Move and/or resize a node by setting absolute `x`/`y`/`width`/`height` (any subset)."
+    },
+    {
+      "name": "node_rename",
+      "description": "Rename a node (sets `name` to an exact value)."
+    },
+    {
+      "name": "node_delete",
+      "description": "Delete one or more nodes in a single batched, per-item-validated call. No API undo. If the status is 'partial_success', treat it as an incomplete operation, report the failed and skipped items to the user, and retry every non-success item (both failed and skipped)."
+    },
+    {
+      "name": "node_clone",
+      "description": "Duplicate an existing node, optionally at a new `x`/`y`. Produces a new node id. By default the copy goes into the source's parent; pass `parentId` + `parentNodeName` to place it into another page, frame or section — on any page, as long as that parent is inside the editable scope (connect with an additional editable root to reach another page)."
+    },
+    {
+      "name": "view_navigate",
+      "description": "Navigate the editor view to a page or node(s)."
+    },
+    {
+      "name": "node_group",
+      "description": "Wrap multiple nodes in a new group node."
+    },
+    {
+      "name": "node_ungroup",
+      "description": "Dissolve a group, promoting its children to the parent. Removes the group container."
+    },
+    {
+      "name": "node_flatten",
+      "description": "Flatten a node and its children into a single vector. Lossy — original structure is not recoverable."
+    },
+    {
+      "name": "node_insert_child",
+      "description": "Reparent a node under a new parent at an optional `index`. Valid range is 0 to parent's child count. Omit `index` to append."
+    },
+    {
+      "name": "node_set_auto_layout",
+      "description": "Configure a frame's auto-layout (mode, padding, spacing, alignment, sizing) in one unified setter."
+    },
+    {
+      "name": "node_set_fill",
+      "description": "Set a node's fill to a literal RGBA color, an image, or clear it. Use `node_apply_style` to link a shared paint style, or `node_bind_variable` to bind a color token."
+    },
+    {
+      "name": "node_set_stroke",
+      "description": "Set a node's stroke color and weight; supports uniform or per-side weights."
+    },
+    {
+      "name": "node_set_corner_radius",
+      "description": "Set a node's corner radius — uniform or per-corner."
+    },
+    {
+      "name": "node_set_effects",
+      "description": "Set a node's effect array (shadows, blurs). Use `node_apply_style` to link a shared effect style instead."
+    },
+    {
+      "name": "node_apply_style",
+      "description": "Link a node to a shared library style (paint/text/effect/grid) by `styleId`. Use the raw `node_set_*` setters for ad-hoc values not backed by a style."
+    },
+    {
+      "name": "node_bind_variable",
+      "description": "Bind a variable to a node property, or set an explicit variable mode. Use instead of a literal `node_set_*` when the value should track a design token. Ordering rules: set auto-layout before binding padding/spacing; set a solid fill before binding a colour token."
+    },
+    {
+      "name": "node_export_visual",
+      "description": "Render a node to an image (PNG/JPG/SVG/PDF) at a given scale. Read-only; the canonical way to visually verify edits. SVG returns raw XML in `svg` (directly readable); PNG/JPG/PDF return base64 in `imageData` (PDF is a delivery artifact — prefer PNG/SVG for inspection)."
+    },
+    {
+      "name": "create_shape",
+      "description": "Create a rectangle, ellipse, polygon, or star via `type`, with position/size and optional `fillColor`/`strokeColor`. Shape-specific params (`arcData`; `pointCount`/`innerRadius`) validated by `type`. `pointCount` = sides (polygon) or points (star), native count — no even-parity rule."
+    },
+    {
+      "name": "create_frame",
+      "description": "Create a frame (container) with optional fill/stroke and full auto-layout configuration."
+    },
+    {
+      "name": "create_text",
+      "description": "Create a text node with content and optional font size/weight/color."
+    },
+    {
+      "name": "create_svg",
+      "description": "Create a node from an SVG markup string."
+    },
+    {
+      "name": "create_component",
+      "description": "Convert an existing frame into a main component."
+    },
+    {
+      "name": "create_instance",
+      "description": "Instantiate a component (by `componentKey` or `componentId`) at a position."
+    },
+    {
+      "name": "create_component_set",
+      "description": "Combine components into a component set (variants) with property definitions."
+    },
+    {
+      "name": "style_list",
+      "description": "List all local styles (paint/text/effect/grid) in the document."
+    },
+    {
+      "name": "style_manage",
+      "description": "Create a named style (paint/text/effect/grid), or update an existing one when `styleId` is given. UPDATE requires currentStyleName."
+    },
+    {
+      "name": "style_delete",
+      "description": "Delete a local style by id. Detaches consumers — they keep their resolved values and lose only the style link."
+    },
+    {
+      "name": "text_set_content",
+      "description": "Set the text of one or more text nodes in a single batched, per-item-validated call. If the status is 'partial_success', treat it as an incomplete operation, report the failed and skipped items to the user, and retry every non-success item (both failed and skipped)."
+    },
+    {
+      "name": "text_set_style",
+      "description": "Set any combination of typography properties (font, size, weight, spacing, decoration, …) on a text node."
+    },
+    {
+      "name": "component_list",
+      "description": "List components in the document, with filtering and scope options. Document scans isolate page failures and report them in `coverage`; page-scoped failures return their structured error directly."
+    },
+    {
+      "name": "component_manage_property",
+      "description": "Add or edit a component-property definition (BOOLEAN/TEXT/INSTANCE_SWAP) on a main component or variant set. Deleting is `component_delete_property`."
+    },
+    {
+      "name": "component_delete_property",
+      "description": "Remove a component-property definition from a main component or variant set; propagates to every instance."
+    },
+    {
+      "name": "instance_set_property",
+      "description": "Set one property on an instance — boolean toggle, text override, instance swap, or variant selection."
+    },
+    {
+      "name": "instance_get_overrides",
+      "description": "Read the override properties from a source instance, to later apply them to other instances."
+    },
+    {
+      "name": "instance_set_overrides",
+      "description": "Apply previously-read overrides to target instances; targets are swapped to the source component and all overrides applied. If the status is 'partial_success', treat it as an incomplete operation, report the failed and skipped items to the user, and retry every non-success item (both failed and skipped)."
+    },
+    {
+      "name": "variable_list",
+      "description": "List local variables/collections, or detailed info for specific variable ids; optionally scan for consumers. Document consumer scans isolate page failures and report them in `coverage`; page-scoped failures return their structured error directly."
+    },
+    {
+      "name": "variable_manage",
+      "description": "Create collections and variables and set their values/aliases (create/update router). UPDATE_VARIABLE requires `currentVariableName`. CREATE_VARIABLE requires `collectionName` and `scopes`."
+    },
+    {
+      "name": "variable_delete",
+      "description": "Delete specific variables or an entire collection. Runs a full-document consumer check first, before any removal: if a target is still in use the call is refused with VARIABLE_IN_USE, whose `details.variablesInUse` lists every consumer; if any page cannot be loaded and read it is refused with DOCUMENT_SCAN_INCOMPLETE, because a page error can never mean zero consumers."
+    },
+    {
+      "name": "annotation_list",
+      "description": "Read the native annotations on a page or node (and subtree); exactly one of pageId or nodeId is required. The file's annotation categories are returned by default; pass includeCategories: false to omit them. Page loading is bounded; a page-scoped failure returns its structured error directly and successful reads include `coverage`."
+    },
+    {
+      "name": "annotation_set",
+      "description": "Append native annotations to one or more nodes in a batched call. If the status is 'partial_success', treat it as an incomplete operation and report the failed and skipped items to the user. Appending is NOT idempotent and a 'failed' row may already have appended its annotation (verified counts differ, or outcomeUnknown is true when post-state is unreadable; both carry partialMutation: true) — before retrying any non-success item, call annotation_list and compare the labels already on the node, or you will create a duplicate."
+    },
+    {
+      "name": "reaction_list",
+      "description": "Read prototype reactions from one or more nodes and their descendants."
+    },
+    {
+      "name": "reaction_update",
+      "description": "Replace a node's prototype reactions with a full new reactions array (read first via `reaction_list`)."
+    },
+    {
+      "name": "channel_join",
+      "description": "Bind this session to the Figma file that has the plugin open. Usually unnecessary: any tool binds automatically when exactly one file has the plugin open. Pass `link` (any Figma link to the file) to pick a file, or `channel` for a plugin that shows a 4-character code."
+    },
+    {
+      "name": "channel_leave",
+      "description": "Leave the current plugin channel. Frees this session's lease so another AI session can take that area. A later channel_join reconnects."
+    }
+  ]
+}

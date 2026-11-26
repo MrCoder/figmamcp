@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP in Cursor: what works and what FigmaMCP covers</title>
+<meta name="description" content="Cursor can use Figma&rsquo;s own MCP server. FigmaMCP is a local editing option for Claude Code and Codex. Here is how they differ.">
+<link rel="canonical" href="https://figmamcp.dev/figma-mcp-cursor">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP in Cursor: what works and what FigmaMCP covers">
+<meta property="og:description" content="Cursor can use Figma&rsquo;s own MCP server. FigmaMCP is a local editing option for Claude Code and Codex. Here is how they differ.">
+<meta property="og:url" content="https://figmamcp.dev/figma-mcp-cursor">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/figma-mcp-cursor#webpage","url":"https://figmamcp.dev/figma-mcp-cursor","name":"Figma MCP in Cursor: what works and what FigmaMCP covers","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/figma-mcp-cursor#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/figma-mcp-cursor#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Figma MCP in Cursor","item":"https://figmamcp.dev/figma-mcp-cursor"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does FigmaMCP work with Cursor?","acceptedAnswer":{"@type":"Answer","text":"It is built and tested for Claude Code and Codex. We do not claim Cursor support."}},{"@type":"Question","name":"Which Figma MCP server works with Cursor?","acceptedAnswer":{"@type":"Answer","text":"Figma’s official server is documented for Cursor. Other community servers also name it. Check each project’s own README."}},{"@type":"Question","name":"Can I add FigmaMCP to Cursor by hand?","acceptedAnswer":{"@type":"Answer","text":"The README describes a manual MCP config entry for other clients and names Cursor’s config file as an example. We have not tested it with Cursor and do not list Cursor as supported."}},{"@type":"Question","name":"Can I use Cursor and Claude Code together?","acceptedAnswer":{"@type":"Answer","text":"Yes. Run Claude Code or Codex in a terminal beside Cursor. Both reach the same open Figma file."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">Figma MCP in Cursor</li></ol></nav>
+<article class="wrap page">
+<h1>Figma MCP in Cursor</h1>
+<p class="lede">If you use Cursor, Figma&rsquo;s own MCP server is the supported route, and it works with Cursor. FigmaMCP does not name Cursor as a supported client: it is built for Claude Code and Codex. We say so plainly so you can pick the right tool.</p>
+
+<h2>Which option fits</h2>
+<div class="tablewrap"><table><caption class="sr">Cursor and FigmaMCP</caption>
+<thead><tr><th scope="col">You use</th><th scope="col">Start with</th></tr></thead><tbody>
+<tr><th scope="row">Cursor, and you mostly read designs to write code</th><td><a href="/compare/official-figma-mcp">Figma&rsquo;s official MCP server</a></td></tr>
+<tr><th scope="row">Cursor, and you want an agent to edit the canvas</th><td><a href="/compare/talk-to-figma-mcp">Talk to Figma MCP</a>, whose README names Cursor</td></tr>
+<tr><th scope="row">Claude Code or Codex on a Mac, and you want edits with no call quota</th><td>FigmaMCP</td></tr>
+</tbody></table></div>
+
+<h2>What FigmaMCP supports</h2>
+<p class="measure">FigmaMCP connects two agents automatically: Claude Code and Codex. The Mac app checks for both, installs the plugin in Figma and registers the FigmaMCP tools with each agent it finds. Cursor is not in that list. We have not tested FigmaMCP with Cursor, so we do not claim support for it.</p>
+
+<h2>What the FigmaMCP README says about other clients</h2>
+<p class="measure">The FigmaMCP README has a section for other MCP clients. It says that any client that can launch a local MCP server can be given a FigmaMCP entry in its MCP config, and it names Cursor&rsquo;s config file, <code>~/.cursor/mcp.json</code>, as an example. It then says to install the Mac app so the plugin is registered in Figma. That is the documented path. It is a manual one, and the project does not list Cursor as tested or supported.</p>
+
+<h2>A limit to check first</h2>
+<p class="measure">FigmaMCP registers 46 tools. Each tool adds its name and parameter schema to the agent&rsquo;s context. The FigmaMCP contributor guide notes that some MCP hosts, Cursor among them, have shown a cap on the total number of tools, in the range of 40 to 128 depending on host and model. We have not measured this in Cursor. If you try a manual setup, check how many tools your client loads.</p>
+
+<h2>What stays the same either way</h2>
+<ul class="plain">
+<li>FigmaMCP needs macOS and the Figma desktop app. It does not run in the browser.</li>
+<li>Edits happen only where the plugin&rsquo;s <em>AI can edit this file</em> switch is on.</li>
+<li>Each edit names its target layer, and the name must match.</li>
+<li>Failures return structured errors, such as <code>READ_ONLY_MODE</code> or <code>PLUGIN_PEER_UNAVAILABLE</code>.</li></ul>
+
+<h2>Cursor and Claude Code side by side</h2>
+<p class="measure">Using Claude Code or Codex next to Cursor is fine: they can run in a terminal beside it, and both reach the same open Figma file. You can read and write code in Cursor while your terminal agent edits the design through FigmaMCP. Do not point two tools at the same file at once, because two agents can change the same layers.</p><p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<p class="measure fine">Related: <a href="/compare">Compare Figma MCP options</a> · <a href="/integrations">Integrations</a> · <a href="/figma-mcp-alternative">Figma MCP alternative</a></p>
+<h2>Questions</h2><div class="faq"><details><summary>Does FigmaMCP work with Cursor?</summary><div class="ans">It is built and tested for Claude Code and Codex. We do not claim Cursor support.</div></details><details><summary>Which Figma MCP server works with Cursor?</summary><div class="ans">Figma&rsquo;s official server is documented for Cursor. Other community servers also name it. Check each project&rsquo;s own README.</div></details><details><summary>Can I add FigmaMCP to Cursor by hand?</summary><div class="ans">The README describes a manual MCP config entry for other clients and names Cursor&rsquo;s config file as an example. We have not tested it with Cursor and do not list Cursor as supported.</div></details><details><summary>Can I use Cursor and Claude Code together?</summary><div class="ans">Yes. Run Claude Code or Codex in a terminal beside Cursor. Both reach the same open Figma file.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bulk edit Figma layers with AI: rename, restyle, swap text</title>
+<meta name="description" content="Rename layers, change text and apply styles across many layers at once from Claude Code or Codex, with checks before anything changes.">
+<link rel="canonical" href="https://figmamcp.dev/use-cases/bulk-edit-figma-layers">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Bulk edit Figma layers with AI: rename, restyle, swap text">
+<meta property="og:description" content="Rename layers, change text and apply styles across many layers at once from Claude Code or Codex, with checks before anything changes.">
+<meta property="og:url" content="https://figmamcp.dev/use-cases/bulk-edit-figma-layers">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/use-cases/bulk-edit-figma-layers#webpage","url":"https://figmamcp.dev/use-cases/bulk-edit-figma-layers","name":"Bulk edit Figma layers with AI: rename, restyle, swap text","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/use-cases/bulk-edit-figma-layers#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/use-cases/bulk-edit-figma-layers#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Use cases","item":"https://figmamcp.dev/use-cases"},{"@type":"ListItem","position":3,"name":"Bulk edit Figma layers with AI","item":"https://figmamcp.dev/use-cases/bulk-edit-figma-layers"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How many layers can it change at once?","acceptedAnswer":{"@type":"Answer","text":"We have not set a limit. Start small and review."}},{"@type":"Question","name":"Can I undo it?","acceptedAnswer":{"@type":"Answer","text":"Use Figma undo or version history. The delete tool has no API undo."}},{"@type":"Question","name":"What happens if one layer in my list has the wrong name?","acceptedAnswer":{"@type":"Answer","text":"With a batch tool such as text_set_content or node_delete, the whole call stops before any change. Read the layers again and send the list with the right names."}},{"@type":"Question","name":"Does renaming 80 layers happen as one batch?","acceptedAnswer":{"@type":"Answer","text":"No. node_rename takes one layer per call, so the agent makes 80 calls. Each call is checked on its own."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/use-cases">Use cases</a></li><li aria-current="page">Bulk edit Figma layers with AI</li></ol></nav>
+<article class="wrap page">
+<h1>Bulk edit Figma layers with AI</h1>
+<p class="lede">FigmaMCP lets Claude Code or Codex change many Figma layers in one request: rename, replace text, apply styles and delete. It checks every target in a batch, including its name, before anything changes. If one target is invalid, the batch stops with no change. Some tools take a list, and some work on one layer per call.</p>
+<h2>Good first jobs</h2>
+<div class="tablewrap"><table><caption class="sr">Bulk edit examples</caption>
+<thead><tr><th scope="col">Job</th><th scope="col">Tools used</th><th scope="col">One call or many?</th></tr></thead><tbody>
+<tr><th scope="row">Rename layers to a pattern</th><td><code>node_rename</code></td><td>One layer per call. The agent repeats it.</td></tr>
+<tr><th scope="row">Replace text content</th><td><code>text_set_content</code></td><td>One call takes a list of text layers.</td></tr>
+<tr><th scope="row">Apply a color or text style</th><td><code>node_apply_style</code></td><td>One layer per call.</td></tr>
+<tr><th scope="row">Delete unused layers</th><td><code>node_delete</code>, name must match</td><td>One call takes a list.</td></tr>
+</tbody></table></div>
+<h2>How FigmaMCP validates a batch</h2>
+<p class="measure">FigmaMCP&rsquo;s batch tools are <code>node_delete</code>, <code>text_set_content</code>, <code>annotation_set</code>, <code>instance_set_overrides</code> and <code>create_component_set</code>. Before they change anything, they check every item. A missing layer, a layer outside the editable scope, a wrong name or a wrong layer type aborts the whole call with no change. Each item must carry its own <code>nodeName</code>, copied from <code>node_info</code>. A duplicate target in one list is refused.</p>
+<p class="measure">After the checks pass, the tool runs the items one by one and stops at the first failure. There is no rollback. <code>node_delete</code> is the exception: it deletes in parallel chunks and does not stop. Read the result&rsquo;s <code>status</code>. When it is <code>partial_success</code>, some rows <code>failed</code> or were <code>skipped</code>. Retry those rows after you note what already worked.</p>
+<h2>Replace text in many layers</h2>
+<ol>
+<li>Call <code>node_info</code> on the frame with a text filter and the <code>characters</code> and <code>name</code> properties.</li>
+<li>Split the layers into chunks that make sense, such as one card group or one table.</li>
+<li>Optionally copy the frame first with <code>node_clone</code>.</li>
+<li>Send one chunk to <code>text_set_content</code>, with each name copied verbatim.</li>
+<li>Export the chunk with <code>node_export_visual</code> at a small scale and look at it. Then do the next chunk.</li>
+</ol>
+<h2>Name verification</h2>
+<p class="measure">FigmaMCP refuses a write when the name you send does not match the layer&rsquo;s real name. This protects you from a stale ID. If a designer renamed a layer after the agent read it, the write stops. The error is <code>NAME_MISMATCH</code>. It arrives as <code>UNKNOWN_ERROR</code> with the text <code>nodeName does not match name of nodeId</code>. Read the layer again and retry.</p>
+<div class="tablewrap"><table><caption class="sr">Bulk edit errors</caption>
+<thead><tr><th scope="col">Error or message</th><th scope="col">Meaning</th><th scope="col">What to do</th></tr></thead><tbody>
+<tr><th scope="row"><code>NAME_MISMATCH</code></th><td>The name does not match the layer.</td><td>Read again with <code>node_info</code>, then retry.</td></tr>
+<tr><th scope="row"><code>READ_ONLY_MODE</code></th><td>The AI can edit this file switch is off.</td><td>Turn it on in the plugin.</td></tr>
+<tr><th scope="row"><code>OUTSIDE_SCOPE</code></th><td>A target is outside the editable scope.</td><td>Remove it from the list or widen the scope.</td></tr>
+<tr><th scope="row"><code>Node is not a text node</code></th><td>A <code>text_set_content</code> target is not a text layer.</td><td>Check the type with <code>node_info</code>.</td></tr>
+<tr><th scope="row"><code>Node not found</code> on a <code>node_delete</code> row</th><td>The target is already gone. A list often names a parent and its child.</td><td>Do not retry that row.</td></tr>
+</tbody></table></div>
+<h2>Before you run it</h2>
+<p class="measure">Start on a duplicate page, check one result by eye, then run the rest. <code>node_delete</code> has no API undo, so keep Figma version history on. A wrong edit that follows the rules still goes through. See <a href="/is-figma-mcp-safe">Is Figma MCP safe</a>.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<p class="measure fine">Related: <a href="/use-cases/edit-figma-with-ai">Edit Figma with AI</a> · <a href="/tools/write">Write tools</a> · <a href="/is-figma-mcp-safe">Safety</a></p>
+<h2>Questions</h2><div class="faq"><details><summary>How many layers can it change at once?</summary><div class="ans">We have not set a limit. Start small and review.</div></details><details><summary>Can I undo it?</summary><div class="ans">Use Figma undo or version history. The delete tool has no API undo.</div></details><details><summary>What happens if one layer in my list has the wrong name?</summary><div class="ans">With a batch tool such as text_set_content or node_delete, the whole call stops before any change. Read the layers again and send the list with the right names.</div></details><details><summary>Does renaming 80 layers happen as one batch?</summary><div class="ans">No. node_rename takes one layer per call, so the agent makes 80 calls. Each call is checked on its own.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

@@ -1,0 +1,97 @@
+// Node-only smoke test for the published `figmamcp-relay` bin.
+// Run from a directory where `figmamcp` and `ws` are installed under
+// `node_modules/` (see .github/workflows/ci.yml node-smoke job).
+//
+// Boots the socket server on an ephemeral port, opens a WebSocket, and
+// asserts the server sends the documented welcome frame. This catches
+// runtime-only regressions (e.g. using Bun-only APIs) that --version cannot.
+
+import { spawn } from "node:child_process";
+import { setTimeout as sleep } from "node:timers/promises";
+import { resolve } from "node:path";
+import { pathToFileURL } from "node:url";
+import { createRequire } from "node:module";
+import { getFreePort } from "./free-port.mjs";
+
+// Anchor require() to the cwd (the scratch dir set up by CI), not this script's
+// location, so it resolves `ws` from the project under test rather than from
+// whatever happens to be installed alongside the repo.
+const require = createRequire(pathToFileURL(resolve(process.cwd(), "package.json")));
+const WebSocket = require("ws");
+
+const socketBin = resolve(process.cwd(), "node_modules", "figmamcp", "dist", "socket.js");
+// Own free port per run: matrix legs share one CI VM, a fixed port gave EADDRINUSE.
+const port = await getFreePort();
+
+const proc = spawn(process.execPath, [socketBin, "--port", String(port)], {
+    stdio: ["ignore", "inherit", "inherit"],
+});
+
+let exited = false;
+proc.on("exit", (code, signal) => {
+    exited = true;
+    if (signal !== "SIGKILL" && signal !== "SIGTERM" && code !== 0) {
+        console.error(`socket exited prematurely: code=${code} signal=${signal}`);
+        process.exit(1);
+    }
+});
+
+const deadline = Date.now() + 15000;
+let ws;
+let firstMessage;
+while (Date.now() < deadline && !exited) {
+    await sleep(300);
+    try {
+        const candidate = new WebSocket(`ws://localhost:${port}`);
+        // Subscribe BEFORE awaiting "open". The server sends its welcome frame
+        // synchronously inside its connection handler, so when the upgrade
+        // response and that frame arrive in the same I/O tick, `ws` emits
+        // "message" while this function is still suspended on the await below —
+        // a listener attached after the await would miss it and the frame would
+        // be dropped with no error. Buffering it here removes the race.
+        const buffered = new Promise((res) => candidate.once("message", res));
+        await new Promise((res, rej) => {
+            candidate.once("open", res);
+            candidate.once("error", rej);
+        });
+        ws = candidate;
+        firstMessage = buffered;
+        break;
+    } catch {
+        // not ready yet
+    }
+}
+
+if (!ws) {
+    console.error("socket did not become ready within 15s");
+    proc.kill("SIGKILL");
+    process.exit(1);
+}
+
+const welcome = await new Promise((res, rej) => {
+    const t = setTimeout(() => rej(new Error("no welcome frame within 5s")), 5000);
+    // Resolves whether the frame landed during the handshake tick or arrives now.
+    firstMessage.then((data) => {
+        clearTimeout(t);
+        try {
+            res(JSON.parse(data.toString()));
+        } catch (e) {
+            rej(e);
+        }
+    });
+    ws.once("error", (e) => {
+        clearTimeout(t);
+        rej(e);
+    });
+});
+
+if (welcome.type !== "system" || typeof welcome.message !== "string") {
+    console.error("unexpected welcome frame:", welcome);
+    ws.close();
+    proc.kill("SIGKILL");
+    process.exit(1);
+}
+
+console.log("socket smoke: ok");
+ws.close();
+proc.kill("SIGKILL");

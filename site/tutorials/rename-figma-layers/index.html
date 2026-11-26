@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rename Figma layers with an AI agent</title>
+<meta name="description" content="Let Claude Code or Codex rename the layers of a Figma frame: it proposes a naming map, waits for your yes, then renames each layer and checks the result.">
+<link rel="canonical" href="https://figmamcp.dev/tutorials/rename-figma-layers">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Rename Figma layers with an AI agent">
+<meta property="og:description" content="Let Claude Code or Codex rename the layers of a Figma frame: it proposes a naming map, waits for your yes, then renames each layer and checks the result.">
+<meta property="og:url" content="https://figmamcp.dev/tutorials/rename-figma-layers">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/tutorials/rename-figma-layers#webpage","url":"https://figmamcp.dev/tutorials/rename-figma-layers","name":"Rename Figma layers with an AI agent","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/tutorials/rename-figma-layers#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/tutorials/rename-figma-layers#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Tutorials","item":"https://figmamcp.dev/tutorials"},{"@type":"ListItem","position":3,"name":"Rename Figma layers with an AI agent","item":"https://figmamcp.dev/tutorials/rename-figma-layers"}]},{"@type":"HowTo","name":"Rename Figma layers with an AI agent","description":"Let Claude Code or Codex rename the layers of a Figma frame: it proposes a naming map, waits for your yes, then renames each layer and checks the result.","tool":[{"@type":"HowToTool","name":"A Mac with macOS 14 or later"},{"@type":"HowToTool","name":"The Figma desktop app"},{"@type":"HowToTool","name":"Claude Code or Codex"},{"@type":"HowToTool","name":"The figma-rename-layers skill"}],"step":[{"@type":"HowToStep","position":1,"name":"Set up FigmaMCP","text":"Install the FigmaMCP Mac app and connect Claude Code or Codex. If you have not done this yet, follow the tutorial Edit a Figma file with Claude Code in 5 minutes first.","url":"https://figmamcp.dev/tutorials/rename-figma-layers#step-1"},{"@type":"HowToStep","position":2,"name":"Copy the figma-rename-layers skill","text":"Copy the skills/figma-rename-layers folder from the FigmaMCP releases page into ~/.claude/skills/ for Claude Code, or ~/.codex/skills/ for Codex. Then start a new agent session.","url":"https://figmamcp.dev/tutorials/rename-figma-layers#step-2"},{"@type":"HowToStep","position":3,"name":"Open the plugin and check the switch","text":"Open the file in the Figma desktop app, then choose Plugins, Development, FigmaMCP. Make sure the AI can edit this file switch is on. If it is off, every rename is refused with READ_ONLY_MODE and the agent stops.","url":"https://figmamcp.dev/tutorials/rename-figma-layers#step-3"},{"@type":"HowToStep","position":4,"name":"Name the frame and the naming rule","text":"Name the frame, or paste a Figma link to it. Say the naming rule you want, for example Section / Element, kebab-case or Title Case, and ask to see the list before any change.","url":"https://figmamcp.dev/tutorials/rename-figma-layers#step-4"},{"@type":"HowToStep","position":5,"name":"Let the agent read the layers","text":"The agent reads the layer tree of the frame with node_info , including the content of each text layer, which is the best clue to its name. On a very large frame, it works section by section.","url":"https://figmamcp.dev/tutorials/rename-figma-layers#step-5"},{"@type":"HowToStep","position":6,"name":"Check the naming map and say yes","text":"The agent shows a table of current names and new names, and waits for your yes before it writes. It keeps names that are already clear, and it skips locked layers and the inner layers of component instances.","url":"https://figmamcp.dev/tutorials/rename-figma-layers#step-6"},{"@type":"HowToStep","position":7,"name":"Let it rename one layer at a time","text":"For each row, the agent calls node_rename with the current name of the layer, copied exactly as it read it. There is no batch rename. If the name does not match, because someone changed the file after the read, the call is refused and the agent reads that layer again.","url":"https://figmamcp.dev/tutorials/rename-figma-layers#step-7"},{"@type":"HowToStep","position":8,"name":"Check the result","text":"The agent reads the frame again, compares it with the map and reports what it renamed, what it skipped and why. If the run stopped partway, this read shows where it stopped, and the agent continues from there.","url":"https://figmamcp.dev/tutorials/rename-figma-layers#step-8"}]}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/tutorials">Tutorials</a></li><li aria-current="page">Rename Figma layers with an AI agent</li></ol></nav>
+<article class="wrap page"><h1>Rename Figma layers with an AI agent</h1>
+<p class="lede">This tutorial shows how to let Claude Code or Codex give the layers of one Figma frame clear, consistent names, so that &ldquo;Frame 12&rdquo; and &ldquo;Rectangle 4&rdquo; become names such as Header, Price and Divider. The agent shows you the new names first and changes them only after your yes, in the file you have open in the Figma desktop app on your Mac.</p>
+
+<h2>What you will do</h2>
+<p class="measure">You will copy one skill, open the FigmaMCP plugin in your file and name one frame. The agent reads its layers, proposes a naming map, renames each layer after you agree and reads the frame again to confirm. Clean names help designers, developers and code-generation agents find things, so this is a good step before a handoff or before you generate code from a frame.</p>
+
+<h2>How the agent picks a name</h2>
+<p class="measure">The agent follows the rule you give it. With no rule, the skill uses these defaults.</p>
+<div class="tablewrap"><table><caption class="sr">Default naming rules</caption>
+<thead><tr><th scope="col">Layer</th><th scope="col">Named after</th><th scope="col">Examples</th></tr></thead><tbody>
+<tr><th scope="row">Text</th><td>What it is, not what it says, unless it is a fixed label such as a button&rsquo;s Sign in</td><td>Title, Price, Error message</td></tr>
+<tr><th scope="row">Frame or group</th><td>Its role</td><td>Header, Product card, Actions</td></tr>
+<tr><th scope="row">Shape</th><td>Its purpose</td><td>Divider, Avatar background</td></tr>
+</tbody></table></div>
+
+<h2>Steps</h2>
+<ol class="steps">
+<li id="step-1"><h3>Set up FigmaMCP</h3><p>Install the FigmaMCP Mac app and connect Claude Code or Codex. If you have not done this yet, follow the tutorial Edit a Figma file with Claude Code in 5 minutes first.</p><p>Setup is the same for every task. See <a href="/tutorials/edit-figma-with-claude-code">Edit a Figma file with Claude Code in 5 minutes</a> or <a href="/docs/setup">Figma MCP setup for Mac</a>.</p></li>
+<li id="step-2"><h3>Copy the figma-rename-layers skill</h3><p>Copy the <code>skills/figma-rename-layers</code> folder from the FigmaMCP releases page into <code>~/.claude/skills/</code> for Claude Code, or <code>~/.codex/skills/</code> for Codex. Then start a new agent session.</p><p>A skill is a short instruction file that tells the agent which tools to call, in which order. The FigmaMCP app installs only the base <code>figmamcp</code> skill, so you copy this one yourself. Get it from <a href="https://github.com/MrCoder/figmamcp-releases/tree/main/skills/figma-rename-layers">skills/figma-rename-layers</a>.</p></li>
+<li id="step-3"><h3>Open the plugin and check the switch</h3><p>Open the file in the Figma desktop app, then choose Plugins, Development, FigmaMCP. Make sure the AI can edit this file switch is on. If it is off, every rename is refused with <code>READ_ONLY_MODE</code> and the agent stops.</p><figure class="step-shot narrow"><img src="/assets/figmamcp-edit-switch.webp" width="566" height="428" loading="lazy" decoding="async" alt="FigmaMCP plugin panel showing Connected to a file, the AI can edit this file switch turned on, and 1 AI session connected"><figcaption>The FigmaMCP panel in Figma. With the switch off, the agent can only read.</figcaption></figure></li>
+<li id="step-4"><h3>Name the frame and the naming rule</h3><p>Name the frame, or paste a Figma link to it. Say the naming rule you want, for example Section / Element, kebab-case or Title Case, and ask to see the list before any change.</p><p>For example: &ldquo;Rename the layers in the Pricing card frame on Page 1 so a developer can read them. Use short role names in Title Case. Show me the list before you change anything.&rdquo;</p></li>
+<li id="step-5"><h3>Let the agent read the layers</h3><p>The agent reads the layer tree of the frame with <code>node_info</code>, including the content of each text layer, which is the best clue to its name. On a very large frame, it works section by section.</p><p>Reading changes nothing in the file.</p></li>
+<li id="step-6"><h3>Check the naming map and say yes</h3><p>The agent shows a table of current names and new names, and waits for your yes before it writes. It keeps names that are already clear, and it skips locked layers and the inner layers of component instances.</p><p>If the role of a layer is not clear, the agent asks you, or keeps the old name and lists it.</p></li>
+<li id="step-7"><h3>Let it rename one layer at a time</h3><p>For each row, the agent calls <code>node_rename</code> with the current name of the layer, copied exactly as it read it. There is no batch rename. If the name does not match, because someone changed the file after the read, the call is refused and the agent reads that layer again.</p><p>Two layers with the same name, such as two called Text, are told apart by their layer ID. A locked layer, or a layer the plugin refuses for another reason, comes back as Operation Denied; the agent reports that message and continues with the rest.</p></li>
+<li id="step-8"><h3>Check the result</h3><p>The agent reads the frame again, compares it with the map and reports what it renamed, what it skipped and why. If the run stopped partway, this read shows where it stopped, and the agent continues from there.</p></li>
+</ol>
+
+<h2 id="example">The skill&rsquo;s worked example</h2>
+<p class="measure">The skill includes this example for the Pricing card prompt in step 4. It is an example written in the skill, not a recorded run. The agent is expected to show a map like this one:</p>
+<div class="tablewrap"><table><caption class="sr">Example naming map for the Pricing card frame</caption>
+<thead><tr><th scope="col">Current name</th><th scope="col">New name</th></tr></thead><tbody>
+<tr><th scope="row">Frame 3</th><td>Header</td></tr>
+<tr><th scope="row">Text</th><td>Plan Name</td></tr>
+<tr><th scope="row">Text</th><td>Price</td></tr>
+<tr><th scope="row">Rectangle 2</th><td>Divider</td></tr>
+<tr><th scope="row">Frame 4</th><td>Feature List</td></tr>
+</tbody></table></div>
+<p class="measure">After your yes, it makes one <code>node_rename</code> call per row, reads the frame again and reports a summary such as 5 renamed, 0 skipped.</p>
+
+<h2 id="limits">What the agent will not do</h2>
+<ul>
+<li>It changes only layer names. It does not move, resize, restyle or delete anything.</li>
+<li>It does not rename pages, styles, variables or component properties.</li>
+<li>It does not guess when the role of a layer is unclear.</li>
+<li>It does not edit locked layers.</li>
+</ul>
+
+<h2>Notes</h2>
+<ul>
+<li>macOS only for now, and the Figma desktop app is required.</li>
+<li>Other changes to many layers at once, such as replacing text, are covered in <a href="/use-cases/bulk-edit-figma-layers">Bulk edit Figma layers</a>.</li>
+<li>Naming is one of the six categories in <a href="/tutorials/design-qa-figma-file">a design QA pass</a>.</li>
+<li>FigmaMCP is not affiliated with or endorsed by Figma, Inc.</li>
+</ul>
+<p class="measure">Next: <a href="/tutorials/spec-to-figma-frames">turn a written spec into Figma frames</a>, <a href="/use-cases/design-to-code">design to code</a>, <a href="/tutorials">all tutorials</a>, or <a href="/tools">all tools</a>.</p>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

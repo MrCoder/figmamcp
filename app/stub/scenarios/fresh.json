@@ -1,0 +1,9 @@
+{"steps":[
+{"id":"platform","state":"ok","message":"macOS detected.","fix":null},
+{"id":"figma","state":"ok","message":"Found /Applications/Figma.app.","fix":null},
+{"id":"node","state":"ok","message":"Using node v22.","fix":null},
+{"id":"runtime","state":"todo","message":"Install files.","fix":null},
+{"id":"relay","state":"todo","message":"Start background relay on port 3055.","fix":null},
+{"id":"agent-claude","state":"todo","message":"Connect FigmaMCP to Claude Code.","fix":null},
+{"id":"agent-codex","state":"skip","message":"codex was not found.","fix":null},
+{"id":"plugin","state":"todo","message":"Import the plugin.","fix":null}]}

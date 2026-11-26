@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP prototype: read and edit prototype reactions</title>
+<meta name="description" content="Read and update prototype interactions in Figma from Claude Code or Codex: list and change reactions, and write annotations in your open file, with FigmaMCP.">
+<link rel="canonical" href="https://figmamcp.dev/tools/prototype">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP prototype: read and edit prototype reactions">
+<meta property="og:description" content="Read and update prototype interactions in Figma from Claude Code or Codex: list and change reactions, and write annotations in your open file, with FigmaMCP.">
+<meta property="og:url" content="https://figmamcp.dev/tools/prototype">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/tools/prototype#webpage","url":"https://figmamcp.dev/tools/prototype","name":"Figma MCP prototype: read and edit prototype reactions","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/tools/prototype#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/tools/prototype#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://figmamcp.dev/tools"},{"@type":"ListItem","position":3,"name":"Figma MCP prototype","item":"https://figmamcp.dev/tools/prototype"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can it link every button to a screen?","acceptedAnswer":{"@type":"Answer","text":"It can, if you say which screens. Review the flow in prototype view."}},{"@type":"Question","name":"Does reaction_update keep the reactions that are already there?","acceptedAnswer":{"@type":"Answer","text":"No. It replaces the whole array on that layer. Read the reactions with reaction_list first and send back the ones you want to keep."}},{"@type":"Question","name":"Can FigmaMCP draw a connector diagram or flow chart?","acceptedAnswer":{"@type":"Answer","text":"No. FigmaMCP has no tool that discovers connector templates or builds a flow diagram. It reads and replaces native prototype reactions, and it reads and appends annotations."}},{"@type":"Question","name":"Will it add the same annotation twice if I run the request again?","acceptedAnswer":{"@type":"Answer","text":"It can. Annotations are appended, so a repeat makes a second note. Run annotation_list first and compare, then write only what is missing."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/tools">Tools</a></li><li aria-current="page">Figma MCP prototype</li></ol></nav>
+<article class="wrap page">
+<h1>Figma MCP prototype</h1>
+<p class="lede">FigmaMCP lets Claude Code or Codex read and replace prototype reactions on layers in the Figma file you have open, and write annotations that explain a design to developers. Four tools cover this: reaction_list, reaction_update, annotation_list and annotation_set. Every write names its target layer, and the name must match.</p>
+<h2>Tools</h2>
+<div class="tablewrap"><table><caption class="sr">Prototype and note tools</caption>
+<thead><tr><th scope="col">Task</th><th scope="col">Tool</th><th scope="col">Writes to the file?</th></tr></thead><tbody>
+<tr><th scope="row">See existing interactions</th><td><code>reaction_list</code></td><td>No. Reads the reactions on the layers you name and on their descendants.</td></tr>
+<tr><th scope="row">Add or change an interaction</th><td><code>reaction_update</code></td><td>Yes. Replaces the whole reaction array of one layer.</td></tr>
+<tr><th scope="row">Read annotations</th><td><code>annotation_list</code></td><td>No. Reads one page or one layer and its subtree.</td></tr>
+<tr><th scope="row">Write annotations</th><td><code>annotation_set</code></td><td>Yes. Appends annotations to one or more layers in one batch.</td></tr>
+</tbody></table></div>
+<h2>What reaction_update can set</h2>
+<p class="measure">FigmaMCP&rsquo;s <code>reaction_update</code> tool takes the layer&rsquo;s ID, its exact current name, and the full list of reactions that layer should have afterwards. Each reaction has a trigger and an action, or a list of actions. A trigger has a type such as <code>ON_CLICK</code> or <code>ON_HOVER</code>, and can carry a delay or key codes.</p>
+<div class="tablewrap"><table><caption class="sr">Reaction action types</caption>
+<thead><tr><th scope="col">Action type</th><th scope="col">What it does in the prototype</th></tr></thead><tbody>
+<tr><th scope="row"><code>NODE</code></th><td>Goes to a destination layer, with a navigation type and an optional transition.</td></tr>
+<tr><th scope="row"><code>URL</code></th><td>Opens a link.</td></tr>
+<tr><th scope="row"><code>BACK</code>, <code>CLOSE</code></th><td>Goes back, or closes an overlay.</td></tr>
+<tr><th scope="row"><code>SET_VARIABLE</code>, <code>SET_VARIABLE_MODE</code></th><td>Changes a variable value or a variable mode.</td></tr>
+<tr><th scope="row"><code>CONDITIONAL</code></th><td>Runs different actions depending on a condition.</td></tr>
+<tr><th scope="row"><code>UPDATE_MEDIA_RUNTIME</code></th><td>Controls media playback.</td></tr>
+</tbody></table></div>
+<h2>How to change an interaction safely</h2>
+<p class="measure">FigmaMCP replaces the whole reaction array and does not patch one reaction inside it. Order matters.</p>
+<ol>
+<li>Read the layer with <code>node_info</code> and copy its exact name.</li>
+<li>Call <code>reaction_list</code> for that layer, so you know which reactions exist now.</li>
+<li>Call <code>reaction_update</code> with the full array: the reactions you keep plus the new one.</li>
+<li>Call <code>reaction_list</code> again and check the flow in Figma&rsquo;s prototype view.</li>
+</ol>
+<p class="measure">If you skip step 2, the new array can remove interactions you wanted to keep. The tool reads and writes native reaction data only. It cannot draw a flow diagram for you. The read may not return every field Figma stores for a reaction, so check the result in prototype view.</p>
+<h2>Annotations for developers</h2>
+<p class="measure">FigmaMCP&rsquo;s <code>annotation_list</code> needs exactly one of <code>pageId</code> or <code>nodeId</code>. It returns the annotations grouped by the layer that owns them. It also returns the file&rsquo;s annotation categories, unless you pass <code>includeCategories: false</code>. Check <code>coverage.complete</code> before you say that a page has no notes.</p>
+<p class="measure"><code>annotation_set</code> takes a list. Each item has <code>nodeId</code>, <code>nodeName</code> and <code>labelMarkdown</code>, which must not be blank. It can also take a <code>categoryId</code> from <code>annotation_list</code> and a list of property references, such as <code>fills</code> or <code>itemSpacing</code>. Figma refuses a property the layer type does not support, and that item fails on its own.</p>
+<h2>Errors you can meet</h2>
+<div class="tablewrap"><table><caption class="sr">Prototype and annotation errors</caption>
+<thead><tr><th scope="col">Error</th><th scope="col">Meaning</th><th scope="col">What to do</th></tr></thead><tbody>
+<tr><th scope="row"><code>NAME_MISMATCH</code></th><td>The name you sent is not the layer&rsquo;s current name. It arrives as <code>UNKNOWN_ERROR</code>.</td><td>Read the layer again with <code>node_info</code>, then retry with the real name.</td></tr>
+<tr><th scope="row"><code>READ_ONLY_MODE</code></th><td>The plugin&rsquo;s AI can edit this file switch is off.</td><td>Turn the switch on. Reads still work.</td></tr>
+<tr><th scope="row"><code>ANNOTATION_CATEGORY_NOT_FOUND</code></th><td>The <code>categoryId</code> does not exist in this file.</td><td>Call <code>annotation_list</code> and pass back a category ID it returned, or leave it out.</td></tr>
+</tbody></table></div>
+<p class="measure">Annotation writes add to what exists. A repeat does not replace, and it can make a duplicate. When an item reports <code>partial_success</code> or an unknown outcome, call <code>annotation_list</code> before you retry.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<p class="measure fine">Related: <a href="/tools">All tools</a> · <a href="/tools/write">Write tools</a> · <a href="/use-cases/edit-figma-with-ai">Edit Figma with AI</a></p>
+<h2>Questions</h2><div class="faq"><details><summary>Can it link every button to a screen?</summary><div class="ans">It can, if you say which screens. Review the flow in prototype view.</div></details><details><summary>Does reaction_update keep the reactions that are already there?</summary><div class="ans">No. It replaces the whole array on that layer. Read the reactions with reaction_list first and send back the ones you want to keep.</div></details><details><summary>Can FigmaMCP draw a connector diagram or flow chart?</summary><div class="ans">No. FigmaMCP has no tool that discovers connector templates or builds a flow diagram. It reads and replaces native prototype reactions, and it reads and appends annotations.</div></details><details><summary>Will it add the same annotation twice if I run the request again?</summary><div class="ans">It can. Annotations are appended, so a repeat makes a second note. Run annotation_list first and compare, then write only what is missing.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

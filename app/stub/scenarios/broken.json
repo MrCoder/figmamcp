@@ -1,0 +1,8 @@
+{"currentFile":null,"steps":[
+{"id":"platform","state":"ok","message":"macOS detected."},
+{"id":"figma","state":"ok","message":"Found."},
+{"id":"node","state":"ok","message":"ok"},
+{"id":"runtime","state":"ok","message":"ok"},
+{"id":"relay","state":"fail","message":"Port 3055 is already used by another program: pid 812.","fix":"Quit that program."},
+{"id":"agent-claude","state":"ok","message":"Already connected."},
+{"id":"plugin","state":"ok","message":"Registered."}]}

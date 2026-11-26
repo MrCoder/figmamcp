@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP 价格：目前免费，无需注册和 API 令牌</title>
+<meta name="description" content="FigmaMCP 现在免费，不用注册账号，也不需要 API 令牌。另附 Figma 官方 MCP 按席位的调用限额（2026-11-25 核实）。">
+<link rel="canonical" href="https://figmamcp.dev/zh/pricing">
+<link rel="alternate" hreflang="en" href="https://figmamcp.dev/pricing">
+<link rel="alternate" hreflang="ja" href="https://figmamcp.dev/ja/pricing">
+<link rel="alternate" hreflang="zh-CN" href="https://figmamcp.dev/zh/pricing">
+<link rel="alternate" hreflang="x-default" href="https://figmamcp.dev/pricing">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP 价格：目前免费，无需注册和 API 令牌">
+<meta property="og:description" content="FigmaMCP 现在免费，不用注册账号，也不需要 API 令牌。另附 Figma 官方 MCP 按席位的调用限额（2026-11-25 核实）。">
+<meta property="og:url" content="https://figmamcp.dev/zh/pricing">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"一个免费的本地 MCP 服务器和配套应用，让 Claude Code 或 Codex 读取并编辑 Figma 桌面版里打开的文件，没有调用次数配额。","url":"https://figmamcp.dev/zh","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/zh/pricing#webpage","url":"https://figmamcp.dev/zh/pricing","name":"Figma MCP 价格：目前免费，无需注册和 API 令牌","inLanguage":"zh-CN","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/zh/pricing#breadcrumb"},"dateModified":"2026-11-25"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/zh/pricing#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://figmamcp.dev/zh"},{"@type":"ListItem","position":2,"name":"Figma MCP 价格：FigmaMCP 目前免费","item":"https://figmamcp.dev/zh/pricing"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"FigmaMCP 免费吗？","acceptedAnswer":{"@type":"Answer","text":"目前免费。不收费，不用注册，也不需要 API 令牌。以后我们可能会定价，不承诺永久免费。"}},{"@type":"Question","name":"Figma 官方的 MCP 服务器免费吗？","acceptedAnswer":{"@type":"Answer","text":"Figma 按席位和方案公布调用限额，并表示写入画布需要 Professional 或更高的方案和编辑权限，测试期间免费，之后计划按用量收费。最新条款请看上文链接的 Figma 页面。"}},{"@type":"Question","name":"Enterprise 方案用 Figma MCP 要花多少钱？","acceptedAnswer":{"@type":"Answer","text":"Figma 的 MCP 服务器包含在你的 Figma 方案里。Enterprise 方案不同的是读取限额：Full 或 Dev 席位每天最多 600 次、每分钟 20 次，View 或 Collab 席位每月 20 次（2026-11-22 核对 Figma 的页面）。写入工具不计入限额。各方案的完整限额见 Figma MCP 调用限额。FigmaMCP 在任何方案下都免费，没有调用配额。我们还没在 Enterprise 账号上测试过；关键是你的组织是否允许运行开发版插件，请先在一个文件上试。"}},{"@type":"Question","name":"Figma 的读取限额适用于 FigmaMCP 吗？","acceptedAnswer":{"@type":"Answer","text":"不适用。FigmaMCP 不调用 Figma 的 MCP 服务器，它通过你已经打开的桌面版里的 Plugin API 工作。"}},{"@type":"Question","name":"用 FigmaMCP 需要给 Figma 付费吗？","acceptedAnswer":{"@type":"Answer","text":"FigmaMCP 在 Figma 桌面版里运行一个开发版插件，所以关键在于你的账号能否在文件里运行开发版插件。我们没有测试过每一种方案。先在一个文件上试试。"}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/zh" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">对比</a><a href="/zh#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/pricing" hreflang="en" lang="en">English</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/zh">首页</a></li><li aria-current="page">Figma MCP 价格：FigmaMCP 目前免费</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP 价格：FigmaMCP 目前免费</h1>
+<p class="fine lang-switch"><strong>语言：</strong> <a href="/pricing" hreflang="en" lang="en">English</a> · 简体中文 · <a href="/ja/pricing" hreflang="ja" lang="ja">日本語</a></p>
+<p class="lede">FigmaMCP 现在免费。不用付钱，不用注册账号，也不需要 Figma API 令牌。以后我们可能会定价，不承诺永久免费。Figma 官方的 <a href="/zh/what-is-figma-mcp">MCP 服务器</a>则包含在 Figma 方案里，调用限额按席位计算。本页把两者放在一起说明。</p>
+
+<h2>FigmaMCP 的费用</h2>
+<div class="tablewrap"><table>
+<caption class="sr">FigmaMCP 目前的价格</caption>
+<thead><tr><th scope="col">项目</th><th scope="col">目前</th></tr></thead>
+<tbody>
+<tr><th scope="row">FigmaMCP Mac App</th><td>免费</td></tr>
+<tr><th scope="row">账号或注册</th><td>不需要</td></tr>
+<tr><th scope="row">Figma API 令牌</th><td>不需要</td></tr>
+<tr><th scope="row">今后的价格</th><td>尚未决定。不承诺永久免费。</td></tr>
+</tbody></table></div>
+<p class="measure">其他费用照旧由你承担：一个能打开并编辑该文件的 Figma 方案，以及 AI Agent（Claude Code 或 Codex）本身的费用。</p>
+<p class="cta"><a class="btn" href="/download">下载 Mac 版</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14 及以上 · Intel 和 Apple 芯片 · 约 155 MB</span></p>
+
+<h2 id="how-to-use">如何使用 FigmaMCP</h2>
+<p class="measure">没有东西要买，也不用注册。下面四步，从下载到拿到 Agent 对文件的第一个回答。</p>
+<ol class="steps">
+<li><p><strong>下载并打开 App。</strong> <a href="/download">下载 Mac 版 FigmaMCP</a>，打开 FigmaMCP.dmg，把 App 拖进 Applications（应用程序），然后打开它。</p></li>
+<li><p><strong>点击 Add to Figma。</strong> App 的检查清单会检查 Figma、Claude Code 和 Codex。点击 Add to Figma。只有 Figma 正在运行且缺少插件时，Figma 才会重启一次。</p></li>
+<li><p><strong>重启 Agent。</strong> 如果 Claude Code 或 Codex 正在运行，退出后重新启动，让它加载新工具。</p></li>
+<li><p><strong>在文件里打开插件。</strong> 在 Figma 桌面版中打开文件，然后选择 Plugins › Development › FigmaMCP。面板会显示已连接的文件。要让 Agent 编辑，面板里的 “AI can edit this file”（AI 可以编辑此文件）开关必须打开。</p></li>
+</ol>
+<p class="measure">然后先让 Agent 读取一次。粘贴这句：“列出所选画框里的文字图层，以及它们的字体和字号。”读取不会改动文件，适合做第一次测试。</p>
+<figure class="step-shot narrow"><img src="/assets/figmamcp-edit-switch.webp" width="566" height="428" loading="lazy" decoding="async" alt="FigmaMCP 插件面板：显示已连接到一个文件，“AI can edit this file”开关已打开，有 1 个 AI 会话已连接"><figcaption>Figma 里的 FigmaMCP 面板：已连接的文件、“AI can edit this file”开关，以及已连接的 AI 会话数。</figcaption></figure>
+<p class="measure">完整步骤见 <a href="/zh/tutorials/edit-figma-with-claude-code">5 分钟用 Claude Code 编辑 Figma 文件</a>。</p>
+
+<h2>和 Figma 官方 MCP 服务器对比</h2>
+<p class="measure">Figma 官方的 MCP 服务器是托管服务，按席位和方案限制调用次数。FigmaMCP 的做法不同：Mac 上的本地服务器和 Figma 桌面版里的插件通信。它不调用 Figma 的 MCP 服务器，所以 Figma 的读取限额与它的工作方式无关。</p>
+<div class="tablewrap"><table>
+<caption class="sr">Figma 官方 MCP 服务器的限额与 FigmaMCP 对比</caption>
+<thead><tr><th scope="col">席位和方案</th><th scope="col">Figma 官方 MCP（读取工具）</th><th scope="col">FigmaMCP</th></tr></thead>
+<tbody>
+<tr><th scope="row">View 或 Collab 席位，任何方案</th><td>每月 20 次</td><td>免费；不占用这项额度</td></tr>
+<tr><th scope="row">Pro，Full 或 Dev 席位</th><td>每天 200 次，每分钟 10 次</td><td>免费；不占用这项额度</td></tr>
+<tr><th scope="row">Organization</th><td>每天 200 次，每分钟 15 次</td><td>免费；不占用这项额度</td></tr>
+<tr><th scope="row">Enterprise</th><td>每天 600 次，每分钟 20 次</td><td>免费；不占用这项额度</td></tr>
+</tbody></table></div>
+<p class="fine">来源：<a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">Figma 开发者文档：MCP server rate limits and access</a>，2026 年 11 月 25 日核实。限额可能变化，以 Figma 的页面为准。各方案的完整限额见 <a href="/zh/figma-mcp-rate-limit">Figma MCP 速率限制</a>。</p>
+
+<h2>写入是另一回事</h2>
+<p class="measure">Figma 表示，它的写入工具不计入这些读取限额。用 Figma 的服务器写入画布，需要 Professional 或更高的方案，并且要有编辑权限。Figma 称这项功能测试期间免费，之后计划按用量收费。详见 <a href="https://developers.figma.com/docs/figma-mcp-server/write-to-canvas">Figma 的 write to canvas 页面</a>（2026 年 11 月 25 日核实），或我们的 <a href="/figma-mcp-write-to-canvas">Figma MCP write to canvas</a> 页面（英文），那里把官方条款和本地方案放在一起。</p>
+<p class="measure">所以官方服务器不只是读取限额的问题，我们也没有这样宣称。两个工具的工作方式不同，选适合你工作方式的那个。各方案的细节见 <a href="/figma-mcp-free-plan">Figma MCP on the free plan</a>、<a href="/figma-mcp-starter-plan">Figma MCP Starter plan limit</a> 和 <a href="/figma-mcp-limit-reached">Figma MCP limit reached</a>（均为英文）。</p>
+
+<aside class="note"><h2>使用前须知</h2><ul>
+<li>目前仅支持 macOS。</li>
+<li>需要 Figma 桌面版，不能在浏览器中运行。</li>
+<li>FigmaMCP 不在 Figma Community 上，由 Mac App 替你安装插件。</li>
+<li>如果不授予辅助功能权限，请在每个文件中打开一次插件（Plugins、Development、FigmaMCP），并在 Agent 编辑期间保持打开。</li>
+<li>Figma 自身的功能（例如 Dev Mode）不包含在内。</li></ul></aside>
+<p class="fine">FigmaMCP 是独立软件。你使用 Figma 桌面版时，仍受 Figma 条款约束。</p>
+<h2>常见问题</h2><div class="faq"><details><summary>FigmaMCP 免费吗？</summary><div class="ans">目前免费。不收费，不用注册，也不需要 API 令牌。以后我们可能会定价，不承诺永久免费。</div></details><details><summary>Figma 官方的 MCP 服务器免费吗？</summary><div class="ans">Figma 按席位和方案公布调用限额，并表示写入画布需要 Professional 或更高的方案和编辑权限，测试期间免费，之后计划按用量收费。最新条款请看上文链接的 Figma 页面。</div></details><details><summary>Enterprise 方案用 Figma MCP 要花多少钱？</summary><div class="ans">Figma 的 MCP 服务器包含在你的 Figma 方案里。Enterprise 方案不同的是读取限额：Full 或 Dev 席位每天最多 600 次、每分钟 20 次，View 或 Collab 席位每月 20 次（2026-11-22 核对 Figma 的页面）。写入工具不计入限额。各方案的完整限额见 <a href="/zh/figma-mcp-rate-limit">Figma MCP 调用限额</a>。FigmaMCP 在任何方案下都免费，没有调用配额。我们还没在 Enterprise 账号上测试过；关键是你的组织是否允许运行开发版插件，请先在一个文件上试。</div></details><details><summary>Figma 的读取限额适用于 FigmaMCP 吗？</summary><div class="ans">不适用。FigmaMCP 不调用 Figma 的 MCP 服务器，它通过你已经打开的桌面版里的 Plugin API 工作。</div></details><details><summary>用 FigmaMCP 需要给 Figma 付费吗？</summary><div class="ans">FigmaMCP 在 Figma 桌面版里运行一个开发版插件，所以关键在于你的账号能否在文件里运行开发版插件。我们没有测试过每一种方案。先在一个文件上试试。</div></details></div>
+<p class="measure fine updated">最后更新：<time datetime="2026-11-25">2026-11-25</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP 免费。它是 Neo Product LLC 的 <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> 的分支。</p>
+<p>FigmaMCP 不隶属于 Figma，也未获得其认可。Figma 是 Figma, Inc. 的商标。</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/zh/pricing">价格</a><a href="/zh/docs/setup">安装</a><a href="/zh/tutorials/edit-figma-with-claude-code">教程</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/zh/what-is-figma-mcp">什么是 Figma MCP</a><a href="/zh/figma-mcp-rate-limit">速率限制</a><a href="/zh/troubleshooting/not-working">故障排查</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a><a href="/" hreflang="en" lang="en">English</a></p>
+</div></footer>
+<img class="px" src="/p.gif?l=zh" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

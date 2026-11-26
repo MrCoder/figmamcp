@@ -1,0 +1,1 @@
+See the `figmamcp` skill (skills/figmamcp/SKILL.md) and the MCP resource guides (figmamcp://guide/*) for the canonical rules, error-code taxonomy, and workflows. Treat them as authoritative; do not duplicate their content here.

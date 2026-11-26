@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- FigmaMCP app icon: the site's stacked-layers mark on the macOS icon grid
+       (824 px body, 100 px margin). Render: app/make-icon.sh -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5c76ff"/>
+      <stop offset="1" stop-color="#2b3fd6"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000" flood-opacity=".28"/>
+    </filter>
+    <filter id="lift" x="-15%" y="-15%" width="130%" height="135%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#0b1a8c" flood-opacity=".45"/>
+    </filter>
+  </defs>
+  <rect x="100" y="100" width="824" height="824" rx="185" fill="url(#bg)" filter="url(#shadow)"/>
+  <g transform="translate(216 216) scale(18.5)" fill="none" stroke="#fff" stroke-width="2">
+    <rect x="2" y="2" width="20" height="20" rx="4" opacity=".4"/>
+    <rect x="6" y="6" width="20" height="20" rx="4" opacity=".7"/>
+  </g>
+  <rect x="401" y="401" width="370" height="370" rx="74" fill="#fff" filter="url(#lift)"/>
+  <!-- AI sparkle on the layer being edited -->
+  <path d="M586 470 C598 548 618 568 696 586 C618 604 598 624 586 702 C574 624 554 604 476 586 C554 568 574 548 586 470 Z" fill="#3d5afe"/>
+</svg>

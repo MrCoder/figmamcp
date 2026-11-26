@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FigmaMCP changelog: what's new in each release</title>
+<meta name="description" content="FigmaMCP release notes by version, pulled from the public releases repo: what changed, what it means for you, and a link to each release.">
+<link rel="canonical" href="https://figmamcp.dev/changelog">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="FigmaMCP changelog: what's new in each release">
+<meta property="og:description" content="FigmaMCP release notes by version, pulled from the public releases repo: what changed, what it means for you, and a link to each release.">
+<meta property="og:url" content="https://figmamcp.dev/changelog">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FigmaMCP changelog: what's new in each release">
+<meta name="twitter:description" content="FigmaMCP release notes by version, pulled from the public releases repo: what changed, what it means for you, and a link to each release.">
+<meta name="twitter:image" content="https://figmamcp.dev/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/changelog#webpage","url":"https://figmamcp.dev/changelog","name":"FigmaMCP changelog: what's new in each release","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/changelog#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/changelog#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"What’s new in FigmaMCP","item":"https://figmamcp.dev/changelog"}]}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">What’s new in FigmaMCP</li></ol></nav>
+<article class="wrap page"><h1>What&rsquo;s new in FigmaMCP</h1>
+<p class="lede">FigmaMCP ships often. Each release is public at the <a href="https://github.com/MrCoder/figmamcp-releases/releases">releases repo</a>; this page summarizes the recent ones in plain words. The app checks for a new version and shows a banner in the plugin when one is out.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+
+<div class="tablewrap"><table>
+<caption class="sr">FigmaMCP release notes by version</caption>
+<thead><tr><th scope="col">Version</th><th scope="col">Date</th><th scope="col">What changed</th></tr></thead>
+<tbody>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.25">0.1.25</a></th><td>2026-11-22</td><td>Tool-call counts left by a plugin that closed before it could send them are no longer held until the next start. A plugin that stays open checks every minute and sends them, once, as soon as they are 5 minutes old. Before, a plugin opened again within 5 minutes and then left open did not send them. What is counted has not changed.</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.24">0.1.24</a></th><td>2026-11-22</td><td>The FigmaMCP relay and the Mac app send anonymous usage events to Mixpanel through figmamcp.dev, without your IP address: plugin opened, AI connected, one event per tool call (tool name, result, error code, duration) and app launched. No file names, layer names or design content. To turn them off, add <code>"telemetry": false</code> to <code>~/.figmamcp/config.json</code>. See the <a href="/privacy#usage-events">privacy page</a>.</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.23">0.1.23</a></th><td>2026-11-22</td><td>The plugin sends its anonymous tool-call counts while it is open: the first call at once, later calls at most once a minute. Counts not yet sent are kept in the plugin&rsquo;s own Figma storage and sent the next time it opens. It used to wait for 20 calls, 10 minutes or the plugin closing, and the count sent on close was often lost. What is counted has not changed.</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.22">0.1.22</a></th><td>2026-11-21</td><td>The setup command&rsquo;s help and its error messages give the command that is inside the Mac app, <code>/Applications/FigmaMCP.app/Contents/Resources/bin/figmamcp</code>. They used to name a download command that does not work.</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.21">0.1.21</a></th><td>2026-11-21</td><td>The plugin shows a first prompt you can copy. If no AI app has FigmaMCP loaded a few seconds after the plugin connects, it tells you to quit Claude Code or Codex and open it again.</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.20">0.1.20</a></th><td>2026-11-20</td><td>The Mac app tells you when a newer version is available. The plugin shows an example prompt the first time it is connected. The app sends one anonymous launch count (version and a random app ID, no file contents).</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.19">0.1.19</a></th><td>2026-11-19</td><td>The plugin panel lists each AI session connected to the file, one row per session: the app and the session name (for example &ldquo;Claude Code &middot; Redesign settings page&rdquo;), when it connected and when it last acted. The name stays on your computer.</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.18">0.1.18</a></th><td>2026-11-19</td><td>Adds a signal for when an AI assistant connects but has not called a tool yet, so that state is distinct from the plugin being open with no assistant attached, and from an assistant that has already used a tool.</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.17">0.1.17</a></th><td>2026-11-18</td><td>Fixes anonymous usage counts: a batch that included a failed call was not being sent in 0.1.16.</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.16">0.1.16</a></th><td>2026-11-18</td><td>Usage counts now also record which tool failed and its error code (for example <code>node_delete:NAME_MISMATCH</code>), so failures can be fixed faster.</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.15">0.1.15</a></th><td>2026-11-18</td><td>The plugin sends anonymous counts of the tool calls it runs: how many worked, how many failed, and how many times each tool was used.</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.14">0.1.14</a></th><td>2026-11-17</td><td>The plugin now tells you when a newer FigmaMCP is out, with a small dismissable banner linking to this site&rsquo;s download page.</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.13">0.1.13</a></th><td>2026-11-17</td><td>FigmaMCP.app carries its own notarization ticket, so it opens on Macs that cannot reach Apple&rsquo;s servers.</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.12">0.1.12</a></th><td>2026-11-17</td><td>After connecting, the plugin panel collapses to a small status pill; setup now re-registers the plugin when its files are missing.</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.11">0.1.11</a></th><td>2026-11-17</td><td>The plugin counts loads per install with a random anonymous ID stored only in the plugin&rsquo;s local storage.</td></tr>
+<tr><th scope="row"><a href="https://github.com/MrCoder/figmamcp-releases/releases/tag/v0.1.10">0.1.10</a></th><td>2026-11-11</td><td>FigmaMCP starts counting site visits and plugin loads with Google Analytics, version number only, with a random ID that is never stored.</td></tr>
+</tbody></table></div>
+<p class="measure">Older releases and their full notes are on the <a href="https://github.com/MrCoder/figmamcp-releases/releases">releases page</a>. Every <code>.dmg</code> is published with a SHA-256 checksum; see <a href="/docs/setup#verify">verifying your download</a>.</p>
+<p class="measure">Curious what any of this means for privacy? See the <a href="/privacy">privacy page</a>. Wondering who can see the code? See <a href="/figma-mcp-source">FigmaMCP's source</a>.</p>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

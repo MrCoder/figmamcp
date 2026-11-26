@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP not working? 14 symptoms with fixes</title>
+<meta name="description" content="Figma MCP not working or not connecting in Claude Code or Codex? Look up your symptom or error code, such as READ_ONLY_MODE, and get its cause and fix.">
+<link rel="canonical" href="https://figmamcp.dev/troubleshooting/not-working">
+<link rel="alternate" hreflang="en" href="https://figmamcp.dev/troubleshooting/not-working">
+<link rel="alternate" hreflang="ja" href="https://figmamcp.dev/ja/troubleshooting/not-working">
+<link rel="alternate" hreflang="zh-CN" href="https://figmamcp.dev/zh/troubleshooting/not-working">
+<link rel="alternate" hreflang="x-default" href="https://figmamcp.dev/troubleshooting/not-working">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP not working? 14 symptoms with fixes">
+<meta property="og:description" content="Figma MCP not working or not connecting in Claude Code or Codex? Look up your symptom or error code, such as READ_ONLY_MODE, and get its cause and fix.">
+<meta property="og:url" content="https://figmamcp.dev/troubleshooting/not-working">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/troubleshooting/not-working#webpage","url":"https://figmamcp.dev/troubleshooting/not-working","name":"Figma MCP not working? 14 symptoms with fixes","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/troubleshooting/not-working#breadcrumb"},"dateModified":"2026-11-25"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/troubleshooting/not-working#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Troubleshooting","item":"https://figmamcp.dev/troubleshooting"},{"@type":"ListItem","position":3,"name":"Figma MCP not working: find your symptom","item":"https://figmamcp.dev/troubleshooting/not-working"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Why does my AI app not show FigmaMCP tools?", "acceptedAnswer": {"@type": "Answer", "text": "A running Claude Code or Codex reads its MCP settings only when it starts. Quit it, open it again, and keep the plugin open in your Figma file."}}, {"@type": "Question", "name": "Why does the plugin stay on Connecting\u2026?", "acceptedAnswer": {"@type": "Answer", "text": "The plugin looks for the local service on ports 3155 to 3158 and tries again every 3 seconds. Open the FigmaMCP app and it connects by itself."}}, {"@type": "Question", "name": "Do I need to reinstall when something fails?", "acceptedAnswer": {"@type": "Answer", "text": "Usually not. Check that your agent was restarted, that the plugin is open, and that the switch is on."}}, {"@type": "Question", "name": "Why does a retry give the same error?", "acceptedAnswer": {"@type": "Answer", "text": "These errors come from fixed rules. Change the condition first, for example open the plugin or refresh the layer name."}}, {"@type": "Question", "name": "Does this page apply to Figma's official MCP server?", "acceptedAnswer": {"@type": "Answer", "text": "No. It covers FigmaMCP only."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/troubleshooting">Troubleshooting</a></li><li aria-current="page">Figma MCP not working: find your symptom</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP not working: find your symptom</h1>
+<p class="lede">Most FigmaMCP problems come from three things: the agent started before setup, the plugin is not open, or the file is set to read-only. This page covers FigmaMCP. For Figma&rsquo;s own server, see <a href="https://developers.figma.com/docs/figma-mcp-server/">Figma&rsquo;s docs</a>.</p>
+
+<div class="tablewrap"><table>
+<caption class="sr">Symptoms, causes and fixes</caption>
+<thead><tr><th scope="col">What you see</th><th scope="col">Cause</th><th scope="col">Fix</th></tr></thead>
+<tbody>
+<tr><th scope="row">Download is slow, or <code>curl</code> gets 403</th><td><code>/download</code> redirects to a GitHub link that expires after about an hour</td><td>Download in the browser, or run <code>curl -L -O https://github.com/MrCoder/figmamcp-releases/releases/latest/download/FigmaMCP.dmg</code>. Then <a href="/docs/setup#verify">check the SHA-256</a>.</td></tr>
+<tr><th scope="row">The agent has no Figma tools</th><td>It was running before setup</td><td>Restart Claude Code or Codex.</td></tr>
+<tr><th scope="row">FigmaMCP is missing from the Plugins menu</th><td>The plugin is not installed</td><td>Open the FigmaMCP app and click Add to Figma.</td></tr>
+<tr><th scope="row"><code>PLUGIN_PEER_UNAVAILABLE</code>, or no plugin connected</th><td>The plugin is not open in this file</td><td>Open the file in the desktop app. Then choose Plugins, Development, FigmaMCP. Allow Accessibility if you want the app to do this for you.</td></tr>
+<tr><th scope="row"><code>CHANNEL_NOT_BOUND</code>, or the agent asks which file</th><td>The plugin is open in more than one file</td><td>Give your agent a Figma link to the file you mean, or close the plugin in the others.</td></tr>
+<tr><th scope="row"><code>READ_ONLY_MODE</code>, or it reads but does not edit</th><td>AI can edit this file is off</td><td>Turn the switch on in the plugin.</td></tr>
+<tr><th scope="row">The name does not match</th><td>The layer changed after the agent read it</td><td>Ask your agent to read the layer again and retry.</td></tr>
+<tr><th scope="row">Edit refused inside an instance</th><td>Structure inside an instance cannot change</td><td>Edit the main component, or change the instance&rsquo;s properties and overrides.</td></tr>
+<tr><th scope="row">A library asset is read-only</th><td>It belongs to another file</td><td>Edit it in its source library.</td></tr>
+<tr><th scope="row"><code>CONNECTION_NOT_READY</code> on <code>channel_join</code></th><td>The local relay connection did not open in time (FigmaMCP app not running, or the agent just started)</td><td>Open the FigmaMCP app and the plugin, then retry. Calling <code>page_info</code> first also works.</td></tr>
+<tr><th scope="row"><code>PLUGIN_DISCONNECTED</code></th><td>The plugin closed or reloaded during a command</td><td>Reopen the plugin. Check whether the last edit applied before you repeat it.</td></tr>
+<tr><th scope="row"><code>VERSION_MISMATCH</code></th><td>The app and plugin versions differ</td><td>Download the latest FigmaMCP, run its checklist, and restart your agent.</td></tr>
+<tr><th scope="row"><code>CHANNEL_IN_USE</code></th><td>Too many agent sessions use this file</td><td>End one of the other sessions.</td></tr>
+<tr><th scope="row">Nothing happens in browser Figma</th><td>FigmaMCP needs the desktop app</td><td>Open the file in the Figma desktop app.</td></tr>
+</tbody></table></div>
+
+<h2 id="tools-not-loading">Tools not loading</h2>
+<p class="measure">Your AI app does not list FigmaMCP tools, or it says it has no Figma tools. Work down this list and stop when the tools appear.</p>
+<ol class="plain"><li><strong>Quit and reopen Claude Code or Codex.</strong> A running app reads its MCP settings only when it starts. One that was open during setup does not see FigmaMCP until you quit it and open it again.</li><li><strong>Open the plugin in a Figma file.</strong> In the Figma desktop app, choose Plugins, Development, FigmaMCP. If the panel says &ldquo;No AI app has FigmaMCP loaded yet&rdquo;, the restart in step 1 has not taken effect. If it says &ldquo;FigmaMCP isn&rsquo;t running&rdquo;, open the FigmaMCP app. The plugin reconnects by itself.</li><li><strong>Check that the plugin is installed.</strong> If FigmaMCP is not in the Plugins menu, see <a href="/troubleshooting/plugin-not-showing">plugin not showing</a>.</li><li><strong>Check which Figma tool you mean.</strong> Claude&rsquo;s built-in Figma connector is a different server. See <a href="#claude-figma-connector">the connector section below</a>.</li></ol>
+<p class="measure">If the tools are listed but a call returns <code>CHANNEL_NOT_BOUND</code>, the plugin is open in more than one file. Give your agent a Figma link to the file you mean.</p>
+
+<h2 id="slow-or-stuck">Slow or stuck</h2>
+<p class="measure">A call hangs, the plugin shows Connecting&hellip;, or nothing happens.</p>
+<div class="tablewrap"><table>
+<caption class="sr">Slow or stuck: what you see, cause and fix</caption>
+<thead><tr><th scope="col">What you see</th><th scope="col">Cause</th><th scope="col">Fix</th></tr></thead>
+<tbody>
+<tr><th scope="row">The plugin shows &ldquo;Connecting&hellip;&rdquo; or &ldquo;Can&rsquo;t connect&rdquo;</th><td>The plugin looks for the local service on ports 3155 to 3158 and tries again every 3 seconds</td><td>Open the FigmaMCP app and wait a few seconds. The panel changes to Connected on its own.</td></tr>
+<tr><th scope="row">&ldquo;The plugin did not respond. Trying again.&rdquo;</th><td>The plugin did not answer within 5 seconds of the connect request</td><td>Wait for the next try. If it keeps repeating, close the plugin and open it again.</td></tr>
+<tr><th scope="row">The agent waits and nothing changes in Figma</th><td>The plugin is not open in this file, or it is open in several files, or the file is in browser Figma</td><td>Open the file in the Figma desktop app and open the plugin there. For several files, give your agent a link to the one you mean.</td></tr>
+<tr><th scope="row">The first call after the agent starts fails with <code>CONNECTION_NOT_READY</code></th><td>The local connection was not open yet</td><td>Open the FigmaMCP app and the plugin, then retry.</td></tr>
+<tr><th scope="row">A read of a large file times out (<code>PAGE_LOAD_TIMEOUT</code>)</th><td>A page did not finish loading in time</td><td>Retry once. If it times out again, ask your agent to read one page or one layer at a time.</td></tr>
+</tbody></table></div>
+<p class="measure">A retry gives the same result until the condition changes, so fix the cause first. For a failed edit, check whether it applied before you repeat it.</p>
+
+<h2 id="claude-figma-connector">Claude&rsquo;s Figma connector not working</h2>
+<p class="measure">Claude&rsquo;s built-in Figma connector is Figma&rsquo;s official remote server. It runs on Figma&rsquo;s hosted service, not on your Mac. FigmaMCP is a different tool: a free local plugin server that works on the file open in the Figma desktop app. The two do not share a connection, so the table above does not explain a connector problem.</p>
+<ul class="plain"><li><strong>Plan or seat limits:</strong> the official server has call limits by plan. A View or Collab seat gets 20 calls a month, and Pro Full or Dev gets 200 a day. Checked November 22, 2026. See <a href="/figma-mcp-rate-limit">Figma MCP rate limit by plan</a>.</li><li><strong>Edits need a Full seat:</strong> writing to the canvas is in beta on the remote server, and it needs a Full seat outside drafts. Read calls can work while edits fail.</li><li><strong>Wrong server in mind:</strong> if your agent should use FigmaMCP, it must be set up on your Mac and the agent restarted. Follow the <a href="/docs/setup">setup guide</a>.</li></ul>
+<p class="measure">For the official server&rsquo;s own errors, use <a href="https://developers.figma.com/docs/figma-mcp-server/">Figma&rsquo;s docs</a>. For the differences between the two, read <a href="/compare/official-figma-mcp">Official Figma MCP vs FigmaMCP</a>.</p>
+
+<h2>Still stuck?</h2>
+<p class="measure">Open an issue on the <a href="https://github.com/MrCoder/figmamcp-releases/issues">releases page</a>. Include what you asked, the exact error and your macOS version. Do not include private design content. See also the <a href="/docs/setup">setup guide</a>.</p>
+
+<h2>Questions</h2><div class="faq"><details><summary>Why does my AI app not show FigmaMCP tools?</summary><div class="ans">A running Claude Code or Codex reads its MCP settings only when it starts. Quit it, open it again, and keep the plugin open in your Figma file.</div></details><details><summary>Why does the plugin stay on Connecting&hellip;?</summary><div class="ans">The plugin looks for the local service on ports 3155 to 3158 and tries again every 3 seconds. Open the FigmaMCP app and it connects by itself.</div></details><details><summary>Do I need to reinstall when something fails?</summary><div class="ans">Usually not. Check that your agent was restarted, that the plugin is open, and that the switch is on.</div></details><details><summary>Why does a retry give the same error?</summary><div class="ans">These errors come from fixed rules. Change the condition first, for example open the plugin or refresh the layer name.</div></details><details><summary>Does this page apply to Figma's official MCP server?</summary><div class="ans">No. It covers FigmaMCP only.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-25">2026-11-25</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/troubleshooting/plugin-not-showing">Plugin not showing</a><a href="/can-claude-edit-figma">Can Claude edit Figma</a><a href="/is-figma-mcp-safe">Is it safe</a><a href="/figma-mcp-cursor">Cursor</a><a href="/figma-mcp-windows">Windows</a><a href="/compare/figma-make">Figma Make</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

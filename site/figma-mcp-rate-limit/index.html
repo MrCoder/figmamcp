@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP rate limit by plan: what it covers</title>
+<meta name="description" content="Figma's MCP rate limits by plan, checked 2026-11-22. The cap applies to tools that read data; tools that write to Figma files are exempt.">
+<link rel="canonical" href="https://figmamcp.dev/figma-mcp-rate-limit">
+<link rel="alternate" hreflang="en" href="https://figmamcp.dev/figma-mcp-rate-limit">
+<link rel="alternate" hreflang="ja" href="https://figmamcp.dev/ja/figma-mcp-rate-limit">
+<link rel="alternate" hreflang="zh-CN" href="https://figmamcp.dev/zh/figma-mcp-rate-limit">
+<link rel="alternate" hreflang="x-default" href="https://figmamcp.dev/figma-mcp-rate-limit">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP rate limit by plan: what it covers">
+<meta property="og:description" content="Figma's MCP rate limits by plan, checked 2026-11-22. The cap applies to tools that read data; tools that write to Figma files are exempt.">
+<meta property="og:url" content="https://figmamcp.dev/figma-mcp-rate-limit">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/figma-mcp-rate-limit#webpage","url":"https://figmamcp.dev/figma-mcp-rate-limit","name":"Figma MCP rate limit by plan: what it covers","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/figma-mcp-rate-limit#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/figma-mcp-rate-limit#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Figma MCP rate limit","item":"https://figmamcp.dev/figma-mcp-rate-limit"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the Figma MCP rate limit?", "acceptedAnswer": {"@type": "Answer", "text": "It depends on the seat and plan. As of 2026-11-22, Figma lists up to 20 calls per month for a View or Collab seat on any plan, and for Full or Dev seats up to 200 per day and 10 per minute on Professional, 200 per day and 15 per minute on Organization, and 600 per day and 20 per minute on Enterprise."}}, {"@type": "Question", "name": "Do Figma MCP write calls count against the limit?", "acceptedAnswer": {"@type": "Answer", "text": "No. Figma says the limits apply to tools that read data from Figma, and that some tools are exempt, including tools that write to Figma files. Source: Figma's rate limits and access page, checked 2026-11-22."}}, {"@type": "Question", "name": "Which calls hit the limit?", "acceptedAnswer": {"@type": "Answer", "text": "Read tools, for example get_design_context, get_metadata and get_screenshot. An agent that looks at a design before it edits it uses these first."}}, {"@type": "Question", "name": "Does FigmaMCP have a call limit?", "acceptedAnswer": {"@type": "Answer", "text": "FigmaMCP has no call quota of its own and does not call Figma's MCP server. It works through a plugin in your Figma desktop app, so you need your existing access to the file, and edit access to edit."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">Figma MCP rate limit</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP rate limit by plan</h1>
+<p class="lede">Figma&rsquo;s own MCP server limits how many calls an account can make. The limit applies to tools that read data from Figma. Some tools are exempt, including tools that write to Figma files. This page lists the limits by plan as Figma publishes them, checked 2026-11-22, and says what that means when an agent works on a design.</p>
+
+<h2>The limits by plan</h2>
+<div class="tablewrap"><table>
+<caption class="sr">Figma MCP server read-call limits by seat and plan</caption>
+<thead><tr><th scope="col">Seat and plan</th><th scope="col">Limit on read calls</th><th scope="col">In practice</th></tr></thead>
+<tbody>
+<tr><th scope="row">View or Collab seat, any plan (including Starter)</th><td>Up to 20 per month</td><td>An agent that reads one page and a few frames can use the whole month in one session</td></tr>
+<tr><th scope="row">Professional, Full or Dev seat</th><td>Up to 200 per day, 10 per minute</td><td>The 11th read call inside one minute is over the limit, even if the day has plenty left</td></tr>
+<tr><th scope="row">Organization, Full or Dev seat</th><td>Up to 200 per day, 15 per minute</td><td>Same shape as Professional, with 5 more calls a minute</td></tr>
+<tr><th scope="row">Enterprise, Full or Dev seat</th><td>Up to 600 per day, 20 per minute</td><td>The highest published allowance; it is still a limit</td></tr>
+<tr><th scope="row">Education plans</th><td>Same as Professional Full or Dev: 200 per day, 10 per minute</td><td>Per Figma&rsquo;s page</td></tr>
+<tr><th scope="row">Starter, Full or Dev seat</th><td>Up to 20 per month</td><td>Figma&rsquo;s table shows a dash here, and the same page&rsquo;s upgrade advice gives the Starter plan 20 calls per month</td></tr>
+</tbody></table></div>
+<p class="fine">Source: <a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">Figma developer docs, MCP server rate limits and access</a>, checked 2026-11-22. Figma may change these numbers, and its page is the authority.</p>
+
+<h2>What counts and what does not</h2>
+<div class="tablewrap"><table>
+<caption class="sr">Which Figma MCP tools count against the limit</caption>
+<thead><tr><th scope="col">Kind of tool</th><th scope="col">Counts against the limit</th><th scope="col">Examples</th></tr></thead>
+<tbody>
+<tr><th scope="row">Reads data from Figma</th><td>Yes</td><td><code>get_design_context</code>, <code>get_metadata</code>, <code>get_screenshot</code></td></tr>
+<tr><th scope="row">Writes to Figma files</th><td>No, exempt</td><td>Tools that write to Figma files; Figma&rsquo;s page names <code>add_code_connect_map</code>, <code>create_new_file</code> and <code>generate_figma_design</code> as exempt, and also <code>whoami</code>, which reads your account details</td></tr>
+</tbody></table></div>
+<p>Figma also says that actions which use Figma AI credits, such as generating images or sending prompts to Figma Make, do not count toward MCP rate limits. The <a href="#checker">checker below</a> lists every tool.</p>
+<p>Writing to the canvas has its own terms, which are separate from the rate limit: see <a href="/figma-mcp-write-to-canvas">write to canvas</a> for plan and edit access.</p>
+
+<h2 id="checker">Figma MCP rate limit checker</h2>
+<p class="measure">The table lists each tool of Figma&rsquo;s own MCP server, whether Figma lists it as a read or a write tool, and whether its calls count toward the rate limit. Read tools count. Write tools are exempt, and so is <code>whoami</code>, a read tool that Figma names as exempt. The official server can write to Figma files; those calls simply do not use the allowance. With JavaScript on, pick your plan and seat, enter how many calls you expect, and the checker adds up the calls that count.</p>
+<p class="fine">Facts from Figma&rsquo;s <a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">rate limits and access</a> and <a href="https://developers.figma.com/docs/figma-mcp-server/tools-and-prompts/">tools and prompts</a> pages, checked 2026-11-22. Left out: three Code Connect tools that Figma calls itself, the Weave tools and the one MCP prompt, because Figma&rsquo;s tool index does not list them as read or write.</p>
+<div id="rl-checker" class="checker" hidden>
+<label for="rl-plan">Your plan and seat</label>
+<select id="rl-plan">
+<option value="view" data-row="View or Collab seat, any plan (including Starter)" data-limit="20" data-period="month">View or Collab seat, any plan: 20 per month</option>
+<option value="starter" data-row="Starter, Full or Dev seat" data-limit="20" data-period="month">Starter plan, Full or Dev seat: 20 per month</option>
+<option value="professional" data-row="Professional, Full or Dev seat" data-limit="200" data-period="day" data-minute="10">Professional, Full or Dev seat: 200 per day, 10 per minute</option>
+<option value="organization" data-row="Organization, Full or Dev seat" data-limit="200" data-period="day" data-minute="15">Organization, Full or Dev seat: 200 per day, 15 per minute</option>
+<option value="enterprise" data-row="Enterprise, Full or Dev seat" data-limit="600" data-period="day" data-minute="20">Enterprise, Full or Dev seat: 600 per day, 20 per minute</option>
+<option value="education" data-row="Education plans" data-limit="200" data-period="day" data-minute="10">Education plan: 200 per day, 10 per minute</option>
+</select>
+<p class="fine">Enter calls per <span data-rl-period>month</span> in the Calls column. Limits checked 2026-11-22 on <a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">Figma&rsquo;s page</a>.</p>
+</div>
+<div class="tablewrap"><table id="rl-tools">
+<caption class="sr">Official Figma MCP server tools: read or write, and whether calls count toward the rate limit</caption>
+<thead><tr><th scope="col">Tool</th><th scope="col">Read or write</th><th scope="col">Rate limit</th></tr></thead>
+<tbody>
+<tr data-tool="download_assets" data-kind="read" data-counts="yes"><th scope="row"><code>download_assets</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="export_video" data-kind="read" data-counts="yes"><th scope="row"><code>export_video</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="get_code_connect_map" data-kind="read" data-counts="yes"><th scope="row"><code>get_code_connect_map</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="get_comments" data-kind="read" data-counts="yes"><th scope="row"><code>get_comments</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="get_design_context" data-kind="read" data-counts="yes"><th scope="row"><code>get_design_context</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="get_figjam" data-kind="read" data-counts="yes"><th scope="row"><code>get_figjam</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="get_generative_plugin" data-kind="read" data-counts="yes"><th scope="row"><code>get_generative_plugin</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="get_libraries" data-kind="read" data-counts="yes"><th scope="row"><code>get_libraries</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="get_metadata" data-kind="read" data-counts="yes"><th scope="row"><code>get_metadata</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="get_motion_context" data-kind="read" data-counts="yes"><th scope="row"><code>get_motion_context</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="get_screenshot" data-kind="read" data-counts="yes"><th scope="row"><code>get_screenshot</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="get_shader" data-kind="read" data-counts="yes"><th scope="row"><code>get_shader</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="get_variable_defs" data-kind="read" data-counts="yes"><th scope="row"><code>get_variable_defs</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="list_file_shaders" data-kind="read" data-counts="yes"><th scope="row"><code>list_file_shaders</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="list_generative_plugins" data-kind="read" data-counts="yes"><th scope="row"><code>list_generative_plugins</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="list_shaders" data-kind="read" data-counts="yes"><th scope="row"><code>list_shaders</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="search_design_system" data-kind="read" data-counts="yes"><th scope="row"><code>search_design_system</code></th><td>Read</td><td>Counts toward the limit</td></tr>
+<tr data-tool="whoami" data-kind="read" data-counts="no"><th scope="row"><code>whoami</code></th><td>Read</td><td>Exempt: Figma names it</td></tr>
+<tr data-tool="add_code_connect_map" data-kind="write" data-counts="no"><th scope="row"><code>add_code_connect_map</code></th><td>Write</td><td>Exempt: Figma names it</td></tr>
+<tr data-tool="create_generative_plugin" data-kind="write" data-counts="no"><th scope="row"><code>create_generative_plugin</code></th><td>Write</td><td>Exempt: a write tool; the limits apply to read tools</td></tr>
+<tr data-tool="create_new_file" data-kind="write" data-counts="no"><th scope="row"><code>create_new_file</code></th><td>Write</td><td>Exempt: Figma names it</td></tr>
+<tr data-tool="create_shader" data-kind="write" data-counts="no"><th scope="row"><code>create_shader</code></th><td>Write</td><td>Exempt: a write tool; the limits apply to read tools</td></tr>
+<tr data-tool="generate_diagram" data-kind="write" data-counts="no"><th scope="row"><code>generate_diagram</code></th><td>Write</td><td>Exempt: a write tool; the limits apply to read tools</td></tr>
+<tr data-tool="generate_figma_design" data-kind="write" data-counts="no"><th scope="row"><code>generate_figma_design</code></th><td>Write</td><td>Exempt: Figma names it</td></tr>
+<tr data-tool="generate_image" data-kind="write" data-counts="no"><th scope="row"><code>generate_image</code></th><td>Write</td><td>Exempt: a write tool; the limits apply to read tools</td></tr>
+<tr data-tool="generate_vector_illustration" data-kind="write" data-counts="no"><th scope="row"><code>generate_vector_illustration</code></th><td>Write</td><td>Exempt: a write tool; the limits apply to read tools</td></tr>
+<tr data-tool="html_to_figma" data-kind="write" data-counts="no"><th scope="row"><code>html_to_figma</code></th><td>Write</td><td>Exempt: a write tool; the limits apply to read tools</td></tr>
+<tr data-tool="send_code_to_figma" data-kind="write" data-counts="no"><th scope="row"><code>send_code_to_figma</code></th><td>Write</td><td>Exempt: a write tool; the limits apply to read tools</td></tr>
+<tr data-tool="update_generative_plugin" data-kind="write" data-counts="no"><th scope="row"><code>update_generative_plugin</code></th><td>Write</td><td>Exempt: a write tool; the limits apply to read tools</td></tr>
+<tr data-tool="update_shader" data-kind="write" data-counts="no"><th scope="row"><code>update_shader</code></th><td>Write</td><td>Exempt: a write tool; the limits apply to read tools</td></tr>
+<tr data-tool="upload_assets" data-kind="write" data-counts="no"><th scope="row"><code>upload_assets</code></th><td>Write</td><td>Exempt: a write tool; the limits apply to read tools</td></tr>
+<tr data-tool="use_figma" data-kind="write" data-counts="no"><th scope="row"><code>use_figma</code></th><td>Write</td><td>Exempt: a write tool; the limits apply to read tools</td></tr>
+</tbody></table></div>
+<output id="rl-result" class="rl-result" for="rl-plan" aria-live="polite" hidden></output>
+
+<h2>What this means in practice</h2>
+<ul class="plain"><li>The part of an agent&rsquo;s work that meets the cap is looking. A task that starts by reading a page, then its frames, then their text and styles, spends read calls before it changes anything.</li><li>A task that mostly writes uses little of the allowance. A task that mostly reads uses it quickly.</li><li>If you hit the cap, ask the agent for fewer, narrower reads. Point it at one frame instead of a whole file. Our <a href="/figma-mcp-limit-reached">Figma MCP limit reached</a> page lists the other options.</li></ul>
+
+<h2>How FigmaMCP differs</h2>
+<p>FigmaMCP is a Mac app with a local server and a plugin inside the Figma desktop app. Your agent talks to the local server, and the plugin reads and edits the open file through Figma&rsquo;s Plugin API on your machine. It does not call Figma&rsquo;s MCP server, so Figma&rsquo;s MCP rate limits are not part of how it works, and FigmaMCP has no call quota of its own.</p>
+<p>That does not remove every Figma rule. Whether your account can run a development plugin in your file is Figma&rsquo;s decision, and we have not tested every plan. Try it on one file before you plan around it. See also <a href="/compare/official-figma-mcp">Official Figma MCP vs FigmaMCP</a> and <a href="/pricing">pricing</a>.</p>
+<figure class="step-shot"><img src="/assets/figmamcp-agent-editing.webp" width="1600" height="554" loading="lazy" decoding="async" alt="Figma shows a pricing card while Claude Code in the terminal beside it renames the card&rsquo;s layers through FigmaMCP"><figcaption>Claude Code renames layers in the open Figma file through FigmaMCP. These calls do not count toward Figma&rsquo;s MCP rate limit.</figcaption></figure>
+<p>To set it up and make a first read, follow <a href="/tutorials/edit-figma-with-claude-code">Edit a Figma file with Claude Code in 5 minutes</a>.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+<h2>Questions</h2><div class="faq"><details><summary>What is the Figma MCP rate limit?</summary><div class="ans">It depends on the seat and plan. As of 2026-11-22, Figma lists up to 20 calls per month for a View or Collab seat on any plan, and for Full or Dev seats up to 200 per day and 10 per minute on Professional, 200 per day and 15 per minute on Organization, and 600 per day and 20 per minute on Enterprise.</div></details><details><summary>Do Figma MCP write calls count against the limit?</summary><div class="ans">No. Figma says the limits apply to tools that read data from Figma, and that some tools are exempt, including tools that write to Figma files. Source: Figma&rsquo;s rate limits and access page, checked 2026-11-22.</div></details><details><summary>Which calls hit the limit?</summary><div class="ans">Read tools, for example <code>get_design_context</code>, <code>get_metadata</code> and <code>get_screenshot</code>. An agent that looks at a design before it edits it uses these first.</div></details><details><summary>Does FigmaMCP have a call limit?</summary><div class="ans">FigmaMCP has no call quota of its own and does not call Figma&rsquo;s MCP server. It works through a plugin in your Figma desktop app, so you need your existing access to the file, and edit access to edit.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+<script src="/rate-limit-checker.js" defer></script>
+</body></html>

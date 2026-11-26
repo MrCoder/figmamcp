@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP write: what the agent can create and edit</title>
+<meta name="description" content="What Claude Code or Codex can create and edit in Figma via FigmaMCP: frames, shapes, text, components, instances, styles, variables, auto layout, with checks.">
+<link rel="canonical" href="https://figmamcp.dev/tools/write">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP write: what the agent can create and edit">
+<meta property="og:description" content="What Claude Code or Codex can create and edit in Figma via FigmaMCP: frames, shapes, text, components, instances, styles, variables, auto layout, with checks.">
+<meta property="og:url" content="https://figmamcp.dev/tools/write">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/tools/write#webpage","url":"https://figmamcp.dev/tools/write","name":"Figma MCP write: what the agent can create and edit","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/tools/write#breadcrumb"},"dateModified":"2026-11-25"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/tools/write#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://figmamcp.dev/tools"},{"@type":"ListItem","position":3,"name":"Figma MCP write: what your agent can create and edit","item":"https://figmamcp.dev/tools/write"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can the agent create a new design from scratch?","acceptedAnswer":{"@type":"Answer","text":"It can build frames, shapes, text and components, and lay them out with auto layout. The result is only as good as your prompt, so review it."}},{"@type":"Question","name":"Can it change my variables and styles?","acceptedAnswer":{"@type":"Answer","text":"Yes, while the AI can edit this file switch is on. With it off, the agent can only read them."}},{"@type":"Question","name":"Can the agent delete my work?","acceptedAnswer":{"@type":"Answer","text":"Only layers inside the file where the plugin is open and its AI can edit this file switch is on. Locked layers are protected, and the layer it deletes must be named correctly. Use Figma version history as your safety net."}},{"@type":"Question","name":"Does writing use Figma's MCP limits?","acceptedAnswer":{"@type":"Answer","text":"No. FigmaMCP does not call Figma's MCP server. It works through the Plugin API inside the desktop app. Figma's own write terms are described above."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/tools">Tools</a></li><li aria-current="page">Figma MCP write: what your agent can create and edit</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP write: what your agent can create and edit</h1>
+<p class="lede">Your agent can create and change frames, shapes, text, components, instances, styles, variables and auto layout in the Figma file you have open. With FigmaMCP, that agent is Claude Code or Codex, and every write passes safety checks before it runs.</p>
+
+<h2>What the agent can do</h2>
+<div class="tablewrap"><table>
+<caption class="sr">What the agent can create and edit, by group</caption>
+<thead><tr><th scope="col">Group</th><th scope="col">What it can do</th></tr></thead>
+<tbody>
+<tr><th scope="row">Frames and structure</th><td>Create frames. Group, ungroup, clone, rename, move, resize and delete layers. Move a layer into another parent.</td></tr>
+<tr><th scope="row">Shapes and vectors</th><td>Create rectangles, ellipses, polygons and stars. Create a shape from SVG. Set fills, strokes, effects and corner radius.</td></tr>
+<tr><th scope="row">Text</th><td>Create text layers. Change the words. Change font, size and other text style.</td></tr>
+<tr><th scope="row">Components</th><td>Create components and component sets. Add and manage component properties.</td></tr>
+<tr><th scope="row">Instances</th><td>Create instances of a component. Set their properties and overrides.</td></tr>
+<tr><th scope="row">Styles</th><td>Create and edit paint, text, effect and grid styles. Apply a style to a layer.</td></tr>
+<tr><th scope="row">Variables</th><td>Create and edit variables and collections. Bind a variable to a layer property so it follows the token.</td></tr>
+<tr><th scope="row">Auto layout</th><td>Turn on auto layout for a frame. Set direction, spacing, padding and alignment.</td></tr>
+</tbody></table></div>
+<p class="measure">The agent can also read: pages, layers, components, styles and variables, plus a picture of a layer. Reads never change the file. Annotations and prototype reactions are included too.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+
+<h2>The safety checks, in plain words</h2>
+<ul class="plain">
+<li><strong>Only the file you chose.</strong> Writes go only to the file where the plugin is open and its AI can edit this file switch is on. Switch it off and the agent can only read.</li>
+<li><strong>Right layer, by name.</strong> To change an existing layer, variable or style, the agent must give its current name. If the name does not match, the edit is refused.</li>
+<li><strong>Bulk edits are checked first.</strong> If one item in a batch is invalid, nothing in the batch changes.</li>
+<li><strong>Locked layers stay locked.</strong> Locked layers, assets from shared libraries, and the inside of component instances are not edited around.</li>
+<li><strong>Variables and styles follow the same switch.</strong> With it off, the agent can only read them.</li>
+<li><strong>Clear errors.</strong> A refused edit returns a plain reason, and the agent can correct the request.</li></ul>
+<p class="measure">A wrong edit that follows the rules still goes through, because the checks cannot know what you meant. Review the result, and use Figma version history. For setup, see <a href="/docs/setup">Figma MCP setup</a>.</p>
+
+<h2>How this relates to Figma&rsquo;s own write tools</h2>
+<p class="measure">Figma&rsquo;s official server has its own way to write to the canvas. Figma says it needs a Professional plan or above with edit access, and that it is free in beta and planned to become usage-based. See <a href="https://developers.figma.com/docs/figma-mcp-server/write-to-canvas">Figma&rsquo;s write to canvas page</a>, checked November 22, 2026. FigmaMCP works differently: through a development plugin in the desktop app. Whether your account can run one is up to Figma, and we have not tested every plan.</p>
+
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+<h2>Questions</h2><div class="faq"><details><summary>Can the agent create a new design from scratch?</summary><div class="ans">It can build frames, shapes, text and components, and lay them out with auto layout. The result is only as good as your prompt, so review it.</div></details><details><summary>Can it change my variables and styles?</summary><div class="ans">Yes, while the AI can edit this file switch is on. With it off, the agent can only read them.</div></details><details><summary>Can the agent delete my work?</summary><div class="ans">Only layers inside the file where the plugin is open and its AI can edit this file switch is on. Locked layers are protected, and the layer it deletes must be named correctly. Use Figma version history as your safety net.</div></details><details><summary>Does writing use Figma&rsquo;s MCP limits?</summary><div class="ans">No. FigmaMCP does not call Figma&rsquo;s MCP server. It works through the Plugin API inside the desktop app. Figma&rsquo;s own write terms are described above.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-25">2026-11-25</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

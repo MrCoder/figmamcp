@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP use cases: what agents do in Figma</title>
+<meta name="description" content="A hub of FigmaMCP use cases: bulk edit layers, code to canvas, design to code, editing a live file with AI, and auditing a Figma file.">
+<link rel="canonical" href="https://figmamcp.dev/use-cases">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP use cases: what agents do in Figma">
+<meta property="og:description" content="A hub of FigmaMCP use cases: bulk edit layers, code to canvas, design to code, editing a live file with AI, and auditing a Figma file.">
+<meta property="og:url" content="https://figmamcp.dev/use-cases">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Figma MCP use cases: what agents do in Figma">
+<meta name="twitter:description" content="A hub of FigmaMCP use cases: bulk edit layers, code to canvas, design to code, editing a live file with AI, and auditing a Figma file.">
+<meta name="twitter:image" content="https://figmamcp.dev/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/use-cases#webpage","url":"https://figmamcp.dev/use-cases","name":"Figma MCP use cases: what agents do in Figma","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/use-cases#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/use-cases#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Figma MCP use cases","item":"https://figmamcp.dev/use-cases"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which use case should I try first?","acceptedAnswer":{"@type":"Answer","text":"Try the audit. It only reads, so it cannot change your file. Then try a small bulk edit on a duplicate page."}},{"@type":"Question","name":"Do these pages need different setup?","acceptedAnswer":{"@type":"Answer","text":"No. Setup is the same for every job: install the Mac app, open your file in the Figma desktop app and ask your agent."}},{"@type":"Question","name":"Can FigmaMCP turn a design into code by itself?","acceptedAnswer":{"@type":"Answer","text":"No. FigmaMCP lets your agent read the design. The agent writes the code in your project with its own file tools."}},{"@type":"Question","name":"Can it import an HTML file into Figma?","acceptedAnswer":{"@type":"Answer","text":"No. There is no HTML importer. The agent reads your code and builds frames, text and shapes with the create tools."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">Figma MCP use cases</li></ol></nav>
+<article class="wrap page">
+<h1>Figma MCP use cases</h1>
+<p class="lede">Pick the job you want done, and the table sends you to the page for it: bulk edits, a read-only audit, building a design from code, or reading a design to write code. Each page uses FigmaMCP, which connects Claude Code or Codex to the Figma file you have open on your Mac. New to it? Start with a job that only reads.</p>
+<h2>Pick a page by task</h2>
+<div class="tablewrap"><table><caption class="sr">FigmaMCP use-case pages</caption>
+<thead><tr><th scope="col">Your task</th><th scope="col">Page</th><th scope="col">Main tools</th></tr></thead><tbody>
+<tr><th scope="row">Rename, restyle or replace text across many layers</th><td><a href="/use-cases/bulk-edit-figma-layers">Bulk edit Figma layers</a></td><td><code>node_rename</code>, <code>text_set_content</code>, <code>node_apply_style</code>, <code>node_delete</code></td></tr>
+<tr><th scope="row">Change a live file from Claude Code or Codex in general</th><td><a href="/use-cases/edit-figma-with-ai">Edit Figma with AI</a></td><td><code>node_rename</code>, <code>text_set_content</code>, <code>create_frame</code>, <code>node_bind_variable</code>, <code>annotation_set</code></td></tr>
+<tr><th scope="row">Build frames, text and shapes from code</th><td><a href="/use-cases/code-to-design">Code to canvas</a></td><td><code>create_frame</code>, <code>create_text</code>, <code>create_svg</code>, <code>node_set_auto_layout</code></td></tr>
+<tr><th scope="row">Read a design and write the code yourself</th><td><a href="/use-cases/design-to-code">Design to code</a></td><td><code>page_info</code>, <code>node_info</code>, <code>variable_list</code>, <code>node_export_visual</code></td></tr>
+<tr><th scope="row">List unstyled layers, unnamed frames and missing bindings</th><td><a href="/use-cases/figma-design-audit">Audit a Figma file</a></td><td><code>page_info</code>, <code>node_info</code>, <code>style_list</code>, <code>variable_list</code>, <code>component_list</code></td></tr>
+</tbody></table></div>
+<h2>Reading is safer than writing</h2>
+<p class="measure">FigmaMCP splits its tools into reads and writes. The read tools never change the file. They are <code>page_info</code>, <code>node_info</code>, <code>style_list</code>, <code>variable_list</code>, <code>component_list</code>, <code>annotation_list</code>, <code>reaction_list</code> and <code>instance_get_overrides</code>. The audit and design-to-code pages use mostly these. If you are new to the tool, start with one of them.</p>
+<h2>What every write has in common</h2>
+<p class="measure">FigmaMCP checks each write before it runs. The edit goes only to the open file where the plugin&rsquo;s AI can edit this file switch is on. Each edit names its target layer, and the name must match the layer&rsquo;s real name. Batch tools check every item first, so one invalid item stops the call with no change. A refused call returns a structured error, such as <code>NAME_MISMATCH</code> or <code>READ_ONLY_MODE</code>, and the agent can correct the request. A wrong edit that follows the rules still goes through, so keep Figma version history on.</p>
+<h2>Which job to start with</h2>
+<div class="tablewrap"><table><caption class="sr">Starting points</caption>
+<thead><tr><th scope="col">If you want</th><th scope="col">Start with</th><th scope="col">Why</th></tr></thead><tbody>
+<tr><th scope="row">To see what the agent finds, with no risk</th><td>Audit a Figma file</td><td>It only reads.</td></tr>
+<tr><th scope="row">To save time on repeated edits</th><td>Bulk edit Figma layers</td><td>Check one result by eye, then run the rest.</td></tr>
+<tr><th scope="row">To move a screen from code into Figma</th><td>Code to canvas</td><td>Build one frame first, then check the picture.</td></tr>
+<tr><th scope="row">To turn a design into code</th><td>Design to code</td><td>The agent reads layers, tokens and a picture. FigmaMCP does not write the code.</td></tr>
+</tbody></table></div>
+<h2>Limits that apply to every page</h2>
+<ul>
+<li>macOS only for now, and the Figma desktop app is required. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li>
+<li>FigmaMCP is independent. It is not affiliated with Figma, Inc.</li>
+</ul>
+<p class="measure">First time? The tutorial <a href="/tutorials/edit-figma-with-claude-code">Edit a Figma file with Claude Code in 5 minutes</a> takes you from download to a first read and a first edit. Then try <a href="/tutorials/design-qa-figma-file">Run a design QA pass on a Figma file with an AI agent</a>: the agent scores one frame, fixes what scores lowest and repeats. To build a new screen, <a href="/tutorials/spec-to-figma-frames">turn a written spec into Figma frames</a>; to clean up a frame, <a href="/tutorials/rename-figma-layers">rename Figma layers with an AI agent</a>. All four are on the <a href="/tutorials">tutorials page</a>.</p>
+<p class="measure">Each page lists its own tools, steps and errors. For the full tool list, see <a href="/tools">all tools</a>.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+
+<h2>Questions</h2><div class="faq"><details><summary>Which use case should I try first?</summary><div class="ans">Try the audit. It only reads, so it cannot change your file. Then try a small bulk edit on a duplicate page.</div></details><details><summary>Do these pages need different setup?</summary><div class="ans">No. Setup is the same for every job: install the Mac app, open your file in the Figma desktop app and ask your agent.</div></details><details><summary>Can FigmaMCP turn a design into code by itself?</summary><div class="ans">No. FigmaMCP lets your agent read the design. The agent writes the code in your project with its own file tools.</div></details><details><summary>Can it import an HTML file into Figma?</summary><div class="ans">No. There is no HTML importer. The agent reads your code and builds frames, text and shapes with the create tools.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

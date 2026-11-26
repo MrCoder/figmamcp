@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Run a design QA pass on a Figma file with an AI agent</title>
+<meta name="description" content="Run a design QA pass on a Figma frame with Claude Code or Codex: the agent scores six categories, fixes the lowest ones and repeats until each scores 9 or more.">
+<link rel="canonical" href="https://figmamcp.dev/tutorials/design-qa-figma-file">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Run a design QA pass on a Figma file with an AI agent">
+<meta property="og:description" content="Run a design QA pass on a Figma frame with Claude Code or Codex: the agent scores six categories, fixes the lowest ones and repeats until each scores 9 or more.">
+<meta property="og:url" content="https://figmamcp.dev/tutorials/design-qa-figma-file">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/tutorials/design-qa-figma-file#webpage","url":"https://figmamcp.dev/tutorials/design-qa-figma-file","name":"Run a design QA pass on a Figma file with an AI agent","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/tutorials/design-qa-figma-file#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/tutorials/design-qa-figma-file#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Tutorials","item":"https://figmamcp.dev/tutorials"},{"@type":"ListItem","position":3,"name":"Run a design QA pass on a Figma file with an AI agent","item":"https://figmamcp.dev/tutorials/design-qa-figma-file"}]},{"@type":"HowTo","name":"Run a design QA pass on a Figma file with an AI agent","description":"Run a design QA pass on a Figma frame with Claude Code or Codex: the agent scores six categories, fixes the lowest ones and repeats until each scores 9 or more.","tool":[{"@type":"HowToTool","name":"A Mac with macOS 14 or later"},{"@type":"HowToTool","name":"The Figma desktop app"},{"@type":"HowToTool","name":"Claude Code or Codex"},{"@type":"HowToTool","name":"The figma-design-qa skill"}],"step":[{"@type":"HowToStep","position":1,"name":"Set up FigmaMCP","text":"Install the FigmaMCP Mac app and connect Claude Code or Codex. If you have not done this yet, follow the tutorial Edit a Figma file with Claude Code in 5 minutes first.","url":"https://figmamcp.dev/tutorials/design-qa-figma-file#step-1"},{"@type":"HowToStep","position":2,"name":"Copy the figma-design-qa skill","text":"Copy the skills/figma-design-qa folder from the FigmaMCP releases page into ~/.claude/skills/ for Claude Code, or ~/.codex/skills/ for Codex. Then start a new agent session.","url":"https://figmamcp.dev/tutorials/design-qa-figma-file#step-2"},{"@type":"HowToStep","position":3,"name":"Open the plugin and check the switch","text":"Open the file in the Figma desktop app, then choose Plugins, Development, FigmaMCP. Make sure the AI can edit this file switch is on. Work on a duplicate of the file or frame if you want to keep the original.","url":"https://figmamcp.dev/tutorials/design-qa-figma-file#step-3"},{"@type":"HowToStep","position":4,"name":"Ask for design QA on one frame","text":"Name one frame and a target, for example: “Run design QA on the frame Sign-up card until every category scores 9 or more.” The agent says which frame it will edit, by name and ID, before it writes.","url":"https://figmamcp.dev/tutorials/design-qa-figma-file#step-4"},{"@type":"HowToStep","position":5,"name":"Let the agent score the frame","text":"In round 0 the agent reads the frame with node_info and exports it with node_export_visual as a picture. It scores six categories from 0 to 10: alignment, spacing, type scale, contrast, naming and auto layout. The overall score is the mean of the six.","url":"https://figmamcp.dev/tutorials/design-qa-figma-file#step-5"},{"@type":"HowToStep","position":6,"name":"Let it fix and score again","text":"In each round the agent fixes the one or two lowest categories, exports the frame again and scores all six again. It stops when every category is 9 or more, at the round limit, or when a round raises no score.","url":"https://figmamcp.dev/tutorials/design-qa-figma-file#step-6"},{"@type":"HowToStep","position":7,"name":"Review the result","text":"The agent reports one table row per round, with the fix it applied and the six scores, then anything it could not fix and why. Check the frame in Figma, and use version history to undo a round you do not want.","url":"https://figmamcp.dev/tutorials/design-qa-figma-file#step-7"}]}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/tutorials">Tutorials</a></li><li aria-current="page">Run a design QA pass on a Figma file with an AI agent</li></ol></nav>
+<article class="wrap page"><h1>Run a design QA pass on a Figma file with an AI agent</h1>
+<p class="lede">This tutorial shows how to let Claude Code or Codex check one frame in your Figma file and fix what it finds. The agent scores the frame against a written rubric, fixes the lowest categories, looks at the frame again and repeats until every category scores 9 or more. It works on the live file through FigmaMCP and the Figma desktop app on your Mac.</p>
+
+<h2>What you will do</h2>
+<p class="measure">You will copy one skill, open the FigmaMCP plugin in your file and ask for design QA on one frame. The agent then runs a loop: look, score, fix, look again. You get a table with the scores for each round and the fix the agent applied in it.</p>
+
+<h2>The six categories</h2>
+<div class="tablewrap"><table><caption class="sr">Design QA rubric categories</caption>
+<thead><tr><th scope="col">Category</th><th scope="col">What loses points</th></tr></thead><tbody>
+<tr><th scope="row">Alignment</th><td>Children of a stack with different left edges; labels that are not centered in their button</td></tr>
+<tr><th scope="row">Spacing</th><td>Gaps that are not a multiple of 4; more than two gap sizes in one stack; uneven padding</td></tr>
+<tr><th scope="row">Type scale</th><td>Font sizes off the scale 12, 14, 16, 20, 24, 32, or the scale your file uses</td></tr>
+<tr><th scope="row">Contrast</th><td>Text below 4.5:1 against its background, or below 3:1 for large text</td></tr>
+<tr><th scope="row">Naming</th><td>Default layer names such as Frame 12, Text or Rectangle 3</td></tr>
+<tr><th scope="row">Auto layout</th><td>Stacks, inputs and buttons laid out by hand instead of with auto layout</td></tr>
+</tbody></table></div>
+<p class="measure">Each category starts at 10 and loses points for each problem. The full penalties are in the skill&rsquo;s rubric.</p>
+
+<h2>Steps</h2>
+<ol class="steps">
+<li id="step-1"><h3>Set up FigmaMCP</h3><p>Install the FigmaMCP Mac app and connect Claude Code or Codex. If you have not done this yet, follow the tutorial Edit a Figma file with Claude Code in 5 minutes first.</p><p>Setup is the same for every task. See <a href="/tutorials/edit-figma-with-claude-code">Edit a Figma file with Claude Code in 5 minutes</a> or <a href="/docs/setup">Figma MCP setup for Mac</a>.</p></li>
+<li id="step-2"><h3>Copy the figma-design-qa skill</h3><p>Copy the <code>skills/figma-design-qa</code> folder from the FigmaMCP releases page into <code>~/.claude/skills/</code> for Claude Code, or <code>~/.codex/skills/</code> for Codex. Then start a new agent session.</p><p>A skill is a short instruction file. This one tells the agent how to score a frame and which tools fix which problem. The FigmaMCP app installs only the base <code>figmamcp</code> skill, so you copy this one yourself. Get it from <a href="https://github.com/MrCoder/figmamcp-releases/tree/main/skills/figma-design-qa">skills/figma-design-qa</a>; the rubric is in <a href="https://github.com/MrCoder/figmamcp-releases/blob/main/skills/figma-design-qa/references/rubric.md">references/rubric.md</a>.</p></li>
+<li id="step-3"><h3>Open the plugin and check the switch</h3><p>Open the file in the Figma desktop app, then choose Plugins, Development, FigmaMCP. Make sure the AI can edit this file switch is on. Work on a duplicate of the file or frame if you want to keep the original.</p><figure class="step-shot narrow"><img src="/assets/figmamcp-edit-switch.webp" width="566" height="428" loading="lazy" decoding="async" alt="FigmaMCP plugin panel showing Connected to a file, the AI can edit this file switch turned on, and 1 AI session connected"><figcaption>The FigmaMCP panel in Figma. With the switch off, the agent can only read.</figcaption></figure></li>
+<li id="step-4"><h3>Ask for design QA on one frame</h3><p>Name one frame and a target, for example: &ldquo;Run design QA on the frame Sign-up card until every category scores 9 or more.&rdquo; The agent says which frame it will edit, by name and ID, before it writes.</p><p>You can also set the round limit (the default is 5), or give the type scale your file already uses.</p></li>
+<li id="step-5"><h3>Let the agent score the frame</h3><p>In round 0 the agent reads the frame with <code>node_info</code> and exports it with <code>node_export_visual</code> as a picture. It scores six categories from 0 to 10: alignment, spacing, type scale, contrast, naming and auto layout. The overall score is the mean of the six.</p><p>The scores come from numbers, such as left edges, gaps, font sizes and contrast ratios, not from the picture alone. The agent writes down each problem with the number that proves it.</p></li>
+<li id="step-6"><h3>Let it fix and score again</h3><p>In each round the agent fixes the one or two lowest categories, exports the frame again and scores all six again. It stops when every category is 9 or more, at the round limit, or when a round raises no score.</p><p>Fixing one or two categories per round keeps each change small enough to review in Figma.</p></li>
+<li id="step-7"><h3>Review the result</h3><p>The agent reports one table row per round, with the fix it applied and the six scores, then anything it could not fix and why. Check the frame in Figma, and use version history to undo a round you do not want.</p></li>
+</ol>
+
+<h2 id="result">Example result: 1.7 to 10.0 in three rounds</h2>
+<p class="measure">This is the worked example in the skill&rsquo;s rubric, from a live run on 2026-11-20. The frame was a sign-up card built messy on purpose: a title, a subtitle, two input frames, a button frame and a log-in line.</p>
+<div class="tablewrap"><table><caption class="sr">Design QA scores per round</caption>
+<thead><tr><th scope="col">Round</th><th scope="col">Fix applied</th><th scope="col">Align</th><th scope="col">Spacing</th><th scope="col">Type</th><th scope="col">Contrast</th><th scope="col">Names</th><th scope="col">Auto layout</th><th scope="col">Overall</th></tr></thead><tbody>
+<tr><th scope="row">0</th><td>(none)</td><td>0</td><td>0</td><td>4</td><td>2</td><td>0</td><td>4</td><td><strong>1.7</strong></td></tr>
+<tr><th scope="row">1</th><td>Card: vertical auto layout, padding 32, gap 16, hug height; fields and button fill width</td><td>8</td><td>10</td><td>4</td><td>2</td><td>0</td><td>7</td><td><strong>5.2</strong></td></tr>
+<tr><th scope="row">2</th><td>Sizes 27/15/13/14/17/11 &rarr; 24/16/14/14/16/12; three greys to #64748B/#6B7380</td><td>9</td><td>10</td><td>10</td><td>10</td><td>0</td><td>7</td><td><strong>7.7</strong></td></tr>
+<tr><th scope="row">3</th><td>Fields and button: horizontal auto layout, padding 16, centered; button height 46 &rarr; 48; 10 layers renamed</td><td>10</td><td>10</td><td>10</td><td>10</td><td>10</td><td>10</td><td><strong>10.0</strong></td></tr>
+</tbody></table></div>
+<p class="measure">A frame from a real project will start from a different score, and some problems may be outside what the rubric or the tools can fix. The agent then stops and tells you what is left.</p>
+
+<h2 id="limits">What the agent will not do</h2>
+<ul>
+<li>It writes only inside the frame you named. It does not change other frames, and it does not change styles or variables unless you ask.</li>
+<li>If the frame is outside the editable scope, or the switch is off and the file is read-only, it stops and tells you. It does not move the work to another frame or file.</li>
+<li>Each edit must name its target layer exactly, and a bulk edit with one invalid item changes nothing. See <a href="/is-figma-mcp-safe">Is it safe?</a></li>
+</ul>
+
+<h2>Notes</h2>
+<ul>
+<li>macOS only for now, and the Figma desktop app is required.</li>
+<li>Read-only audits with no fixes are covered in <a href="/use-cases/figma-design-audit">Audit a Figma file</a>.</li>
+<li>FigmaMCP is not affiliated with or endorsed by Figma, Inc.</li>
+</ul>
+<p class="measure">Next: <a href="/tools/auto-layout">auto layout tools</a>, <a href="/tools/export">export a frame as an image</a>, <a href="/use-cases">use cases</a>, or <a href="/tools">all tools</a>.</p>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

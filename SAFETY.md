@@ -1,0 +1,305 @@
+# Safety Manual — `figmamcp` (v2.3.3)
+
+> **What this is.** A *safety manual* for the project: it states the **safety guarantees** the system makes, the **assumptions** under which those guarantees hold, the **residual risks** it does not cover, and the **controls** (cross-cutting invariants + a per-tool gate matrix) that implement them. The framing is borrowed — informally — from functional-safety *safety manuals* (IEC 61508 / ISO 26262), whose job is to state a component's guarantees **and the conditions of safe use**. It is adapted to an MCP server and is **not** a certification artifact.
+>
+> **What this is *not*.** It is **not** a `SECURITY.md` vulnerability-disclosure policy — there is no reporting process, supported-versions table, or security contact here. This documents what the software *enforces*, not how to report a flaw.
+>
+> **Audience.** Contributors changing the enforcement code; host / integrator authors wiring the plugin into an agent; and auditors or agents reasoning about which edits are possible.
+>
+> **Applies to: v2.3.3.** It describes the current enforcement state — the v2.1.0/v2.2.0/v2.3.0/v2.3.1 scope-lock and name-verification model, the v2.3.2 dispatcher/component-set/creation hardening, and v2.3.3's universal existing-object verification, truthful batch outcomes, recursive strictness, contained creation, peer-bound routing, and page-load isolation. Bare `§N` references point into the [v2.2.0 PRD](documentation/completed/v2.2.0-safety-enhancement/prd.md), where those structural guards were specified; sections tagged with a release version point into that release's PRD.
+>
+> **Ground truth.** The enforcement lives in three places, in this order of authority:
+> 1. The plugin dispatcher [`figma_plugin/src/main.ts`](figma_plugin/src/main.ts) — the per-command gate stack; the only layer an agent cannot bypass.
+> 2. The handlers under [`figma_plugin/handlers/`](figma_plugin/handlers/) — type/range/structural checks performed during execution.
+> 3. The MCP input schemas under [`src/mcp_server/tools/`](src/mcp_server/tools/) — Zod shape/enum/range validation, before the WebSocket round-trip.
+>
+> If this document and the code disagree, **the code is correct and this document is stale** — fix the doc.
+
+---
+
+## Safety goal & trust model
+
+The system exists to prevent an LLM agent from making **unsafe or unintended edits to a live, user-owned Figma document**. The agent is **untrusted with respect to edit safety**: it may hold a stale node ID, hallucinate a name, or misjudge whether an edit is wanted.
+
+The **Figma plugin is the trust boundary.** It holds the user-granted scope and permissions and refuses anything outside them — returning a structured `"Operation Denied: …"` error rather than relying on the agent's judgement. The MCP server and the agent's host are **not** trust boundaries (see Assumption AS1). Because the plugin cannot trust the agent's judgement about whether an edit is safe, it enforces *mechanical, checkable* properties (where, which node, what type, what protection) and leaves *intent* to the user (see Residual Risk R2).
+
+---
+
+## Safety guarantees
+
+The system guarantees, subject to the Assumptions below, that:
+
+| # | Guarantee | Implemented by |
+|---|---|---|
+| **G1** | **Bounded write surface** — no successful node write finishes outside the user-selected scope subtree; successful creation returns only after the artifact is in its verified destination; no node writes at all without a scope link. A failed creator cleanup may terminate with a survivor only under the explicit-disclosure residual R6. | A2 · A4 |
+| **G2** | **Right-object assurance.** No write against an existing object proceeds unless the caller-supplied current name matches the resolved object's actual name — nodes, variables, styles, and collections alike. Creation verifies the identified parent or collection instead. | A3 |
+| **G3** | **Explicit placement** — every successful creation uses an explicit, resolved destination and reports its actual parent. | A4 |
+| **G4** | **Prevalidated, truthful batches** — a batch containing any invalid member mutates nothing; after execution begins, every accepted result reports one ordered row per input and distinguishes success, partial success, failure, and skipped work without claiming transactional rollback. | A5 |
+| **G5** | **Reads cannot mutate** — discovery/navigation never change the document and are never blocked. | A6 |
+| **G6** | **Self-preservation** — the session's scope anchor cannot be destroyed or replaced by an edit (`node_delete`/`node_flatten`/`node_ungroup`/`create_component`). | A9 · §1 |
+| **G7** | **Respect explicit protection** — locked nodes, remote (shared-library) assets, and the interiors of component instances are not edited around. | A9 · §2/§4/§7 |
+| **G8** | **Least authority for assets** — document-global variable and style edits each require an explicit, separate opt-in, independent of node-edit permission. | A2 · §14 |
+| **G9** | **Peer-bound command delivery** — a joined channel routes commands and responses only between its one admitted plugin peer and one MCP session, with a peer-bound, self-reported version check — not cryptographic attestation. | A10 |
+
+---
+
+## Assumptions & conditions of safe use
+
+Each guarantee holds **only while these conditions hold**. Violating one voids the corresponding guarantee — this is the heart of the safety-manual contract.
+
+- **AS1 — The plugin is the sole write path.** Guarantees assume every edit flows through this plugin's dispatcher. A second plugin, manual editing, the REST API, or a host that bypasses the plugin is outside this manual's scope (see R4).
+- **AS2 — The user sets scope and permissions truthfully.** The breadth of G1/G8 is exactly what the user links and ticks at connect time. The system enforces the granted scope; it cannot distinguish a wise scope from an unwise one.
+- **AS3 — Names are passed back verbatim.** G2 depends on the agent reading node/parent names from `node_info`/`page_info`, variable/collection names from `variable_list`, and style names from `style_list`, then passing them back without normalizing, translating, or "cleaning up" them. The plugin can verify a name but cannot reconstruct intent from a wrong one.
+- **AS4 — The user locks what must be structurally protected.** G7's locked-layer guard protects only nodes the user actually locked; it does not infer importance.
+- **AS5 — Connect-time binding is acceptable.** Scope and the three permission axes are read once at connect and fixed for the session; changing any of them requires reconnect. Mid-session changes of intent are not tracked.
+- **AS6 — Schema validation is not relied upon for safety.** The MCP Zod layer is input hygiene, not a control; every safety-relevant check is owned plugin-side (PRD **D3**). A client that talks to the plugin directly, bypassing Zod, still hits every guarantee.
+- **AS7 — Peer versions are honest self-reports.** G9 detects known server/plugin version skew across release lines (major.minor; patch releases share one wire contract) and prevents cross-peer routing; it does not authenticate the plugin, prove artifact identity, or detect two different contracts that deliberately self-report the same version.
+
+---
+
+## Residual risks & known limitations
+
+Explicitly **not** guaranteed — accepted trade-offs a safe integration must account for:
+
+- **R1 — TOCTOU race.** A node may be locked/unlocked, reparented, or deleted by the user between validation and mutation; guards do not hold a lock across that gap. The initiating Figma failure remains authoritative; if recovery cannot restore the prior state, the error is enriched with partial-mutation evidence rather than replaced. *(A8.)*
+- **R2 — In-scope *wrong* edits.** The system bounds *where* and *which node (by name/type/protection)* — not whether an in-scope, name-matched, unprotected edit is *what the user actually wanted*. A confidently-wrong-but-valid edit is not prevented.
+- **R3 — Off-scope visual export.** `node_export_visual` can render a node outside scope (read-surface only; low risk, since `node_info` already exposes full reads). *(A6 / PRD D5.)*
+- **R4 — No protection against the host.** A malicious or buggy *host* that bypasses the plugin (violating AS1) is out of scope for this manual.
+- **R5 — Advisory validations are not exhaustive.** Some checks deliberately defer final arbitration to Figma: `INSTANCE_SWAP` values are shape-checked only (§5/D10), and instance-interior *override* writes are permitted with Figma as the final arbiter (§4/D7). A structurally-valid call that Figma still refuses degrades to a normal handler error rather than a pre-emptive `"Operation Denied"`.
+- **R6 — Implicit-creator placement and recovery are not transactional.** Figma APIs without a parent parameter construct on `currentPage` for part of one synchronous stack; the plugin inserts the artifact into the verified destination as the immediate next operation, before any `await` or fallible configuration. If placement or later configuration fails, cleanup is best-effort and counts as complete only when removal is confirmed. A survivor may therefore remain — including at the implicit page location — but the initiating error stays primary and carries `details.partialMutation: true`, `whatChanged`, and actual-versus-verified location evidence. Survivor location is explicitly `located`, `detached`, or `unknown`: only an observed `parent === null` proves detachment, while an unreadable parent or parent ID remains unknown. Integrations must reconcile that evidence before retrying. *(A4/A8.)*
+- **R7 — Creator destination freshness is bounded, not fully re-asserted.** Every creator resolves its destination as the last `await` before creation, and no yield separates that read from immediate placement. The dispatcher verified scope, exact name, and lock/instance predicates one read earlier, however, so a rename or reparent in the dispatcher-to-handler hop is not detected again. A full synchronous parent-predicate re-assert is deferred unless a creation is reported or reproduced as landing outside its verified destination. *(A4.)*
+
+> Limitations present in earlier releases are now **closed** and have moved into the guarantees: document-global asset reach from a node-scoped session is gated by the permission axes (G8 / §14, v2.2.0), remote-library-asset edits are blocked by a structured pre-check (G7 / §7, v2.2.0), and the scope-root clone escape under G1 is closed by the `node_clone` destination-parent scope check (v2.3.2 — cloning the scope root is now denied).
+
+---
+
+## Operator / integrator responsibilities
+
+To keep the guarantees valid, the human and host must:
+
+- Connect with a Page/Layer link scoped to the **narrowest** region the task needs. Local patch (simple model): a blank link now means the **whole file** is editable (pages and the document root stay protected); untick **AI can edit this file** for a node-read-only session. This weakens the narrow-scope default; G1 holds with the whole document as the scope root.
+- Tick **"AI can change Variables"** / **"AI can change Styles"** (under Advanced; upstream labels "Allow AI Agent to modify …") only when the task genuinely needs document-global asset edits (upstream default **off**; local patch, simple model: default **on**, untick them for a narrower session).
+- **Lock** layers that must be structurally protected *before* connecting (AS4).
+- Ensure the agent reads current names from the matching discovery tool (`node_info`/`page_info`, `variable_list`, or `style_list`) and passes them back unchanged (AS3).
+- Treat `"Operation Denied: …"` as a **stop** signal, not a retry prompt — adjust the target/scope/permission or reconnect; never attempt a workaround.
+
+---
+
+## Part A — Safety guarantees in detail (the enforced invariants)
+
+These cross-cutting invariants are the mechanisms behind the G-claims. Part B says which apply to each tool.
+
+### A1. Enforcement is plugin-side; the agent cannot bypass it
+All access control runs **inside the Figma plugin** at execution time and returns a structured `"Operation Denied: …"` error. The MCP server's Zod schemas validate *shape* (types, enums, numeric ranges) but are **not** a security boundary — they exist for ergonomics and fail-fast input errors (AS6). Per PRD **D3**, the v2.2.0 guards are plugin-only, not mirrored MCP-side.
+
+### A2. The permission / scope model → G1, G8
+Connection state carries four fields, set **at connect time** and **locked for the session** (changing any requires disconnect + reconnect — AS5):
+
+```
+scopeRootId       // enforcement anchor for node edits; null ⇒ no node edits
+allowEditNode     // false | "page" | "node"  — truthy ⇔ scopeRootId set
+allowEditVariable // boolean — document-global, independent of scope
+allowEditStyle    // boolean — document-global, independent of scope
+```
+
+The three permission axes are **independent** — none implies another:
+
+| Axis | Granted by | Gate | Failure |
+|---|---|---|---|
+| **Node edits** | a Page/Layer scope link (local patch, simple model: or a blank link with "AI can edit this file" on, which scopes the whole document) | `allowEditNode` set **and** target within `scopeRootId` | `READ_ONLY_MODE` (node-only) / `OUTSIDE_SCOPE` |
+| **Variable edits** | "Allow … Variables" checkbox | `allowEditVariable` | `VARIABLE_EDITS_DISABLED` |
+| **Style edits** | "Allow … Styles" checkbox | `allowEditStyle` | `STYLE_EDITS_DISABLED` |
+
+- **Scope is an ancestor check.** A node-write target must be the scope root or a descendant (`checkScopeAccess`/`checkScopeAccessRef`). Creation checks the **parent**; reparent checks **both** parent and child. Scope cannot be widened programmatically.
+- **Both asset checkboxes default off** — the safe default is "node edits within scope only." A linked session can no longer edit variables/styles unless explicitly granted (intended tightening vs. pre-v2.2.0).
+- `node_bind_variable` / `node_apply_style` are **node** edits (gated by `allowEditNode` + scope + name), not asset edits — they reference an asset but mutate a node. Binding a variable *into a style* (`style_manage`) needs only `allowEditStyle`.
+- `get_connect_payload` surfaces `{ allowEditNode, allowEditVariable, allowEditStyle }` so the agent knows its capabilities up front. (Full 8-combination matrix: PRD §14.)
+
+### A3. Every write verifies the resolved name → G2
+No write against an existing object proceeds unless the caller-supplied current name matches the resolved object's actual name — nodes, variables, styles, and collections alike. Creation verifies the identified parent or collection instead.
+
+Node modifications require `nodeName`; caller-placed node creation requires `parentNodeName`; node batches carry a name per item. `UPDATE_VARIABLE` requires `currentVariableName`; creating a variable in an identified collection requires `collectionName`; updating an identified style requires `currentStyleName`; variable/style deletion keeps its action-specific current-name fields. The plugin resolves the object by ID and rejects an omitted or mismatched required verification name before mutation. This catches stale or fabricated IDs and applies equally to `reaction_update`, `variable_delete`, and `style_delete`. Names must be passed back **verbatim** from the matching read tool (AS3).
+
+Name assignment is a separate check from existing-object verification. As of v2.3.3 Rev 54, every public action that assigns a user-visible name rejects an explicit `""` before mutation at the MCP boundary and again at the plugin trust boundary. Omission is action-sensitive: it selects the native default for optional creator/group/collection-mode names, preserves the current name for optional style/variable/property update names, and is invalid for required `node_rename.name`, variable/style creation `name`, and component-property ADD `propertyName`. Dual-role fields are classified by action (`propertyName` assigns on ADD and looks up on EDIT). C9's present-empty exactness covers `parentNodeName` on its two protected parent paths; it does not define a universal empty-value rule for every lookup field. The corresponding action-conditional field descriptions are pinned against the emitted `tools/list` surface.
+
+### A4. Creation requires an explicit parent → G3
+There is no successful "current page" fallback. `create_shape`/`create_frame`/`create_text`/`create_svg`/`create_instance` and `create_component_set` require a resolvable `parentId` + `parentNodeName`; `create_component` derives its destination from the verified source frame's parent. Each creator resolves the destination as the last `await` before creation. APIs that cannot accept a parent directly are inserted into that verified destination as the immediate next synchronous operation. The same-stack construction transient and failed-cleanup survivor are the explicit R6 residual, while the dispatcher-to-handler predicate gap is the bounded R7 residual; none is a successful placement mode.
+
+Creator names are presence-sensitive but cannot be explicitly empty. Live Figma normalizes `""` to a type/content-derived name, so `create_shape`, `create_frame`, `create_text`, `create_svg`, and `create_component_set` reject an explicitly empty `name` / `componentSetName` before any creator, rename, or combine mutation. Omission (`undefined`) remains valid and selects the established default; a supplied name must be non-empty.
+
+### A5. Batch atomicity (pre-validate → zero-mutation abort) → G4
+Batch tools validate **every** item (existence, scope, name, type, **locked**, **instance-interior**, **scope-root**) **before** any mutation. A single bad member aborts the whole batch with **zero mutations**. Once mutation begins, handlers process sequentially, stop on first failure, and return a completed-vs-failed report — **no general transaction layer is promised**. Tool-specific best-effort recovery may run; any durable state it cannot restore is reported with partial-mutation evidence. (`text_set_content`, `annotation_set`, `instance_set_overrides`, `create_component_set`, `node_delete`.)
+- **Exception:** `node_delete` (`deleteMultipleNodes`) runs resilient parallel chunks and is excluded from stop-on-first-failure — but its **pre-validation** still runs, so it never *starts* on an invalid target.
+- The v2.2.0 scope-root / locked / instance-interior guards run inside this same pre-validation loop (PRD **D6**), reusing the resolved-node reference.
+- The four execution aggregators (`node_delete`, `text_set_content`, `annotation_set`, `instance_set_overrides`) derive `status: "success" | "partial_success" | "failed"` and `success === (status === "success")`, return the shared count fields, and emit exactly one row per requested item in input order. Every row carries `nodeId` and `status`; every `failed` or `skipped` row also carries a non-empty actionable `error`. Treat `partial_success` as incomplete and account for both failed and skipped rows. `annotation_set` is append-only and not idempotent, so list and compare annotations before retrying any non-success row.
+
+### A6. Reads are never gated → G5
+Discovery and navigation ignore the node/variable/style permission axes, scope, and locks: `node_info`, `page_info`, all `*_list`, `instance_get_overrides`, `reaction_list`, `annotation_list`, `view_navigate`, and `node_export_visual` (PRD **D5**). Accepted residual R3: `node_export_visual` can render an off-scope node.
+
+### A7. Node-ID normalization
+Figma-URL IDs use dashes (`20485-41`); the API expects colons (`20485:41`). The MCP server converts before forwarding; pass URL-format IDs through unchanged.
+
+### A8. TOCTOU and incomplete recovery are accepted residuals → R1, R6
+A node can be locked/unlocked, reparented, or deleted by the user between validation and mutation. Guards do not hold a lock across the gap. Recovery machinery cannot replace the initiating failure: when cleanup/restoration is incomplete, that original error carries `details.partialMutation: true`, a plain-language `whatChanged`, and cheap before/location evidence.
+
+Error reporting is total for arbitrary JavaScript thrown values. Plugin structuring guards direct and nested `code`/`error`/`message`/`details` reads and optional-details copying; the registered MCP callback also guards its field reads and fallback stringification. A readable coded error keeps its structural code/message/details. If the thrown value itself is hostile or unreadable, reporting falls back to the canonical `UNKNOWN_ERROR` envelope, omits unreadable optional details, and preserves separately constructed partial-mutation evidence so reconciliation can still proceed.
+
+### A9. Structural-integrity guards (cross-cutting) → G6, G7
+Four families of plugin-side guard, each returning `"Operation Denied: …"`:
+- **Scope-root preservation (§1):** refuse to delete/flatten/ungroup/convert the node that *is* `scopeRootId` — it would brick the session with `SCOPE_DELETED`. Covers `node_delete`, `node_flatten`, `node_ungroup`, and `create_component` (which replaces the source frame with a new component id). → **G6**
+- **Locked-layer block (§2):** refuse any write whose target — or any ancestor — is `locked` (`findLockedAncestor`). Single-target writes check the target; batch writes check each item; creation/reparent check the parent (and, for reparent, the child). → **G7**
+- **Instance-interior block (§4):** refuse *structural* edits — delete, reparent, group/ungroup, create/clone-under, or convert-to-component — inside an `INSTANCE` (`findInstanceAncestor`), or when the parent node is an `INSTANCE` itself. Property/override writes remain allowed, with Figma as final arbiter (R5). → **G7**
+- **Remote-asset block (§7):** refuse edits to remote (shared-library) **styles, variables, and main components** (`.remote`). Instances of remote components stay fully editable (local overrides), so `instance_set_property` is **not** remote-gated. → **G7**
+
+### A10. One admitted peer pair per channel → G9
+A channel admits exactly one plugin peer and one MCP session. The socket assigns peer identities, binds the pair, correlates responses to the bound plugin, rejects cross-peer frames, and invalidates the binding when either side leaves or disconnects. Admission refuses an empty plugin slot, a second plugin, a second MCP session, and a known server/plugin version mismatch (a different major.minor, or unequal non-release builds) with structured codes. A successful `channel_join` reports the package-derived server version and the plugin's self-reported build version. This is a **peer-bound, self-reported version check — not cryptographic attestation** (AS7).
+
+---
+
+## Part B — Controls: per-tool enforcement matrix
+
+Gate order in the dispatcher (most-specific error wins): **permission → scope → name → locked → instance-interior / scope-root → handler checks.** Shorthand: **node-perm** = `allowEditNode` + scope link; **var-perm** = `allowEditVariable`; **style-perm** = `allowEditStyle`.
+
+### B1. Node write tools (single target)
+
+| Tool | Enforced gate stack |
+|---|---|
+| `node_set_fill` | node-perm · scope · name · locked |
+| `node_set_stroke` | node-perm · scope · name · locked |
+| `node_set_corner_radius` | node-perm · scope · name · locked |
+| `node_set_effects` | node-perm · scope · name · locked |
+| `node_set_auto_layout` | node-perm · scope · name · locked · enum checks · **FILL needs auto-layout parent (§8)** · **NONE-frame silent-drop rejected (§8)** · BASELINE horizontal-only · counterAxisSpacing WRAP-only |
+| `node_rename` | node-perm · scope · name · locked · **explicit name non-empty when supplied** |
+| `node_transform` | node-perm · scope · name · locked · **layout-controlled x/y hard-reject (§9)** · **resize-resets-sizing warning (§9)** |
+| `node_bind_variable` | node-perm · scope · name · locked · **unsupported node / mixed paint guard (v2.3.1 §1)** · **auto-layout precheck (v2.3.1 §3)** · SOLID-only paint bind (**type-mismatch guard**, gated by node-perm not var-perm) |
+| `node_apply_style` | node-perm · scope · name · locked (gated by node-perm, **not** style-perm) |
+| `node_clone` | node-perm · scope(source) · name · locked(source) · **instance-interior(source) (§4)** · parent scope · **parent appendable (v2.3.2 §1)** · parent locked · parent instance-interior · **handler-prevalidation-before-mutation** · **immediate destination insertion** |
+| `node_flatten` | node-perm · scope · name · locked · **scope-root (§1)** · **handler-prevalidation-before-mutation** · **parent+index passed to flatten** |
+| `node_ungroup` | node-perm · scope · name · locked · **scope-root (§1)** · **instance-interior (§4)** · must be GROUP |
+| `text_set_style` | node-perm · scope · name · locked · type TEXT · **mixed-font load via getStyledTextSegments (§10)** · **full schema↔handler contract incl. fontName + lineHeight AUTO (§15)** |
+| `instance_set_property` | node-perm · scope · name · locked · type INSTANCE · **value type validation BOOLEAN/TEXT/VARIANT/INSTANCE_SWAP (§5)** · **not** remote-gated (local override) |
+| `reaction_update` | node-perm · scope · **name (§6A)** · locked |
+
+> **v2.3.2 contract extension (D9):** the `node_clone` row previously promised only `locked(source)`. The full stack above — source scope/name/locked/instance-interior plus destination-parent scope/appendability/locked/instance checks — is enforced as of v2.3.2 and closes the G1 scope-root clone escape (the destination parent of a scope-root clone is outside scope by definition, so cloning the scope root is denied).
+
+### B2. Node batch tools (per-item pre-validation, zero-mutation abort)
+
+| Tool | Enforced gate stack (per item unless noted) |
+|---|---|
+| `node_delete` | node-perm · scopeRoot present · exists · scope · name · **locked** · **instance-interior (§4)** · **scope-root (§1)** · **D7 status envelope** |
+| `node_group` | node-perm · scope · name · **same-parent** · **locked** · **instance-interior (§4)** · **explicit name non-empty when supplied** |
+| `text_set_content` | node-perm · scopeRoot · exists · scope · name · type TEXT · **locked** · **correct `characters` contract (§16)** · **D7 status envelope** |
+| `annotation_set` | node-perm · scopeRoot · exists · scope · name · supports-annotations · **locked** · **category verified before mutation** · **D7 status envelope with guarded retry** |
+| `instance_set_overrides` | node-perm · scopeRoot · source exists+INSTANCE · per-target exists+scope+name+INSTANCE+**locked** · **use-time predicate recheck** · **D7 status envelope** |
+| `create_component_set` | node-perm · scopeRoot · per-component exists+scope+name+propValues-count+COMPONENT-type · **instance-interior (§4)** · **remote block (§7)** · parent scope+name+**locked**+**instance-interior (§4)** · **explicit set name non-empty when supplied (§3)** · **parent-cycle (v2.3.2 §2)** · **set-member block (v2.3.2 §2)** · **value separator rules (v2.3.2 §2)** · **duplicate component IDs (v2.3.2 §2)** · **duplicate-variant uniqueness (§11)** · **plan/mutate two-phase (v2.3.2 §2)** · **verified parent passed directly to combine** |
+
+`create_component_set` snapshots each member's original parent and inspects post-failure placement before any recovery name write. An ordinary member whose original placement is confirmed is restored to its original name best-effort, continuing after individual recovery errors. A member confirmed inside a surviving `COMPONENT_SET` instead retains or best-effort confirms its computed `Property=Value` variant name; an unreadable changed-parent type blocks original-name restoration. The initiating error discloses `before.appliedComponents`, `restoredComponents`, `unrestoredComponents`, `removedComponents`, `unknownRemovalComponents`, `reparentedComponents`, `unverifiedPlacementComponents`, `survivingComponentSets`, `retainedVariantComponents`, and `unconfirmedVariantComponents`. Removal is tri-state (`live | removed | unknown`); unknown never authorizes optimistic recovery and remains partial. Once a set exists, required identity/name/parent evidence is snapshotted, the actual parent is checked against the verified destination, and later failures disclose the created set. Optional child-count/variant-property read failures return success warnings.
+
+### B3. Creation tools (gate on the parent)
+
+| Tool | Enforced gate stack |
+|---|---|
+| `create_shape` | node-perm · parent scope+name+**locked**+**instance-interior (§4)** · **explicit name non-empty when supplied (§3)** · shape-param checks (arcData=ellipse, pointCount≥3, innerRadius=star) · color 0–1 (Zod) · **destination resolved last** · **handler-prevalidation-before-mutation** · **immediate destination insertion** |
+| `create_frame` | node-perm · parent scope+name+**locked**+**instance-interior (§4)** · **explicit name non-empty when supplied (§3)** · color 0–1 (Zod) · **opacity normalized, no NaN (§12)** · **destination resolved last** · **handler-prevalidation-before-mutation** · **immediate destination insertion** |
+| `create_text` | node-perm · parent scope+name+**locked**+**instance-interior (§4)** · **explicit name non-empty when supplied (§3)** · color 0–1 (Zod) · **opacity normalized, no NaN (§12)** · **destination resolved last** · **handler-prevalidation-before-mutation** · **immediate destination insertion** |
+| `create_svg` | node-perm · parent scope+name+**locked**+**instance-interior (§4)** · **explicit name non-empty when supplied (§3)** · **destination resolved last** · **handler-prevalidation-before-mutation** · **immediate destination insertion** |
+| `create_instance` | node-perm · parent scope+name+**locked**+**instance-interior (§4)** · **destination resolved last** · **handler-prevalidation-before-mutation** · **immediate destination insertion** |
+| `create_component` | node-perm · scope · name · locked · **instance-interior (§4)** · **scope-root self-destruction (§1)** · **handler-prevalidation-before-mutation** · **immediate destination insertion** |
+| `node_insert_child` | node-perm · parent scope+name · child scope+name · **locked(parent & child)** · **self/cyclic-parent (§3)** · **instance-interior, both ids (§4)** · **index bounds (§13)** |
+
+For the implicit creator and `node_clone` paths, handler prevalidation resolves the destination before construction and insertion is the immediate next synchronous operation. Later failures trigger best-effort cleanup. A failed cleanup preserves the initiating error and discloses the survivor's ID/name/type, `survivingParentState: "located" | "detached" | "unknown"`, nullable `survivingParentId`, and `verifiedParentId`. `located` carries the exact readable ID, `detached` requires an observed null parent, and `unknown` means the parent or its ID could not be read safely. `create_component` uses the analogous `survivingComponentParentState`/`survivingComponentParentId`, attempts every eligible child restoration independently, and removes its new component only after positive proof that the source is live, every original child is back, and the component is empty; its evidence separates restored, still-owned, unknown-parent, and relocated children plus restoration failures.
+
+### B4. Document-global asset tools (gated by the asset permission axes, not positional scope)
+
+| Tool | Enforced gate stack |
+|---|---|
+| `variable_manage` | **var-perm (§14)** · **current-name on UPDATE** · **collection-name on CREATE_VARIABLE** · **remote block on UPDATE (§7)** · **scopes required on CREATE_VARIABLE** · **validate-before-mutate** · **explicit name non-empty when supplied** |
+| `variable_delete` | **var-perm (§14)** · ids-xor-collection · **required name verification, both modes (§6B)** · **remote block (§7)** · **bounded per-page scan coverage** · **fail-closed on incomplete coverage** · **coded in-use refusal before removal** |
+| `style_manage` | **style-perm (§14)** · **current-name on UPDATE** · **remote block on edit-existing (§7)** · **validate-before-mutate** · **explicit name non-empty when supplied** · (binding a variable into a style needs only style-perm) |
+| `style_delete` | **style-perm (§14)** · `styleName` verification (strict) · **remote block (§7)** |
+| `component_manage_property` | node-perm · scope · name · locked · COMPONENT/COMPONENT_SET · blocks VARIANT add · **value type validation (§5)** · **variant-member guard (§5)** · **remote block (§7)** · **explicit name non-empty when supplied** |
+| `component_delete_property` | node-perm · scope · name · locked · **remote block (§7)** |
+
+> **Note:** `component_*_property` edit a *main component definition* and remain **node** edits (node-perm + scope + name), plus the §7 remote block. Only `variable_*`/`style_*` move onto the new asset permission axes.
+
+### B5. Read & navigation tools — ungated (A6)
+
+| Tool | Requirement | Gated? |
+|---|---|---|
+| `node_info` | empty-args → falls back to `scopeRootId`; node-read-only empty-args returns `{nodes:[]}` | No (read) |
+| `page_info`, `style_list`, `component_list`, `variable_list` | — | No (read) |
+| `annotation_list` | exactly one of `pageId`/`nodeId`; node mode accepts any traversable root, even when the root itself lacks `AnnotationsMixin` | No (read) |
+| `instance_get_overrides` | requires `instanceNodeId` | No (read) |
+| `reaction_list` | requires `nodeIds[]` | No (read) |
+| `node_export_visual` | — | No (read; accepted off-scope residual R3) |
+| `view_navigate` | resolves ids; rejects DOCUMENT root, mixed page/node, cross-page selection | No — **deliberately scope-exempt (A6)** |
+| `get_connect_payload` | — | No (handshake; surfaces the three permission axes) |
+
+### B6. Channel-binding surface
+
+| Surface | Enforced gate stack |
+|---|---|
+| `channel_join` / socket routing | exactly one plugin peer + one MCP session · mandatory `clientType` · peer-correlated pair-only routing · known-version equality · explicit leave/disconnect invalidation · block-until-rejoin |
+
+This row is prose backed by the Phase 9 suites — `socketPeerBinding`, `figmaClientPeerBinding`, `figmaClientTransport`, `figmaClientJoinError`, `connectHandlers`, and `v2.3.3.phase9.ui` — so a change to the enforcement must be reflected here by hand. That is now true of every row in Part B, not only this one (see Maintenance).
+
+---
+
+## Part C — Input-validation (Zod / schema-level) checks
+
+These run in the MCP server before the plugin and reject malformed input early (not a control — see A1/AS6). Notable ones:
+
+- **Color channels** `r,g,b,a` constrained `0–1` on `create_shape`/`create_frame`/`create_text` and `style_manage` paints (`min(0).max(1)`). (Plugin-side, `create_frame`/`create_text` also normalize alpha so a missing `a` never yields `NaN` opacity — §12.)
+- **Mutual Exclusivity:** `node_set_fill` requires exactly one of a solid color (`r,g,b`), an image payload (`url` or `bytesBase64`) (v2.3.0 §1), or `clear:true` (v2.3.1 §4); `variable_delete` requires variable IDs xor a collection ID.
+- **Enums** for layout (`layoutMode`, `primaryAxisAlignItems`, `counterAxisAlignItems`, `layoutSizingHorizontal/Vertical`), `textCase`, `textDecoration`, shape `type`, paint `type`, grid `pattern`.
+- **Bindable Fields Allowlist:** `node_bind_variable` constrains `bindVariables` keys to a strict typings-derived allowlist `BINDABLE_FIELDS` instead of an open record (v2.3.1 §2).
+- **Shape params:** `pointCount ≥ 3`, `innerRadius`/`arcData.innerRadius` `0–1`, `strokeWeight` positive.
+- **Effects:** `node_set_effects` accepts exactly `DROP_SHADOW`, `INNER_SHADOW`, `LAYER_BLUR`, and `BACKGROUND_BLUR`; `style_manage` also accepts `NOISE`, `TEXTURE`, and `GLASS`. Each is a strict discriminated shape: unknown/cross-variant keys are rejected, `showShadowBehindNode` is DROP_SHADOW-only, progressive blur ramp fields are required together only with `blurType:"PROGRESSIVE"`, and `blendMode` is one of the 19 literals pinned from Figma's `BlendMode` union. A supplied effect color is complete RGBA with every channel `0–1`; shadow/blur and GLASS radii are non-negative; GLASS `lightIntensity`, `refraction`, and `dispersion` are `0–1`, and GLASS `depth` is at least `1`. NOISE `density` is `0–1`, and NOISE/TEXTURE `noiseSize` plus TEXTURE `radius` are `0–100`. Every one of these bounds exists so an accepted write reads back the value requested: Figma normalizes GLASS `depth: 0` to `1` and silently clamps the `noiseSize`/`radius` fields above `100`. At most one GLASS effect is allowed per node — a host rule enforced by a refinement the emitted JSON Schema cannot carry, so the field description states it.
+- **`lineHeight`:** both `style_manage` and `text_set_style` accept the `{unit:"AUTO"}` union (§15).
+- **Name verification fields:** `nodeName` verifies an existing node; `parentNodeName` verifies a caller-identified creation/reparent destination; `currentVariableName`, `currentStyleName`, `variableNames`, and action-specific `collectionName` fields verify existing document-global assets. `reaction_update`, both `variable_delete` modes, variable/style updates, and `CREATE_VARIABLE` are included. These identify an existing object and are distinct from assignment fields.
+- **Name assignment fields (v2.3.3 Rev 54):** explicit empty assigned names are rejected with action-specific issue paths. The independently pinned public inventory covers creator/set names, node rename/group, style create/update names, variable collection/variable create/update names plus collection `modeName`, and component-property ADD `propertyName` / EDIT `newPropertyName`. Required/defaulting/no-change omission semantics are preserved per action rather than inferred from one shared message.
+
+---
+
+## Part D — Structured error codes (reference)
+
+v2.3.3 coded errors originate from one factory at the layer that can raise them: plugin `REFUSALS`, socket `CHANNEL_REFUSALS`, or MCP-client `CLIENT_REFUSALS`. The closed ratified inventory is twelve operational codes, ten verification codes, and the canonical `UNKNOWN_ERROR` fallback. Pre-v2.3.3 plain-string refusals remain on the separate legacy `ERRORS` surface until their scheduled conversion; codes are never inferred from their prose. Full recovery guidance for every ratified code lives in [`skills/figmamcp/references/error-playbook.md`](skills/figmamcp/references/error-playbook.md).
+
+The table's ratified rows run from `PLUGIN_PEER_UNAVAILABLE` down to `UNKNOWN_ERROR`. **Every row below `UNKNOWN_ERROR` is legacy or descriptive:** those labels name a refusal condition or a diagnostic field, not a `code` a caller receives. The refusals among them reach the MCP boundary as `UNKNOWN_ERROR` carrying their `Operation Denied: …` message, so a caller matches the message text, not the label — `SCOPE_DELETED` and `SCOPE_INVALID` are the one exception, reported as real `errorCode` values on `channel_join`'s connect payload. `NAME_MISMATCH` therefore sits below that line, while the coded `PARENT_NAME_MISSING` / `PARENT_NAME_MISMATCH` pair remains in the ratified block above.
+
+| Code / message | Meaning |
+|---|---|
+| `PLUGIN_PEER_UNAVAILABLE` / `PLUGIN_PEER_AMBIGUOUS` / `CHANNEL_IN_USE` / `VERSION_MISMATCH` / `CHANNEL_NOT_BOUND` | Peer admission, version-skew, or local binding-state failures under A10. `PLUGIN_PEER_AMBIGUOUS` is operator-facing in the joining plugin UI; it cannot reach `channel_join`. |
+| `PAGE_LOAD_FAILED` / `PAGE_SCAN_FAILED` / `PAGE_NOT_FOUND` / `TARGET_NOT_PAGE` / `PAGE_LOAD_TIMEOUT` | Per-page load/read isolation. Multi-page reads report them in `coverage.pageErrors`; a single-page command raises the code directly. |
+| `DOCUMENT_SCAN_INCOMPLETE` / `VARIABLE_IN_USE` | Destructive variable/collection deletion aborted before removal because coverage was incomplete or verified consumers still exist. |
+| `VARIABLE_NAME_MISSING` / `VARIABLE_NAME_MISMATCH` | `UPDATE_VARIABLE` lacks or mismatches `currentVariableName`. |
+| `COLLECTION_NAME_MISSING` / `COLLECTION_NAME_MISMATCH` | `CREATE_VARIABLE` lacks or mismatches the identified collection's `collectionName`. `variable_delete` runs the equivalent check in both modes, but its refusals are still legacy plain strings on the `UNKNOWN_ERROR` surface pending the [v2.3.4](documentation/v2.3.4/prd.md) conversion. |
+| `STYLE_NAME_MISSING` / `STYLE_NAME_MISMATCH` | A style update lacks or mismatches `currentStyleName`. |
+| `VARIABLE_SCOPES_MISSING` | `CREATE_VARIABLE` omitted the explicit `scopes` decision. |
+| `PARENT_NAME_MISSING` / `PARENT_NAME_MISMATCH` | A caller-identified parent lacks or mismatches `parentNodeName`. |
+| `ANNOTATION_CATEGORY_NOT_FOUND` | `annotation_set.categoryId` does not resolve; list categories or omit the field. |
+| `LEASED_BY_OTHER_SESSION` / `SCOPE_LEASE_REFUSED` / `DOCUMENT_WIDE_WRITE_LOCKED` | Local patch (multi-MCP): a node write into another session's lease, a refused `channel_join.scopeLinks` lease, or a variable/style write by a non-implicit session while others are connected. Only reachable when the plugin opts in to several sessions. |
+| `UNKNOWN_ERROR` | A failure did not carry a readable ratified code; guarded normalization still returns a total envelope. |
+| `READ_ONLY_MODE` | No scope root ("AI can edit this file" off, or an older plugin with no link) → **node** writes blocked (asset edits gated separately). |
+| `VARIABLE_EDITS_DISABLED` / `STYLE_EDITS_DISABLED` | The corresponding asset permission axis is off (§14). |
+| `OUTSIDE_SCOPE` / `PARENT_OUTSIDE_SCOPE` / `CLONING_SOURCE_NODE_OUTSIDE_SCOPE` | Target/parent/clone-source not under `scopeRootId`. |
+| `SCOPE_DELETED` | `scopeRootId` no longer resolves — the session-bricking outcome the §1 scope-root guard exists to prevent. |
+| `NAME_MISMATCH` | Resolved node name ≠ supplied `nodeName` (stale/fabricated id). The coded parent equivalents are `PARENT_NAME_MISSING`/`PARENT_NAME_MISMATCH` above. |
+| `"… is locked …"` (§2) | Target or an ancestor is locked. |
+| `"… is inside a component instance …"` (§4) | Structural edit inside an `INSTANCE`. |
+| `"… is a remote library asset …"` (§7) | Edit targets a remote style/variable/main-component. |
+| `"… is the current Editable Scope root …"` (§1) | Destructive/replacing op on the scope anchor. |
+| `"… cannot be inserted into itself …"` / cyclic (§3) | Self- or cyclic reparent. |
+| `"Sizing 'FILL' requires … Auto-Layout parent"` (§8); index-bounds (§13); duplicate-variant (§11); auto-layout child transform (§9) | The remaining structured `"Operation Denied: …"` strings. |
+| Actionable Prechecks | `node_bind_variable` blocks missing auto-layout (v2.3.1 §3) and non-solid paint binds (v2.3.1 §1). |
+| `MISSING_*` / type errors | Parameter/shape/type violations from the dispatcher and handlers. |
+| `details.partialMutation: true` | The command failed after a durable change or recovery could not confirm restoration. Preserve the initiating error and inspect `whatChanged` plus `before`: creators disclose survivor identity plus located/detached/unknown parent state and actual/verified parent IDs; `create_component` discloses the analogous component-parent state plus tri-state source/child recovery evidence; `create_component_set` discloses applied/restored/unrestored/removed/removal-unknown/reparented/location-unreadable members, surviving sets, and retained/unconfirmed variant names, or the already-created set and its actual/verified parent. An `annotation_set` row with `outcomeUnknown:true` crossed the append setter but could not verify post-state: its nullable counts and `beforeCountVerified`/`afterCountVerified` flags are observations, not guesses, and `postStateError` is secondary to the row's initiating `error`. Reconcile before retrying even when a hostile initiating throw was normalized to `UNKNOWN_ERROR`. |
+
+---
+
+## Maintenance
+
+- This file is the **canonical safety manual** for v2.3.3, an aggregated view regenerated from the dispatcher + handlers + schemas. When a tool's gate stack changes, update both the code and this matrix (or delete the row if the tool is removed). When a guarantee, assumption, or residual risk changes, update the G/AS/R lists too — they are the contract.
+- **This matrix is maintained by hand, and nothing mechanically checks it against the code.** Every gate it names is asserted somewhere — `safetyContract.test.ts` drives the real dispatcher against an `EXPECTED_CONTRACTS` table, and the per-phase suites cover the bespoke gates — but the bidirectional diff that once compared this document's Part B tokens against that table has been removed, along with every other test that read a documentation file. A gate claimed here but not enforced in code, or enforced in code but missing here, will **not** fail CI. Treat Part B as a description to keep in step deliberately, not as a verified projection of the implementation.
+- **Publication:** published at the **repo root** as `SAFETY.md` — the **contributor / integrator / auditor-facing** companion to the agent-facing guides in [`skills/figmamcp/references/`](skills/figmamcp/references/) (`constraints.md` et al.) and to [`DESIGN_PHILOSOPHY.md`](DESIGN_PHILOSOPHY.md). The **end-user-facing** safety value proposition lives in [`README.md`](README.md#what-the-ai-cannot-do-to-your-file), which links here for the full contract. If the project ever accepts external vulnerability reports, add a *separate* thin `SECURITY.md` for disclosure — it is a different document from this one.
+- Cross-references: holistic agent guidance → `constraints.md`; per-error recovery → `error-playbook.md`; the v2.3.2 change rationale → [`prd.md`](documentation/completed/v2.3.2-safety-contract-conformance-&-atomicity-hardening/prd.md) (v2.3.1: [`prd.md`](documentation/completed/v2.3.1-bind-variable-guardrails/prd.md)); review provenance → [`figma-documentation-check.md`](documentation/completed/v2.2.0-safety-enhancement/figma-documentation-check.md) and [`critique.md`](documentation/completed/v2.3.1-bind-variable-guardrails/critique.md).

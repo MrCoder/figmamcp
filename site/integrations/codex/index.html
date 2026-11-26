@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP with Codex: edit your open Figma file</title>
+<meta name="description" content="Use Codex with FigmaMCP to read and edit the Figma file you have open. The Mac app sets Codex up for you. macOS and the Figma desktop app required.">
+<link rel="canonical" href="https://figmamcp.dev/integrations/codex">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP with Codex: edit your open Figma file">
+<meta property="og:description" content="Use Codex with FigmaMCP to read and edit the Figma file you have open. The Mac app sets Codex up for you. macOS and the Figma desktop app required.">
+<meta property="og:url" content="https://figmamcp.dev/integrations/codex">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/integrations/codex#webpage","url":"https://figmamcp.dev/integrations/codex","name":"Figma MCP with Codex: edit your open Figma file","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/integrations/codex#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/integrations/codex#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Integrations","item":"https://figmamcp.dev/integrations"},{"@type":"ListItem","position":3,"name":"Figma MCP with Codex","item":"https://figmamcp.dev/integrations/codex"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does Codex need a Figma token to edit a file?","acceptedAnswer":{"@type":"Answer","text":"Not with FigmaMCP. It works through the Figma desktop app on your Mac, so there is no access token to create."}},{"@type":"Question","name":"Do I set Codex up myself?","acceptedAnswer":{"@type":"Answer","text":"No. The Mac app connects Codex for you. If Codex was already running, restart it so it loads the new tool."}},{"@type":"Question","name":"Does the file need to be open?","acceptedAnswer":{"@type":"Answer","text":"Yes. The file must be open in the Figma desktop app. With the Mac app, FigmaMCP can open the plugin for you after you allow Accessibility. Without it, open the plugin yourself once per file."}},{"@type":"Question","name":"What if an edit is refused?","acceptedAnswer":{"@type":"Answer","text":"The tool returns a structured error explaining why, for example the layer name did not match or the file is switched to read-only. Codex can then correct the request."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/integrations">Integrations</a></li><li aria-current="page">Figma MCP with Codex</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP with Codex</h1>
+<p class="lede">Yes. Codex can edit a live Figma file if it is connected to a tool that can act inside Figma. FigmaMCP is a free one, and the Figma MCP Codex setup is automatic: the Mac app connects Codex for you. Codex talks to a small local server, the server talks to a plugin in your Figma desktop app, and the edits appear in your file. It needs macOS and the desktop app, and no API token.</p>
+
+<h2 id="set-up">Set up</h2>
+<p class="measure">Four steps connect Codex to the file open in Figma. The Mac app connects Codex for you, so you do not edit a config file. If you also allow Accessibility, which is optional, FigmaMCP can open the plugin for Codex. For every setup detail, see <a href="/docs/setup">Figma MCP setup</a>.</p>
+<ol class="steps">
+<li><p><strong>Download the app and open it.</strong> Download FigmaMCP for Mac, open FigmaMCP.dmg and drag the app to Applications. Then open the app.</p><p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p></li>
+<li><p><strong>Click Add to Figma.</strong> The app&rsquo;s checklist checks for Figma, Claude Code and Codex. Click Add to Figma. Figma restarts once, and only if it was running and the plugin was missing.</p></li>
+<li><p><strong>Restart Codex.</strong> If Codex is running, quit it and start it again, so it loads the new tools.</p></li>
+<li><p><strong>Open the plugin in your file.</strong> Open the file in the Figma desktop app, then choose Plugins &rsaquo; Development &rsaquo; FigmaMCP. The panel shows the connected file. Its AI can edit this file switch must be on before your agent can edit.</p></li>
+</ol>
+<p class="measure">Then ask Codex for a read first. Paste this: &ldquo;List the text layers in the selected frame, with their font and size.&rdquo; A read cannot change the file, so it is a safe first test.</p>
+<figure class="step-shot narrow"><img src="/assets/figmamcp-plugin-connected.webp" width="800" height="990" loading="lazy" decoding="async" alt="FigmaMCP plugin panel in the Figma desktop app showing Connected, the AI can edit this file switch turned on, and 1 AI session connected"><figcaption>The FigmaMCP panel in Figma shows the connected file, the AI can edit this file switch and the number of connected AI sessions, such as one Codex session.</figcaption></figure>
+<p class="measure">Full walkthrough: <a href="/tutorials/edit-figma-with-claude-code">Edit a Figma file with Claude Code in 5 minutes</a>.</p>
+
+<h2>Prompts that work well</h2>
+<div class="tablewrap"><table>
+<thead><tr><th scope="col">You ask</th><th scope="col">What happens</th></tr></thead>
+<tbody>
+<tr><th scope="row">&ldquo;On this page, rename every layer called Frame 12 to match its heading.&rdquo;</th><td>Codex reads the page, then renames the matching layers in one validated batch.</td></tr>
+<tr><th scope="row">&ldquo;Replace the old product name in all text layers in this frame.&rdquo;</th><td>It finds the text layers in the frame and rewrites them together.</td></tr>
+<tr><th scope="row">&ldquo;Build a pricing card with three tiers using our variables.&rdquo;</th><td>It creates frames and text with auto layout, bound to your variables if you have allowed variable edits.</td></tr>
+<tr><th scope="row">&ldquo;Delete this color variable.&rdquo;</th><td>Refused if layers still use it, so you do not get broken references.</td></tr>
+</tbody></table></div>
+
+<h2>Guardrails you control</h2>
+<ul class="plain"><li>Edits go only to the open file where the plugin&rsquo;s AI can edit this file switch is on. Turn the switch off and the agent can read but not edit.</li>
+<li>Each edit names its target layer, and the name must match.</li>
+<li>Variables and styles follow the same switch: off means they are read-only too.</li>
+<li>A wrong edit that follows the rules still goes through. Review the result, and use Figma version history.</li></ul>
+<p class="measure">More detail: <a href="/tools/write">what the agent can create and edit</a>. Using Claude Code instead? See <a href="/integrations/claude-code">Edit Figma with Claude Code</a>.</p>
+
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+<h2>Questions</h2><div class="faq"><details><summary>Does Codex need a Figma token to edit a file?</summary><div class="ans">Not with FigmaMCP. It works through the Figma desktop app on your Mac, so there is no access token to create.</div></details><details><summary>Do I set Codex up myself?</summary><div class="ans">No. The Mac app connects Codex for you. If Codex was already running, restart it so it loads the new tool.</div></details><details><summary>Does the file need to be open?</summary><div class="ans">Yes. The file must be open in the Figma desktop app. With the Mac app, FigmaMCP can open the plugin for you after you allow Accessibility. Without it, open the plugin yourself once per file.</div></details><details><summary>What if an edit is refused?</summary><div class="ans">The tool returns a structured error explaining why, for example the layer name did not match or the file is switched to read-only. Codex can then correct the request.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

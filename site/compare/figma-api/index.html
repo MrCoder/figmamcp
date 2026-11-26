@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP vs Figma API: tokens, rate limits and which to use</title>
+<meta name="description" content="Figma MCP vs Figma API: how access tokens and REST rate limits work, and when a local tool like FigmaMCP fits instead. Figma docs checked 2026-11-13.">
+<link rel="canonical" href="https://figmamcp.dev/compare/figma-api">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP vs Figma API: tokens, rate limits and which to use">
+<meta property="og:description" content="Figma MCP vs Figma API: how access tokens and REST rate limits work, and when a local tool like FigmaMCP fits instead. Figma docs checked 2026-11-13.">
+<meta property="og:url" content="https://figmamcp.dev/compare/figma-api">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/compare/figma-api#webpage","url":"https://figmamcp.dev/compare/figma-api","name":"Figma MCP vs Figma API: tokens, rate limits and which to use","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/compare/figma-api#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/compare/figma-api#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Compare","item":"https://figmamcp.dev/compare"},{"@type":"ListItem","position":3,"name":"Figma MCP vs Figma API","item":"https://figmamcp.dev/compare/figma-api"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Do I need an access token for FigmaMCP?", "acceptedAnswer": {"@type": "Answer", "text": "No. FigmaMCP works through a plugin in the Figma desktop app, so there is no API token to create."}}, {"@type": "Question", "name": "What happens when I hit a REST API rate limit?", "acceptedAnswer": {"@type": "Answer", "text": "Figma says the endpoint returns a 429 error, with a Retry-After header that gives the wait in seconds. Source: Figma REST API rate-limit docs, checked 2026-11-13."}}, {"@type": "Question", "name": "Does FigmaMCP have a call quota?", "acceptedAnswer": {"@type": "Answer", "text": "FigmaMCP sets no call quota. Figma and your agent still apply their own terms and limits."}}, {"@type": "Question", "name": "Is the REST API the same as Figma's MCP server?", "acceptedAnswer": {"@type": "Answer", "text": "They are different products from Figma. This page covers the REST API; see the official MCP comparison for Figma's MCP server."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/compare">Compare</a></li><li aria-current="page">Figma MCP vs Figma API</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP vs Figma API</h1>
+<p class="lede">Use the Figma REST API when you write your own scripts or server jobs. Use a Figma MCP server when you want an AI agent to work on a design for you. The two sit at different layers: the REST API is an HTTP interface with access tokens and rate limits, and some MCP servers call it underneath. FigmaMCP does not. It is a free Mac app that works through the Figma desktop app. Facts about the REST API are from Figma&rsquo;s docs, checked 2026-11-13.</p>
+
+<div class="tablewrap"><table>
+<caption class="sr">Figma REST API and FigmaMCP</caption>
+<thead><tr><th scope="col"></th><th scope="col">Figma REST API</th><th scope="col">FigmaMCP</th></tr></thead>
+<tbody>
+<tr><th scope="row">What it is</th><td>Figma&rsquo;s HTTP API for your own scripts and apps</td><td>A Mac app with a local server and Figma plugin for Claude Code and Codex</td></tr>
+<tr><th scope="row">Authentication</th><td>Personal access tokens or OAuth 2 apps, with scopes</td><td>No API token</td></tr>
+<tr><th scope="row">Rate limits</th><td>Set by seat type, endpoint tier, and plan of the resource; over the limit returns 429</td><td>No call quota from FigmaMCP</td></tr>
+<tr><th scope="row">Tier 1 endpoints (for example GET file, GET image)</th><td>View or Collab seat: up to 20 a month. Dev or Full seat: 10, 15, or 20 a minute</td><td>Not applicable</td></tr>
+<tr><th scope="row">Retry guidance</th><td>429 responses carry a <code>Retry-After</code> header, in seconds</td><td>Not applicable</td></tr>
+<tr><th scope="row">Where it works</th><td>Any server or script that can send HTTP requests</td><td>Figma desktop on a Mac</td></tr>
+</tbody></table></div>
+<p class="fine">Sources: <a href="https://developers.figma.com/docs/rest-api/rate-limits/">rate limits</a>, <a href="https://developers.figma.com/docs/rest-api/authentication/">authentication</a>. checked 2026-11-13. Limits may change; read the rate-limit page for the tier of each endpoint and how limits map to plans.</p>
+
+<h2>How the limits work</h2>
+<ul class="plain"><li>Figma says limits depend on &ldquo;the seat type of the user,&rdquo; the endpoint&rsquo;s tier, and the location and plan of the resource.</li><li>Tracking differs by auth type: OAuth apps per user, plan and app; plan access tokens per token and plan; personal access tokens per user and plan.</li><li>The 429 response includes a <code>Retry-After</code> header and a rate-limit-type header that says whether the seat is low or high.</li></ul>
+
+<h2>Which one to choose</h2>
+<ul class="plain"><li><strong>REST API:</strong> you are building your own integration, a server job, or a pipeline that must run without a person at a Mac.</li><li><strong>FigmaMCP:</strong> you want Claude Code or Codex to read and edit the file open on your Mac, with no token to create or store. Edits run only where the &ldquo;AI can edit this file&rdquo; switch is on.</li></ul>
+<p>An agent that reads through the REST API uses your seat&rsquo;s limits. FigmaMCP has no call quota of its own, though Figma and your agent still need their own connections.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<p class="measure">See also <a href="/figma-mcp-limit-reached">Figma MCP limit reached</a>, <a href="/compare/official-figma-mcp">official Figma MCP</a>, <a href="/compare/framelink">Framelink</a> and <a href="/docs/setup">setup</a>.</p>
+
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+<h2>Questions</h2><div class="faq"><details><summary>Do I need an access token for FigmaMCP?</summary><div class="ans">No. FigmaMCP works through a plugin in the Figma desktop app, so there is no API token to create.</div></details><details><summary>What happens when I hit a REST API rate limit?</summary><div class="ans">Figma says the endpoint returns a 429 error, with a Retry-After header that gives the wait in seconds. Source: Figma REST API rate-limit docs, checked 2026-11-13.</div></details><details><summary>Does FigmaMCP have a call quota?</summary><div class="ans">FigmaMCP sets no call quota. Figma and your agent still apply their own terms and limits.</div></details><details><summary>Is the REST API the same as Figma's MCP server?</summary><div class="ans">They are different products from Figma. This page covers the REST API; see the official MCP comparison for Figma's MCP server.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

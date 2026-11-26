@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP tutorials: step-by-step guides for AI agents</title>
+<meta name="description" content="Four step-by-step FigmaMCP tutorials for Claude Code and Codex: a first edit, a design QA pass, a written spec turned into frames, and clean layer names.">
+<link rel="canonical" href="https://figmamcp.dev/tutorials">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP tutorials: step-by-step guides for AI agents">
+<meta property="og:description" content="Four step-by-step FigmaMCP tutorials for Claude Code and Codex: a first edit, a design QA pass, a written spec turned into frames, and clean layer names.">
+<meta property="og:url" content="https://figmamcp.dev/tutorials">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"CollectionPage","@id":"https://figmamcp.dev/tutorials#webpage","url":"https://figmamcp.dev/tutorials","name":"Figma MCP tutorials: step-by-step guides for AI agents","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/tutorials#breadcrumb"},"mainEntity":{"@id":"https://figmamcp.dev/tutorials#list"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/tutorials#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Tutorials","item":"https://figmamcp.dev/tutorials"}]},{"@type":"ItemList","@id":"https://figmamcp.dev/tutorials#list","name":"FigmaMCP tutorials","numberOfItems":4,"itemListElement":[{"@type":"ListItem","position":1,"url":"https://figmamcp.dev/tutorials/edit-figma-with-claude-code","name":"Edit a Figma file with Claude Code in 5 minutes"},{"@type":"ListItem","position":2,"url":"https://figmamcp.dev/tutorials/design-qa-figma-file","name":"Run a design QA pass on a Figma file with an AI agent"},{"@type":"ListItem","position":3,"url":"https://figmamcp.dev/tutorials/spec-to-figma-frames","name":"Turn a written spec into Figma frames with an AI agent"},{"@type":"ListItem","position":4,"url":"https://figmamcp.dev/tutorials/rename-figma-layers","name":"Rename Figma layers with an AI agent"}]}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">Tutorials</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP tutorials</h1>
+<p class="lede">These tutorials show, step by step, how to let Claude Code or Codex work on a live Figma file through FigmaMCP, a free Mac app with a local MCP server and a plugin for the Figma desktop app. Each one is a single task with numbered steps, the prompt to type and what the agent does in reply.</p>
+
+<h2>All tutorials</h2>
+<div class="tablewrap"><table><caption class="sr">FigmaMCP tutorials</caption>
+<thead><tr><th scope="col">Tutorial</th><th scope="col">What you get</th><th scope="col">Skill to copy</th></tr></thead><tbody>
+<tr><th scope="row"><a href="/tutorials/edit-figma-with-claude-code">Edit a Figma file with Claude Code in 5 minutes</a></th><td>Install the Mac app, check the plugin switch, then ask for a first read and a first edit. With a demo video.</td><td>None</td></tr>
+<tr><th scope="row"><a href="/tutorials/design-qa-figma-file">Run a design QA pass on a Figma file with an AI agent</a></th><td>The agent scores one frame on six categories, fixes the lowest ones and repeats until each scores 9 or more.</td><td><code>figma-design-qa</code></td></tr>
+<tr><th scope="row"><a href="/tutorials/spec-to-figma-frames">Turn a written spec into Figma frames with an AI agent</a></th><td>The agent builds a screen with auto layout, one frame per section and named layers, then checks a picture of it.</td><td><code>figma-spec-to-frames</code></td></tr>
+<tr><th scope="row"><a href="/tutorials/rename-figma-layers">Rename Figma layers with an AI agent</a></th><td>The agent proposes a naming map, waits for your yes, renames each layer and reads the frame again.</td><td><code>figma-rename-layers</code></td></tr>
+</tbody></table></div>
+
+<h2>Which one to start with</h2>
+<ol>
+<li>Start with <a href="/tutorials/edit-figma-with-claude-code">the 5-minute tutorial</a> if FigmaMCP is new to you. It sets up the app and checks the connection with a read before the first edit.</li>
+<li>Then pick the task you have today. To check and fix a frame, run a design QA pass. To start a new screen from a product spec, turn the spec into frames. To clean up a frame before a handoff, rename its layers.</li>
+<li>Work on a duplicate of the file or frame the first time, and use Figma version history to undo a change you do not want.</li>
+</ol>
+
+<h2>Before you start</h2>
+<p class="measure">Every tutorial needs the same setup: a Mac with macOS 14 or later, the Figma desktop app and Claude Code or Codex. FigmaMCP does not run in the browser, and you do not create a Figma access token. The full reference is <a href="/docs/setup">Figma MCP setup for Mac</a>.</p>
+<p class="measure">The three task tutorials each use a skill: a short instruction file that tells the agent which FigmaMCP tools to call and in which order. The FigmaMCP app installs only the base <code>figmamcp</code> skill. You copy the task skill from the <a href="https://github.com/MrCoder/figmamcp-releases/tree/main/skills">FigmaMCP releases page</a> into <code>~/.claude/skills/</code> for Claude Code, or <code>~/.codex/skills/</code> for Codex, and start a new session.</p>
+
+<h2>What stays the same in every tutorial</h2>
+<ul>
+<li>The agent edits only the file where the plugin is open and its AI can edit this file switch is on. With the switch off, it can only read.</li>
+<li>Each edit must name its target layer exactly, and a bulk edit with one invalid item changes nothing. See <a href="/is-figma-mcp-safe">Is it safe?</a></li>
+<li>The agent tells you what it will change and reports what it did. You still check the result in Figma.</li>
+</ul>
+
+<h2>Questions</h2><div class="faq"><details><summary>Do the tutorials work with Codex?</summary><div class="ans">Yes. The steps are the same for Claude Code and Codex. Only the folder you copy a skill into is different.</div></details><details><summary>Do I need a skill for the first tutorial?</summary><div class="ans">No. The first tutorial uses only the base figmamcp skill, which the Mac app installs for you.</div></details><details><summary>Where is the full list of tools?</summary><div class="ans">On the <a href="/tools">tools page</a>. For jobs described by goal rather than by step, see <a href="/use-cases">use cases</a>.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

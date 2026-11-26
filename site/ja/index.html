@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FigmaMCP：開いているFigmaファイルをAIが編集</title>
+<meta name="description" content="無料・ローカル動作。FigmaMCPはClaude CodeやCodexに開いているFigmaファイルの読み書きを許可。呼び出し上限なし。macOS専用。">
+<link rel="canonical" href="https://figmamcp.dev/ja">
+<link rel="alternate" hreflang="en" href="https://figmamcp.dev/">
+<link rel="alternate" hreflang="zh-CN" href="https://figmamcp.dev/zh">
+<link rel="alternate" hreflang="zh-TW" href="https://figmamcp.dev/zh-hant">
+<link rel="alternate" hreflang="zh-HK" href="https://figmamcp.dev/zh-hant">
+<link rel="alternate" hreflang="ja" href="https://figmamcp.dev/ja">
+<link rel="alternate" hreflang="pl" href="https://figmamcp.dev/pl">
+<link rel="alternate" hreflang="fr" href="https://figmamcp.dev/fr">
+<link rel="alternate" hreflang="de" href="https://figmamcp.dev/de">
+<link rel="alternate" hreflang="ko" href="https://figmamcp.dev/ko">
+<link rel="alternate" hreflang="uk" href="https://figmamcp.dev/uk">
+<link rel="alternate" hreflang="x-default" href="https://figmamcp.dev/">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="FigmaMCP：開いているFigmaファイルをAIが編集">
+<meta property="og:description" content="無料・ローカル動作。FigmaMCPはClaude CodeやCodexに開いているFigmaファイルの読み書きを許可。呼び出し上限なし。macOS専用。">
+<meta property="og:url" content="https://figmamcp.dev/ja">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FigmaMCP：開いているFigmaファイルをAIが編集">
+<meta name="twitter:description" content="無料・ローカル動作。FigmaMCPはClaude CodeやCodexに開いているFigmaファイルの読み書きを許可。呼び出し上限なし。macOS専用。">
+<meta name="twitter:image" content="https://figmamcp.dev/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"無料でローカルに動作する MCP サーバーと専用アプリ。Claude Code や Codex が Figma デスクトップアプリで開いているファイルを読み取り・編集できるようにします。呼び出し回数の上限はありません。","url":"https://figmamcp.dev/ja","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/ja#webpage","url":"https://figmamcp.dev/ja","name":"FigmaMCP：開いているFigmaファイルをAIが編集","inLanguage":"ja","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/ja#breadcrumb"},"dateModified":"2026-11-26"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/ja#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"FigmaMCP：開いているFigmaファイルをAIが編集","item":"https://figmamcp.dev/ja"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"FigmaMCPは本当に無料ですか？","acceptedAnswer":{"@type":"Answer","text":"はい。無料で、有料プランはありません。FigmaがホストするMCPサーバーを呼び出さないため、Figmaのシートごとの呼び出し制限は適用されません。開くファイルには、あなた自身のFigmaプランとFigmaの利用規約がそのまま適用されます。"}},{"@type":"Question","name":"Figmaの公式MCPサーバーとは何が違いますか？","acceptedAnswer":{"@type":"Answer","text":"Figmaの公式サーバーはFigma自身が提供するもので、多くのMCPクライアントで使えます。小規模なプランでは読み取り呼び出しに上限があり、キャンバスへの書き込みはベータ版で、下書き以外ではFullシートが必要です。FigmaMCPは、開いているファイルのプラグインを通じてMac上で動作し、APIトークンも呼び出しクォータもありません。Claude CodeとCodexで使え、macOS専用です。詳しい比較もご覧ください。"}},{"@type":"Question","name":"同じファイルを2人が開いている場合、エージェントはどちらのFigmaを編集しますか？","acceptedAnswer":{"@type":"Answer","text":"エージェントが動いているMac上のFigmaデスクトップアプリです。エージェントはそのアプリのプラグインと通信するため、その人として編集します。その人にはファイルの編集権限が必要です。ほかの人には、通常の編集と同じように変更がリアルタイムで表示されます。2人が同じレイヤーを同時に変更した場合は、Figma自身のマルチプレイヤー同期が解決します。異なるプロパティへの変更はどちらも残り、同じプロパティでは最後の変更が優先されます。FigmaMCP独自のマージ処理は加えません。"}},{"@type":"Question","name":"WindowsやLinuxでも使えますか？","acceptedAnswer":{"@type":"Answer","text":"まだ使えません。FigmaMCPは現在macOS専用です。"}},{"@type":"Question","name":"Figma APIトークンは必要ですか？","acceptedAnswer":{"@type":"Answer","text":"不要です。FigmaMCPはMac上のFigmaデスクトップアプリとPlugin API経由で通信するため、作成したり貼り付けたりするアクセストークンはありません。"}},{"@type":"Question","name":"プラグインがFigma Communityにないのはなぜですか？","acceptedAnswer":{"@type":"Answer","text":"FigmaMCPはFigma Communityの外で配布されています。手動でインストールする必要はありません。Macアプリがあなたの代わりにFigmaへ登録し、Plugins、Developmentの下に表示されるようになります。"}},{"@type":"Question","name":"どのAIエージェントで使えますか？","acceptedAnswer":{"@type":"Answer","text":"Claude CodeとCodexで動作確認済みです。Macアプリがあなたの代わりに接続します。"}},{"@type":"Question","name":"エージェントがファイルを壊してしまうことはありますか？","acceptedAnswer":{"@type":"Answer","text":"編集が反映されるのは、プラグインが開いていて「AI can edit this file」がオンになっているファイルだけです。オフにすればAIは読み取りしかできません。各編集は対象のレイヤーを正確に指定する必要があり、一括編集は1つでも無効な項目があれば何も変更されません。それでも編集ツールであることに変わりはないので、同僚の作業を確認するのと同じように結果を確認し、Figmaのバージョン履歴も活用してください。"}},{"@type":"Question","name":"Figmaのサーバーにリクエストを送りますか？","acceptedAnswer":{"@type":"Answer","text":"送りません。FigmaMCPはFigmaのサーバーやREST APIを呼び出しません。あなたのエージェントはローカルのMCPサーバーと通信し、そのMCPサーバーがlocalhost経由でFigmaデスクトップアプリ内のプラグインと通信し、プラグインがアプリ内のPlugin APIを通じてファイルを読み取り・編集します。あなたの編集は、あなた自身の操作と同じようにアプリの通常の同期を通じてFigmaのクラウドに反映されます。プラグイン自体が送るリクエストにファイルの内容は含まれません。プラグイン起動ごとに1回、プラグインのバージョンとランダムな導入IDをfigmamcp.devとGoogle Analyticsに送るほか、ツール名ごとの呼び出し回数（内容なし）をまとめてfigmamcp.devに送ります。"}},{"@type":"Question","name":"デザインが自分のマシンの外に出ることはありますか？","acceptedAnswer":{"@type":"Answer","text":"FigmaMCP自体はファイルの内容をどこにも送信しません。ただし、あなたのエージェントはFigmaMCPが返した内容を読み取り、そのエージェント自身のモデル提供元の規約に従って送信します。詳細はプライバシーページをご覧ください。"}},{"@type":"Question","name":"これはFigma社が作っていますか？","acceptedAnswer":{"@type":"Answer","text":"いいえ。Figma, Inc.とは提携・承認関係にありません。FigmaMCPはNeo Product LLCによるfigma-edit-mcpのフォークです。"}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">比較</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/" hreflang="en" lang="en">English</a></nav></div></header>
+<main id="main">
+<section class="hero"><div class="wrap">
+ <h1>すでに開いているFigmaファイルを、エージェントが編集します。</h1>
+ <p class="fine lang-switch"><strong>言語：</strong> <a href="/" hreflang="en" lang="en">English</a> · <a href="/zh" hreflang="zh-CN" lang="zh-CN">简体中文</a> · <a href="/zh-hant" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> · 日本語 · <a href="/pl" hreflang="pl" lang="pl">Polski</a> · <a href="/fr" hreflang="fr" lang="fr">Français</a> · <a href="/de" hreflang="de" lang="de">Deutsch</a> · <a href="/ko" hreflang="ko" lang="ko">한국어</a> · <a href="/uk" hreflang="uk" lang="uk">Українська</a></p>
+ <p class="lede">FigmaMCPは無料でローカルに動くツールで、Claude CodeやCodexがFigmaデスクトップアプリ内の開いているファイルを読み取り・編集できるようにします。Mac上でFigmaのPlugin APIを通じて動作するため、呼び出し回数を気にする必要はありません。</p>
+ <p class="cta"><a class="btn" href="/download">Macにダウンロード</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14以上 · Intel / Apple Silicon対応 · 約155 MB</span></p><p class="alt">ダウンロードが遅い、またはブロックされていますか？<a href="https://github.com/MrCoder/figmamcp-releases/releases/latest">GitHubのリリースページ</a>から <code>FigmaMCP.dmg</code> を取得してください。<a href="/ja/docs/setup#verify">SHA-256を確認</a>。</p>
+<div class="after-dl" id="after-download" hidden><p class="after-dl-title"><strong>ダウンロードを開始しました。</strong> <code>FigmaMCP.dmg</code> を開いて、アプリを Applications にドラッグしてください。<a href="/ja/docs/setup">セットアップガイド</a>。</p><form class="sub" action="/subscribe" method="post" data-sub><label for="sub-email-download">セットアップのヒントや新しいツールをメールで受け取りますか？（任意）</label><div class="sub-row"><input id="sub-email-download" type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"><input type="hidden" name="source" value="download"><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">登録する</button></div><p class="sub-note">任意です。送信するメールは少数で、どれにも配信停止リンクがあります。<a href="/privacy#email">プライバシー</a>。</p><p class="sub-msg" role="status" aria-live="polite"></p></form></div>
+ <p class="fine">現在はmacOS専用です。Figmaデスクトップアプリが必要です。無料でローカルに動作します。</p>
+ <figure class="demo">
+  <video data-demo width="1600" height="554" muted loop playsinline autoplay preload="none" poster="/assets/figmamcp-demo-poster.webp" aria-label="FigmaMCPのデモ：ターミナルのClaude CodeがFigmaデスクトップアプリで料金カードを作り、レイヤーに名前を付け、オートレイアウト・角丸・影を加えます"><source data-src="/assets/figmamcp-demo.mp4" type="video/mp4"></video>
+  <figcaption><span>実際の録画（約4倍速）：Claude CodeがFigmaMCPを通じて、開いているFigmaファイルに料金カードを作ります。</span> <button type="button" class="demo-toggle" data-demo-toggle data-pause="一時停止" data-play="再生" hidden>一時停止</button></figcaption>
+ </figure>
+</div></section>
+
+<section class="wrap block" id="see-it-work"><h2>動いているところ</h2>
+ <div class="shots">
+  <figure class="shot-narrow"><img src="/assets/figmamcp-plugin-connected.webp" width="800" height="990" loading="lazy" decoding="async" alt="FigmaデスクトップアプリのFigmaMCPプラグインパネル。「接続済み」と表示され、「AIがこのファイルを編集できる」スイッチがオンで、AIセッションが1つ接続されています"><figcaption><strong>1. プラグインを開く。</strong>FigmaMCPのパネルに、接続中のファイルが表示されます。AIに編集を許すかどうかは、スイッチ1つで決まります。</figcaption></figure>
+  <figure><img src="/assets/figmamcp-agent-editing.webp" width="1600" height="554" loading="lazy" decoding="async" alt="作業中のFigmaMCP：Figmaに新しい料金カードが表示され、隣のターミナルでClaude Codeがカードのレイヤー名を変更しています"><figcaption><strong>2. エージェントに頼む。</strong>Claude CodeがFigmaMCPのツールを呼び出し、見ている間にFigmaのレイヤーが変わります。</figcaption></figure>
+  <figure class="shot-mid"><img src="/assets/figmamcp-result.webp" width="1200" height="794" loading="lazy" decoding="async" alt="FigmaMCPで編集した結果：オートレイアウト・角丸・影の付いた料金カードと、Plan Name、Price、Description、CTA Buttonという名前のレイヤー"><figcaption><strong>3. 結果を確かめる。</strong>オートレイアウトと名前付きレイヤーを備えた本物のFigmaフレームで、そのまま編集を続けられます。</figcaption></figure>
+ </div>
+</section>
+
+<section class="wrap block" id="what"><h2>できること</h2>
+ <p class="measure">やりたいことを自然な言葉でエージェントに伝えてください。エージェントは開いているファイルの構造を読み取り、同じファイルの中でその場で編集します。変化はその場で確認できます。</p>
+ <div class="cols">
+  <div><h3>読み取り</h3><p>目の前のファイルから、ページ、フレーム、レイヤー、テキスト、コンポーネント、変数、スタイルを読み取ります。</p></div>
+  <div><h3>編集</h3><p>フレーム、テキスト、図形、コンポーネントとインスタンス、オートレイアウト、塗り、ストローク、エフェクトを作成・変更します。</p></div>
+  <div><h3>まとめて適用</h3><p>一度のリクエストで多数のレイヤーをまとめてリネーム・再スタイル・書き換えできます。たとえば、古い製品名が書かれたすべてのテキストレイヤーを一括で直せます。</p></div>
+  <div><h3>安全な範囲で</h3><p>各編集は対象を正確に指定する必要があり、一括編集の中に1つでも無効な項目があれば何も変更されません。プラグインのスイッチひとつでファイルを読み取り専用にもできます。</p></div>
+ </div>
+</section>
+
+<section class="wrap block" id="how"><h2>使い方</h2>
+ <ol class="steps">
+  <li><h3>アプリをダウンロードして開く</h3><p>Mac用のFigmaMCPをダウンロードして開いてください。メニューバーに常駐します。</p></li>
+  <li><h3>「Add to Figma」をクリック</h3><p>Figmaが起動中で、まだプラグインが入っていない場合のみ、一度だけ再起動します。「アクセシビリティ」権限を許可すると、FigmaMCPがAIの代わりにプラグインを開けるようになります。</p></li>
+  <li><h3>エージェントに頼む</h3><p>Claude CodeやCodexに、開いているファイルの変更を頼んでください。インポートするものも、貼り付けるコードも、選ぶポート番号もありません。</p></li>
+ </ol>
+ <aside class="note"><h2>最初に知っておきたいこと</h2><ul>
+<li>現在はmacOS専用です。</li>
+<li>Figmaデスクトップアプリが必要です。ブラウザでは動作しません。</li>
+<li>FigmaMCPはFigma Communityには公開されていません。Macアプリがプラグインを代わりにインストールします。</li>
+<li>「アクセシビリティ」を許可しない場合は、各ファイルで一度だけプラグイン（Plugins、Development、FigmaMCP）を開き、エージェントが編集している間は開いたままにしてください。</li>
+<li>Dev Modeなど、Figma本体の機能は含まれていません。</li></ul></aside>
+</section>
+
+<section class="wrap block" id="start"><h2>はじめに</h2>
+ <ul class="plain">
+<li><a href="/ja/docs/setup">Mac用Figma MCPのセットアップ</a>：ダウンロードから最初の編集まで。</li>
+<li><a href="/ja/tutorials/edit-figma-with-claude-code">Claude CodeでFigmaファイルを5分で編集する</a>：デモ動画付きの手順です。</li>
+<li><a href="/ja/what-is-figma-mcp">Figma MCPサーバーとは？</a>：4つの種類と、編集できるもの。</li>
+<li><a href="/ja/pricing">Figma MCPの料金</a>：FigmaMCPは現在無料です。Figma公式の呼び出し上限も載せています。</li>
+<li><a href="/ja/troubleshooting/not-working">Figma MCPが動かないとき</a>：症状やエラーコードから探せます。</li></ul>
+</section>
+
+<section class="wrap block" id="compare"><h2>比較</h2>
+ <p class="measure">各プロジェクト自身の説明にもとづく簡易版です。詳細は各READMEを確認してください。これらのツールは変化します。</p>
+ <div class="tablewrap"><table>
+<caption class="sr">AIエージェントをFigmaに接続する方法の比較</caption>
+<thead><tr><th scope="col">ツール</th><th scope="col">読み取り</th><th scope="col">編集</th><th scope="col">接続方法</th><th scope="col">呼び出し制限</th></tr></thead>
+<tbody>
+<tr class="us"><th scope="row">FigmaMCP</th><td>はい</td><td>はい</td><td>Macアプリがローカルサーバーとプラグインをインストール。APIトークンは不要</td><td>FigmaのMCPサーバーを呼び出さないため呼び出しクォータなし</td></tr>
+<tr><th scope="row">Figma MCPサーバー</th><td>はい</td><td>キャンバスへの書き込み（ベータ）</td><td>Figmaがホスト、ログインが必要</td><td>シート数とプランに応じて。制限は読み取りツールのみで、書き込みツールは対象外</td></tr>
+<tr><th scope="row">Framelink</th><td>はい</td><td>いいえ、読み取り専用</td><td>トークンを使ったFigma REST API</td><td>Figma REST APIの制限</td></tr>
+<tr><th scope="row">figma-console-mcp</th><td>はい</td><td>はい</td><td>プラグインとトークン</td><td>READMEを参照</td></tr>
+<tr><th scope="row">cursor-talk-to-figma</th><td>はい</td><td>はい</td><td>リレーサーバーとチャンネルコード</td><td>READMEを参照</td></tr>
+</tbody></table></div>
+ <p class="fine">Figmaの制限は2026年11月22日に<a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">Figmaのレート制限ページ</a>で確認しました。制限は変わる可能性があります。詳細は<a href="/figma-mcp-alternative">比較ページ</a>をご覧ください。プラン別の上限と、上限に含まれるツールの一覧は<a href="/ja/figma-mcp-rate-limit">Figma MCP レート制限</a>のページにまとめています。</p>
+</section>
+
+<section class="wrap block" id="faq"><h2>よくある質問</h2><div class="faq"><details><summary>FigmaMCPは本当に無料ですか？</summary><div class="ans">はい。無料で、有料プランはありません。FigmaがホストするMCPサーバーを呼び出さないため、Figmaのシートごとの呼び出し制限は適用されません。開くファイルには、あなた自身のFigmaプランとFigmaの利用規約がそのまま適用されます。</div></details><details><summary>Figmaの公式MCPサーバーとは何が違いますか？</summary><div class="ans">Figmaの公式サーバーはFigma自身が提供するもので、多くのMCPクライアントで使えます。小規模なプランでは読み取り呼び出しに上限があり、キャンバスへの書き込みはベータ版で、下書き以外ではFullシートが必要です。FigmaMCPは、開いているファイルのプラグインを通じてMac上で動作し、APIトークンも呼び出しクォータもありません。Claude CodeとCodexで使え、macOS専用です。<a href="/compare/official-figma-mcp">詳しい比較</a>もご覧ください。</div></details><details><summary>同じファイルを2人が開いている場合、エージェントはどちらのFigmaを編集しますか？</summary><div class="ans">エージェントが動いているMac上のFigmaデスクトップアプリです。エージェントはそのアプリのプラグインと通信するため、その人として編集します。その人にはファイルの編集権限が必要です。ほかの人には、通常の編集と同じように変更がリアルタイムで表示されます。2人が同じレイヤーを同時に変更した場合は、Figma自身のマルチプレイヤー同期が解決します。異なるプロパティへの変更はどちらも残り、同じプロパティでは最後の変更が優先されます。FigmaMCP独自のマージ処理は加えません。</div></details><details><summary>WindowsやLinuxでも使えますか？</summary><div class="ans">まだ使えません。FigmaMCPは現在macOS専用です。</div></details><details><summary>Figma APIトークンは必要ですか？</summary><div class="ans">不要です。FigmaMCPはMac上のFigmaデスクトップアプリとPlugin API経由で通信するため、作成したり貼り付けたりするアクセストークンはありません。</div></details><details><summary>プラグインがFigma Communityにないのはなぜですか？</summary><div class="ans">FigmaMCPはFigma Communityの外で配布されています。手動でインストールする必要はありません。Macアプリがあなたの代わりにFigmaへ登録し、Plugins、Developmentの下に表示されるようになります。</div></details><details><summary>どのAIエージェントで使えますか？</summary><div class="ans">Claude CodeとCodexで動作確認済みです。Macアプリがあなたの代わりに接続します。</div></details><details><summary>エージェントがファイルを壊してしまうことはありますか？</summary><div class="ans">編集が反映されるのは、プラグインが開いていて「AI can edit this file」がオンになっているファイルだけです。オフにすればAIは読み取りしかできません。各編集は対象のレイヤーを正確に指定する必要があり、一括編集は1つでも無効な項目があれば何も変更されません。それでも編集ツールであることに変わりはないので、同僚の作業を確認するのと同じように結果を確認し、Figmaのバージョン履歴も活用してください。</div></details><details><summary>Figmaのサーバーにリクエストを送りますか？</summary><div class="ans">送りません。FigmaMCPはFigmaのサーバーやREST APIを呼び出しません。あなたのエージェントはローカルのMCPサーバーと通信し、そのMCPサーバーがlocalhost経由でFigmaデスクトップアプリ内のプラグインと通信し、プラグインがアプリ内のPlugin APIを通じてファイルを読み取り・編集します。あなたの編集は、あなた自身の操作と同じようにアプリの通常の同期を通じてFigmaのクラウドに反映されます。プラグイン自体が送るリクエストにファイルの内容は含まれません。プラグイン起動ごとに1回、プラグインのバージョンとランダムな導入IDをfigmamcp.devとGoogle Analyticsに送るほか、ツール名ごとの呼び出し回数（内容なし）をまとめてfigmamcp.devに送ります。</div></details><details><summary>デザインが自分のマシンの外に出ることはありますか？</summary><div class="ans">FigmaMCP自体はファイルの内容をどこにも送信しません。ただし、あなたのエージェントはFigmaMCPが返した内容を読み取り、そのエージェント自身のモデル提供元の規約に従って送信します。詳細は<a href="/privacy">プライバシーページ</a>をご覧ください。</div></details><details><summary>これはFigma社が作っていますか？</summary><div class="ans">いいえ。Figma, Inc.とは提携・承認関係にありません。FigmaMCPはNeo Product LLCによるfigma-edit-mcpのフォークです。</div></details></div></section>
+
+<section class="wrap block" id="get"><h2>FigmaMCPを入手</h2><p class="measure">無料です。FigmaMCPのアカウントも、Figma APIトークンも要りません。エージェントは、いま開いているファイルをそのまま編集します。</p><p class="cta"><a class="btn" href="/download">Macにダウンロード</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14以上 · Intel / Apple Silicon対応 · 約155 MB</span></p><p class="alt">ダウンロード後、<code>FigmaMCP.dmg</code> を開き、アプリを Applications フォルダにドラッグします。続いて<a href="/ja/docs/setup">セットアップ手順</a>に沿って進めてください。</p></section>
+<p class="wrap fine updated">最終更新：<time datetime="2026-11-26">2026-11-26</time></p>
+</main>
+<footer class="foot"><div class="wrap">
+<form class="sub" action="/subscribe" method="post" data-sub><label for="sub-email-footer">セットアップのヒントや新しいツールをメールで受け取る</label><div class="sub-row"><input id="sub-email-footer" type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"><input type="hidden" name="source" value="footer"><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">登録する</button></div><p class="sub-note">任意です。送信するメールは少数で、どれにも配信停止リンクがあります。<a href="/privacy#email">プライバシー</a>。</p><p class="sub-msg" role="status" aria-live="polite"></p></form>
+<p>FigmaMCPは無料です。Neo Product LLCによる<a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a>のフォークです。</p>
+<p>Figma, Inc.とは提携・承認関係にありません。FigmaはFigma, Inc.の商標です。</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/ja/pricing">料金</a><a href="/ja/docs/setup">セットアップ</a><a href="/ja/tutorials/edit-figma-with-claude-code">チュートリアル</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/ja/what-is-figma-mcp">Figma MCPとは</a><a href="/ja/figma-mcp-rate-limit">レート制限</a><a href="/ja/troubleshooting/not-working">トラブルシューティング</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a><a href="/" hreflang="en" lang="en">English</a></p>
+</div></footer>
+<img class="px" src="/p.gif?l=ja" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

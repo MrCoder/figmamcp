@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCPサーバーとは：4つの種類と編集できるもの</title>
+<meta name="description" content="Figma MCPサーバーを使うと、Claude CodeなどのAIエージェントがFigmaファイルを読み取り・編集できます。4つの種類と接続方法を比べます。">
+<link rel="canonical" href="https://figmamcp.dev/ja/what-is-figma-mcp">
+<link rel="alternate" hreflang="en" href="https://figmamcp.dev/what-is-figma-mcp">
+<link rel="alternate" hreflang="ja" href="https://figmamcp.dev/ja/what-is-figma-mcp">
+<link rel="alternate" hreflang="zh-CN" href="https://figmamcp.dev/zh/what-is-figma-mcp">
+<link rel="alternate" hreflang="x-default" href="https://figmamcp.dev/what-is-figma-mcp">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCPサーバーとは：4つの種類と編集できるもの">
+<meta property="og:description" content="Figma MCPサーバーを使うと、Claude CodeなどのAIエージェントがFigmaファイルを読み取り・編集できます。4つの種類と接続方法を比べます。">
+<meta property="og:url" content="https://figmamcp.dev/ja/what-is-figma-mcp">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"無料でローカルに動作する MCP サーバーと専用アプリ。Claude Code や Codex が Figma デスクトップアプリで開いているファイルを読み取り・編集できるようにします。呼び出し回数の上限はありません。","url":"https://figmamcp.dev/ja","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/ja/what-is-figma-mcp#webpage","url":"https://figmamcp.dev/ja/what-is-figma-mcp","name":"Figma MCPサーバーとは：4つの種類と編集できるもの","inLanguage":"ja","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/ja/what-is-figma-mcp#breadcrumb"},"dateModified":"2026-11-25"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/ja/what-is-figma-mcp#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://figmamcp.dev/ja"},{"@type":"ListItem","position":2,"name":"Figma MCPサーバーとは？","item":"https://figmamcp.dev/ja/what-is-figma-mcp"}]}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/ja" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">比較</a><a href="/ja#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/what-is-figma-mcp" hreflang="en" lang="en">English</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/ja">ホーム</a></li><li aria-current="page">Figma MCPサーバーとは？</li></ol></nav>
+<article class="wrap page"><h1>Figma MCPサーバーとは？</h1>
+<p class="fine lang-switch"><strong>言語：</strong> <a href="/what-is-figma-mcp" hreflang="en" lang="en">English</a> · <a href="/zh/what-is-figma-mcp" hreflang="zh-CN" lang="zh-CN">简体中文</a> · 日本語</p>
+<p class="lede">Figma MCPサーバーは、Claude CodeなどのAIエージェントにFigma用のツールを提供するプログラムです。接続すると、エージェントはデザインを読み取れるようになり、サーバーによっては変更もできます。MCPはModel Context Protocolの略で、エージェントが外部のツールを呼び出すためのオープンな仕組みです。</p>
+
+<h2>仕組み</h2>
+<ol class="steps"><li><h3>エージェントに頼む</h3><p>たとえば「選択中のフレームからこのページを作って」と頼みます。</p></li><li><h3>エージェントがツールを呼び出す</h3><p>MCPサーバーがツールの一覧を示し、エージェントがその中から1つを選びます。</p></li><li><h3>サーバーがFigmaと通信する</h3><p>ホスト型サービス、デスクトップアプリ、REST API、プラグインのいずれかを通じて通信します。どれを使うかで、サーバーにできることが決まります。</p></li><li><h3>結果が返る</h3><p>エージェントが結果を読み、次のステップを決めます。</p></li></ol>
+
+<h2 id="how-to-use">自分のファイルで試す</h2>
+<p class="measure">この4つのステップを実際のファイルで確かめるなら、Mac向けの無料プラグインサーバーであるFigmaMCPを試してください。セットアップは5分ほどです。</p>
+<ol class="steps">
+<li><p><strong>アプリをダウンロードして開きます。</strong> <a href="/download">Mac用FigmaMCPをダウンロード</a>し、FigmaMCP.dmgを開いて、アプリをApplicationsにドラッグします。そのあとアプリを開きます。</p></li>
+<li><p><strong>Add to Figmaをクリックします。</strong> アプリのチェックリストが、Figma、Claude Code、Codexの有無を確認します。Add to Figmaをクリックしてください。Figmaが起動中でプラグインが入っていない場合に限り、Figmaが一度だけ再起動します。</p></li>
+<li><p><strong>エージェントを再起動します。</strong> Claude CodeやCodexが起動中なら、いったん終了して起動し直し、新しいツールを読み込ませます。</p></li>
+<li><p><strong>ファイルでプラグインを開きます。</strong> Figmaデスクトップアプリでファイルを開き、Plugins › Development › FigmaMCPを選びます。パネルに接続中のファイルが表示されます。エージェントに編集させるには、パネルの「AI can edit this file」（AIがこのファイルを編集できる）スイッチをオンにしておく必要があります。</p></li>
+</ol>
+<p class="measure">まずは読み取りを頼んでみましょう。次の文を貼り付けます：「選択中のフレームにあるテキストレイヤーを、フォントとサイズ付きで一覧にして」。読み取りではファイルは変わらないので、最初のテストに向いています。</p>
+<figure class="step-shot"><img src="/assets/figmamcp-agent-editing.webp" width="1600" height="554" loading="lazy" decoding="async" alt="Figmaに料金カードが表示され、隣のターミナルでClaude CodeがFigmaMCPを通じてカードのレイヤー名を変更しています"><figcaption>Claude CodeがFigmaMCPを通じて、開いているFigmaファイルのレイヤー名を変更します。</figcaption></figure>
+<p class="measure">詳しい手順は<a href="/ja/tutorials/edit-figma-with-claude-code">Claude CodeでFigmaファイルを5分で編集する</a>をご覧ください。</p>
+
+<h2>主な種類</h2>
+<div class="tablewrap"><table>
+<caption class="sr">Figma MCPサーバーの種類</caption>
+<thead><tr><th scope="col">種類</th><th scope="col">接続先</th><th scope="col">読み取り</th><th scope="col">編集</th></tr></thead>
+<tbody>
+<tr><th scope="row">Figmaのリモートサーバー</th><td>Figmaのホスト型サービス</td><td>はい</td><td>はい（キャンバスへの書き込み、ベータ）</td></tr>
+<tr><th scope="row">Figmaのデスクトップサーバー</th><td>FigmaデスクトップアプリのDev Mode</td><td>はい</td><td>いいえ</td></tr>
+<tr><th scope="row">REST APIサーバー（Framelinkなど）</th><td>トークンを使ったFigma REST API</td><td>はい</td><td>いいえ</td></tr>
+<tr><th scope="row">プラグインサーバー（FigmaMCPなど）</th><td>Figmaデスクトップアプリ内のプラグイン</td><td>はい</td><td>はい</td></tr>
+</tbody></table></div>
+<p class="fine">Figmaに関する情報は<a href="https://developers.figma.com/docs/figma-mcp-server/">FigmaのMCPドキュメント</a>と<a href="https://developers.figma.com/docs/figma-mcp-server/local-server-installation/">デスクトップサーバーのガイド</a>にもとづきます（2026年11月25日確認）。内容は変わる可能性があります。</p>
+
+<h2>FigmaMCPの位置づけ</h2>
+<p class="measure">FigmaMCPはMac向けの無料プラグインサーバーです。Figmaデスクトップアプリで開いているファイルを対象に動き、APIトークンは不要で、FigmaのMCP呼び出し上限も使いません。<a href="/tools">すべてのツール</a>を見るか、<a href="/compare/local-vs-remote">ローカルとリモートのサーバーの比較</a>をご覧ください（いずれも英語）。</p>
+<p class="cta"><a class="btn" href="/download">Macにダウンロード</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14以上 · Intel / Apple Silicon対応 · 約155 MB</span></p>
+
+<aside class="note"><h2>最初に知っておきたいこと</h2><ul>
+<li>現在はmacOS専用です。</li>
+<li>Figmaデスクトップアプリが必要です。ブラウザ版では動きません。</li>
+<li>FigmaMCPはFigma Communityにはありません。Macアプリがプラグインをインストールします。</li>
+<li>アクセシビリティを許可しない場合は、ファイルごとに一度プラグインを開き（Plugins、Development、FigmaMCP）、エージェントが編集している間は開いたままにしてください。</li>
+<li>Dev ModeなどFigma自体の機能は含まれません。</li></ul></aside>
+<h2>よくある質問</h2><div class="faq"><details><summary>Figma MCPサーバーとFigmaプラグインは同じものですか？</summary><div class="ans">いいえ。プラグインはFigmaの中で動き、MCPサーバーはエージェントにツールを提供します。FigmaMCPはその両方を使います。サーバーがエージェントに応え、プラグインがFigmaの中で操作します。</div></details><details><summary>Figma MCPは無料ですか？</summary><div class="ans">サーバーによります。Figma自身のサーバーには、プランとシートごとの上限があります。FigmaMCPは無料です。詳しくは<a href="/ja/pricing">料金ページ</a>をご覧ください。</div></details><details><summary>エージェントはデザインをモデルに送りますか？</summary><div class="ans">エージェントが読み取った内容は、そのエージェントのモデル提供元に送られ、提供元の規約に従って扱われます。FigmaMCPがデザインの内容を私たちに送ることはありません。</div></details></div>
+<p class="measure fine updated">最終更新：<time datetime="2026-11-25">2026-11-25</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCPは無料です。Neo Product LLCによる<a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a>のフォークです。</p>
+<p>Figma, Inc.とは提携・承認関係にありません。FigmaはFigma, Inc.の商標です。</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/ja/pricing">料金</a><a href="/ja/docs/setup">セットアップ</a><a href="/ja/tutorials/edit-figma-with-claude-code">チュートリアル</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/ja/what-is-figma-mcp">Figma MCPとは</a><a href="/ja/figma-mcp-rate-limit">レート制限</a><a href="/ja/troubleshooting/not-working">トラブルシューティング</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a><a href="/" hreflang="en" lang="en">English</a></p>
+</div></footer>
+<img class="px" src="/p.gif?l=ja" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCPが動かない？14の症状と対処法</title>
+<meta name="description" content="Claude CodeやCodexでFigma MCPが動かないときに。症状やREAD_ONLY_MODEなどのエラーコードから、原因と対処法を探せます。">
+<link rel="canonical" href="https://figmamcp.dev/ja/troubleshooting/not-working">
+<link rel="alternate" hreflang="en" href="https://figmamcp.dev/troubleshooting/not-working">
+<link rel="alternate" hreflang="ja" href="https://figmamcp.dev/ja/troubleshooting/not-working">
+<link rel="alternate" hreflang="zh-CN" href="https://figmamcp.dev/zh/troubleshooting/not-working">
+<link rel="alternate" hreflang="x-default" href="https://figmamcp.dev/troubleshooting/not-working">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCPが動かない？14の症状と対処法">
+<meta property="og:description" content="Claude CodeやCodexでFigma MCPが動かないときに。症状やREAD_ONLY_MODEなどのエラーコードから、原因と対処法を探せます。">
+<meta property="og:url" content="https://figmamcp.dev/ja/troubleshooting/not-working">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"無料でローカルに動作する MCP サーバーと専用アプリ。Claude Code や Codex が Figma デスクトップアプリで開いているファイルを読み取り・編集できるようにします。呼び出し回数の上限はありません。","url":"https://figmamcp.dev/ja","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/ja/troubleshooting/not-working#webpage","url":"https://figmamcp.dev/ja/troubleshooting/not-working","name":"Figma MCPが動かない？14の症状と対処法","inLanguage":"ja","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/ja/troubleshooting/not-working#breadcrumb"},"dateModified":"2026-11-25"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/ja/troubleshooting/not-working#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"ホーム","item":"https://figmamcp.dev/ja"},{"@type":"ListItem","position":2,"name":"トラブルシューティング","item":"https://figmamcp.dev/troubleshooting"},{"@type":"ListItem","position":3,"name":"Figma MCPが動かないとき：症状から探す","item":"https://figmamcp.dev/ja/troubleshooting/not-working"}]}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/ja" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">比較</a><a href="/ja#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/troubleshooting/not-working" hreflang="en" lang="en">English</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/ja">ホーム</a></li><li><a href="/troubleshooting">トラブルシューティング</a></li><li aria-current="page">Figma MCPが動かないとき：症状から探す</li></ol></nav>
+<article class="wrap page"><h1>Figma MCPが動かないとき：症状から探す</h1>
+<p class="fine lang-switch"><strong>言語：</strong> <a href="/troubleshooting/not-working" hreflang="en" lang="en">English</a> · <a href="/zh/troubleshooting/not-working" hreflang="zh-CN" lang="zh-CN">简体中文</a> · 日本語</p>
+<p class="lede">FigmaMCPの問題の多くは、セットアップ前からエージェントが起動していた、プラグインが開いていない、ファイルが読み取り専用になっている、のいずれかが原因です。このページはFigmaMCPについてのものです。Figma自身のサーバーについては<a href="https://developers.figma.com/docs/figma-mcp-server/">Figmaのドキュメント</a>をご覧ください。</p>
+
+<div class="tablewrap"><table>
+<caption class="sr">症状、原因、対処法</caption>
+<thead><tr><th scope="col">起きていること</th><th scope="col">原因</th><th scope="col">対処法</th></tr></thead>
+<tbody>
+<tr><th scope="row">ダウンロードが遅い、または <code>curl</code> で403になる</th><td><code>/download</code> のリダイレクト先のGitHubリンクが約1時間で期限切れになる</td><td>ブラウザでダウンロードするか、<code>curl -L -O https://github.com/MrCoder/figmamcp-releases/releases/latest/download/FigmaMCP.dmg</code> を実行します。そのあと<a href="/ja/docs/setup#verify">SHA-256を確認</a>します。</td></tr>
+<tr><th scope="row">エージェントにFigmaのツールがない</th><td>セットアップ前から起動していた</td><td>Claude CodeまたはCodexを再起動します。</td></tr>
+<tr><th scope="row">PluginsメニューにFigmaMCPがない</th><td>プラグインがインストールされていない</td><td>FigmaMCPアプリを開き、Add to Figmaをクリックします。</td></tr>
+<tr><th scope="row"><code>PLUGIN_PEER_UNAVAILABLE</code>、またはプラグインが接続されていない</th><td>このファイルでプラグインが開いていない</td><td>デスクトップアプリでファイルを開き、Plugins › Development › FigmaMCPを選びます。アプリに任せたい場合は、アクセシビリティを許可してください。</td></tr>
+<tr><th scope="row"><code>CHANNEL_NOT_BOUND</code>、またはエージェントがどのファイルか尋ねてくる</th><td>複数のファイルでプラグインが開いている</td><td>対象ファイルのFigmaリンクをエージェントに渡すか、ほかのファイルのプラグインを閉じます。</td></tr>
+<tr><th scope="row"><code>READ_ONLY_MODE</code>、または読み取れるが編集できない</th><td>「AI can edit this file」がオフになっている</td><td>プラグインでスイッチをオンにします。</td></tr>
+<tr><th scope="row">名前が一致しない</th><td>エージェントが読み取ったあとにレイヤーが変更された</td><td>エージェントにレイヤーを読み直させて、もう一度試します。</td></tr>
+<tr><th scope="row">インスタンス内の編集が拒否される</th><td>インスタンス内部の構造は変更できない</td><td>メインコンポーネントを編集するか、インスタンスのプロパティとオーバーライドを変更します。</td></tr>
+<tr><th scope="row">ライブラリのアセットが読み取り専用</th><td>別のファイルに属している</td><td>元のライブラリで編集します。</td></tr>
+<tr><th scope="row"><code>channel_join</code> で <code>CONNECTION_NOT_READY</code></th><td>ローカルのリレー接続が時間内に開かなかった（FigmaMCPアプリが起動していない、またはエージェントが起動した直後）</td><td>FigmaMCPアプリとプラグインを開いてから、もう一度試します。先に <code>page_info</code> を呼び出す方法でもかまいません。</td></tr>
+<tr><th scope="row"><code>PLUGIN_DISCONNECTED</code></th><td>コマンドの実行中にプラグインが閉じた、または再読み込みされた</td><td>プラグインを開き直します。最後の編集を繰り返す前に、反映済みかどうかを確認してください。</td></tr>
+<tr><th scope="row"><code>VERSION_MISMATCH</code></th><td>アプリとプラグインのバージョンが異なる</td><td>最新のFigmaMCPをダウンロードし、チェックリストを実行して、エージェントを再起動します。</td></tr>
+<tr><th scope="row"><code>CHANNEL_IN_USE</code></th><td>このファイルを使うエージェントのセッションが多すぎる</td><td>ほかのセッションを1つ終了します。</td></tr>
+<tr><th scope="row">ブラウザ版Figmaで何も起きない</th><td>FigmaMCPにはデスクトップアプリが必要</td><td>Figmaデスクトップアプリでファイルを開きます。</td></tr>
+</tbody></table></div>
+
+<h2 id="tools-not-loading">ツールが読み込まれない</h2>
+<p class="measure">AIアプリにFigmaMCPのツールが表示されない、またはFigmaのツールがないと言われる場合です。上から順に確認し、ツールが表示されたらそこで終わりです。</p>
+<ol class="plain"><li><strong>Claude CodeまたはCodexを終了して開き直します。</strong> 起動中のアプリは、起動時にしかMCPの設定を読み込みません。セットアップ中に開いていたアプリは、終了して開き直すまでFigmaMCPを認識しません。</li><li><strong>Figmaファイルでプラグインを開きます。</strong> FigmaデスクトップアプリでPlugins › Development › FigmaMCPを選びます。パネルに「No AI app has FigmaMCP loaded yet」と表示される場合は、手順1の再起動がまだ反映されていません。「FigmaMCP isn’t running」と表示される場合は、FigmaMCPアプリを開いてください。プラグインは自動で再接続します。</li><li><strong>プラグインがインストールされているか確認します。</strong> PluginsメニューにFigmaMCPがない場合は、<a href="/troubleshooting/plugin-not-showing">plugin not showing</a>（英語）をご覧ください。</li><li><strong>どのFigmaツールのことかを確認します。</strong> Claudeに組み込まれたFigmaコネクタは別のサーバーです。<a href="#claude-figma-connector">下のコネクタの項目</a>をご覧ください。</li></ol>
+<p class="measure">ツールは表示されるのに、呼び出すと <code>CHANNEL_NOT_BOUND</code> が返る場合は、複数のファイルでプラグインが開いています。対象ファイルのFigmaリンクをエージェントに渡してください。</p>
+
+<h2 id="slow-or-stuck">遅い・止まる</h2>
+<p class="measure">呼び出しが返ってこない、プラグインがConnecting…のまま、または何も起きない場合です。</p>
+<div class="tablewrap"><table>
+<caption class="sr">遅い・止まる：起きていること、原因、対処法</caption>
+<thead><tr><th scope="col">起きていること</th><th scope="col">原因</th><th scope="col">対処法</th></tr></thead>
+<tbody>
+<tr><th scope="row">プラグインに「Connecting…」または「Can’t connect」と表示される</th><td>プラグインはポート3155〜3158でローカルサービスを探し、3秒ごとに再試行する</td><td>FigmaMCPアプリを開いて数秒待ちます。パネルは自動でConnectedに変わります。</td></tr>
+<tr><th scope="row">「The plugin did not respond. Trying again.」</th><td>接続要求から5秒以内にプラグインが応答しなかった</td><td>次の再試行を待ちます。何度も繰り返す場合は、プラグインを閉じて開き直します。</td></tr>
+<tr><th scope="row">エージェントが待ったままで、Figmaに何も変化がない</th><td>このファイルでプラグインが開いていない、複数のファイルで開いている、またはブラウザ版Figmaでファイルを開いている</td><td>Figmaデスクトップアプリでファイルを開き、そこでプラグインを開きます。複数のファイルを開いている場合は、対象ファイルのリンクをエージェントに渡します。</td></tr>
+<tr><th scope="row">エージェント起動後の最初の呼び出しが <code>CONNECTION_NOT_READY</code> で失敗する</th><td>ローカル接続がまだ開いていなかった</td><td>FigmaMCPアプリとプラグインを開いてから、もう一度試します。</td></tr>
+<tr><th scope="row">大きなファイルの読み取りがタイムアウトする（<code>PAGE_LOAD_TIMEOUT</code>）</th><td>ページの読み込みが時間内に終わらなかった</td><td>一度だけ再試行します。またタイムアウトする場合は、1ページまたは1レイヤーずつ読むようエージェントに頼みます。</td></tr>
+</tbody></table></div>
+<p class="measure">条件が変わらない限り、再試行しても結果は同じです。先に原因を解消してください。編集が失敗した場合は、繰り返す前に反映済みかどうかを確認します。</p>
+
+<h2 id="claude-figma-connector">ClaudeのFigmaコネクタが動かない</h2>
+<p class="measure">Claudeに組み込まれたFigmaコネクタは、Figma公式のリモートサーバーです。Mac上ではなく、Figmaのホスト型サービスで動いています。FigmaMCPは別のツールで、Figmaデスクトップアプリで開いているファイルを対象に動く、無料のローカルプラグインサーバーです。両者は接続を共有しないため、上の表ではコネクタの問題は説明できません。</p>
+<ul class="plain"><li><strong>プランやシートの上限：</strong>公式サーバーには、プランごとの呼び出し上限があります。View または Collab シートは月20回、ProのFullまたはDevシートは1日200回です（2026年11月25日確認）。<a href="/ja/figma-mcp-rate-limit">Figma MCP レート制限</a>をご覧ください。</li><li><strong>編集にはFullシートが必要：</strong>リモートサーバーでのキャンバスへの書き込みはベータ版で、下書き以外ではFullシートが必要です。読み取りは動くのに、編集だけ失敗することがあります。</li><li><strong>想定しているサーバーが違う：</strong>エージェントにFigmaMCPを使わせたい場合は、Macにセットアップしてエージェントを再起動する必要があります。<a href="/ja/docs/setup">セットアップガイド</a>に沿って進めてください。</li></ul>
+<p class="measure">公式サーバー自体のエラーについては<a href="https://developers.figma.com/docs/figma-mcp-server/">Figmaのドキュメント</a>を、両者の違いについては<a href="/compare/official-figma-mcp">Official Figma MCP vs FigmaMCP</a>（英語）をご覧ください。</p>
+
+<h2>それでも解決しない場合</h2>
+<p class="measure"><a href="https://github.com/MrCoder/figmamcp-releases/issues">リリースページ</a>でIssueを作成してください。何を頼んだか、正確なエラー、macOSのバージョンを書いてください。非公開のデザイン内容は含めないでください。<a href="/ja/docs/setup">セットアップガイド</a>もあわせてご覧ください。</p>
+
+<h2>よくある質問</h2><div class="faq"><details><summary>AIアプリにFigmaMCPのツールが表示されないのはなぜですか？</summary><div class="ans">起動中のClaude CodeやCodexは、起動時にしかMCPの設定を読み込みません。終了して開き直し、Figmaファイルでプラグインを開いたままにしてください。</div></details><details><summary>プラグインがConnecting…のままなのはなぜですか？</summary><div class="ans">プラグインはポート3155〜3158でローカルサービスを探し、3秒ごとに再試行します。FigmaMCPアプリを開けば、自動で接続します。</div></details><details><summary>何か失敗したら再インストールが必要ですか？</summary><div class="ans">たいていは不要です。エージェントを再起動したか、プラグインが開いているか、スイッチがオンになっているかを確認してください。</div></details><details><summary>再試行しても同じエラーになるのはなぜですか？</summary><div class="ans">これらのエラーは決まったルールから出ています。先に条件を変えてください。たとえばプラグインを開く、レイヤー名を読み直す、といった対応です。</div></details><details><summary>このページはFigma公式のMCPサーバーにも当てはまりますか？</summary><div class="ans">いいえ。FigmaMCPだけを対象にしています。</div></details></div>
+<p class="measure fine updated">最終更新：<time datetime="2026-11-25">2026-11-25</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCPは無料です。Neo Product LLCによる<a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a>のフォークです。</p>
+<p>Figma, Inc.とは提携・承認関係にありません。FigmaはFigma, Inc.の商標です。</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/ja/pricing">料金</a><a href="/ja/docs/setup">セットアップ</a><a href="/ja/tutorials/edit-figma-with-claude-code">チュートリアル</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/ja/what-is-figma-mcp">Figma MCPとは</a><a href="/ja/figma-mcp-rate-limit">レート制限</a><a href="/ja/troubleshooting/not-working">トラブルシューティング</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a><a href="/" hreflang="en" lang="en">English</a></p>
+</div></footer>
+<img class="px" src="/p.gif?l=ja" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

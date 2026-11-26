@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Can Claude edit Figma files? Yes, with a local plugin</title>
+<meta name="description" content="Claude Code can read and change a live Figma file through FigmaMCP: frames, text, components, styles and variables, with no call quota.">
+<link rel="canonical" href="https://figmamcp.dev/can-claude-edit-figma">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Can Claude edit Figma files? Yes, with a local plugin">
+<meta property="og:description" content="Claude Code can read and change a live Figma file through FigmaMCP: frames, text, components, styles and variables, with no call quota.">
+<meta property="og:url" content="https://figmamcp.dev/can-claude-edit-figma">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/can-claude-edit-figma#webpage","url":"https://figmamcp.dev/can-claude-edit-figma","name":"Can Claude edit Figma files? Yes, with a local plugin","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/can-claude-edit-figma#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/can-claude-edit-figma#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Can Claude edit Figma files?","item":"https://figmamcp.dev/can-claude-edit-figma"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can Claude create a design from scratch in Figma?","acceptedAnswer":{"@type":"Answer","text":"It can build frames, shapes, text and components and lay them out with auto layout. Treat the first result as a draft and review it."}},{"@type":"Question","name":"Do I need a paid Figma plan?","acceptedAnswer":{"@type":"Answer","text":"FigmaMCP does not use Figma’s hosted MCP server, so its call allowance is not involved. Whether your account can run a development plugin is up to Figma. We have not tested every plan."}},{"@type":"Question","name":"Does Claude see my whole account?","acceptedAnswer":{"@type":"Answer","text":"No. It works on the one file where the plugin is open."}},{"@type":"Question","name":"Does Claude need a Figma API token?","acceptedAnswer":{"@type":"Answer","text":"No. FigmaMCP works through the Figma desktop app on your Mac, so there is no token to create."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">Can Claude edit Figma files?</li></ol></nav>
+<article class="wrap page">
+<h1>Can Claude edit Figma files?</h1>
+<p class="lede">Yes. Claude Code can create and change layers in the Figma file you have open, if it can reach the file. FigmaMCP gives it that reach: a small local server on your Mac and a plugin inside the Figma desktop app. Claude talks to the server, the server talks to the plugin, and the plugin edits the file.</p>
+
+<h2>What Claude can change</h2>
+<div class="tablewrap"><table><caption class="sr">What Claude can do in a Figma file with FigmaMCP</caption>
+<thead><tr><th scope="col">You ask</th><th scope="col">Claude does</th><th scope="col">Tool</th></tr></thead><tbody>
+<tr><th scope="row">&ldquo;Make this card use 16px padding&rdquo;</th><td>Sets auto layout padding on that frame</td><td><code>node_set_auto_layout</code></td></tr>
+<tr><th scope="row">&ldquo;Rename these layers to match the code&rdquo;</th><td>Renames each layer, checking the current name first</td><td><code>node_rename</code></td></tr>
+<tr><th scope="row">&ldquo;Add a primary button component&rdquo;</th><td>Creates a component with properties</td><td><code>create_component</code>, <code>component_manage_property</code></td></tr>
+<tr><th scope="row">&ldquo;Bind these fills to the brand variables&rdquo;</th><td>Binds each fill to a variable</td><td><code>node_bind_variable</code></td></tr>
+<tr><th scope="row">&ldquo;Show me what it looks like now&rdquo;</th><td>Exports the layer as an image and looks at it</td><td><code>node_export_visual</code></td></tr>
+</tbody></table></div>
+
+<h2>How Claude Code reaches the file</h2>
+<p class="measure">FigmaMCP connects Claude Code to Figma in four steps. You download the Mac app and click Add to Figma. The app installs the plugin and registers FigmaMCP with Claude Code. You restart Claude Code if it was running. Then you open the file in the Figma desktop app and ask for a change. Claude reads first with <code>page_info</code> and <code>node_info</code>, then writes. You need no Figma API token.</p>
+
+<h2>What Claude cannot do</h2>
+<p class="measure">FigmaMCP stops Claude in these cases. Claude cannot edit a file where the plugin is closed or where the <em>AI can edit this file</em> switch is off. In that case it can only read. It cannot edit locked layers, assets that come from a shared library, or the structure inside a component instance. It also cannot use Figma features that belong to Figma itself, such as Dev Mode. The result is only as good as your prompt, so review it and keep Figma version history on.</p>
+
+<h2>When Claude gets an error</h2>
+<p class="measure">FigmaMCP returns a structured error when it refuses an edit, and Claude can act on it. If the layer name does not match, Claude refreshes it with <code>node_info</code> and tries again. If the plugin is not open, Claude gets <code>PLUGIN_PEER_UNAVAILABLE</code> and asks you to open it. If the edit switch is off, Claude gets <code>READ_ONLY_MODE</code> and tells you. See <a href="/troubleshooting">troubleshooting</a> for the full list.</p>
+
+<h2>Claude Code or Claude Desktop?</h2>
+<p class="measure">FigmaMCP works with Claude Code and Codex. It does not list Claude Desktop as a supported client. See <a href="/integrations/claude-code">Figma MCP for Claude Code</a> for setup, and <a href="/tools/write">what the agent can write</a> for the full list.</p><p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<p class="measure fine">Related: <a href="/use-cases/edit-figma-with-ai">Edit Figma with AI</a> · <a href="/what-is-figma-mcp">What is Figma MCP</a> · <a href="/docs/setup">Setup</a></p>
+<h2>Questions</h2><div class="faq"><details><summary>Can Claude create a design from scratch in Figma?</summary><div class="ans">It can build frames, shapes, text and components and lay them out with auto layout. Treat the first result as a draft and review it.</div></details><details><summary>Do I need a paid Figma plan?</summary><div class="ans">FigmaMCP does not use Figma&rsquo;s hosted MCP server, so its call allowance is not involved. Whether your account can run a development plugin is up to Figma. We have not tested every plan.</div></details><details><summary>Does Claude see my whole account?</summary><div class="ans">No. It works on the one file where the plugin is open.</div></details><details><summary>Does Claude need a Figma API token?</summary><div class="ans">No. FigmaMCP works through the Figma desktop app on your Mac, so there is no token to create.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

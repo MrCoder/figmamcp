@@ -1,0 +1,18 @@
+# AGENTS.md — Using figmamcp from an AI agent
+
+This server enforces hard safety constraints (scope locking, name verification, batch validation) that you cannot bypass, and it returns structured error codes you need to recover from. **Do not operate blind** — load the guidance before writing.
+
+The full operational guide lives in one place and is delivered three ways; use whichever your host supports:
+
+- **MCP resources** (any client, zero setup): read `figmamcp://guide/constraints`, `figmamcp://guide/error-playbook`, `figmamcp://guide/workflows`, `figmamcp://guide/tool-selection`.
+- **The `figmamcp` skill** (Claude Code, Copilot, Codex, Cursor, Gemini, Antigravity, …): `skills/figmamcp/SKILL.md` and its `references/`.
+- **In this repo:** [skills/figmamcp/references/](skills/figmamcp/references/) — `constraints.md`, `error-playbook.md`, `workflows.md`, `tool-selection.md`.
+
+For the precise enforcement *contract* behind these constraints — the safety guarantees, the conditions they hold under, the residual risks, and the per-tool gate matrix — see [`SAFETY.md`](./SAFETY.md) at the repo root.
+
+Two rules to internalize before anything else:
+
+1. **Discover before acting.** Start every node workflow with a read (`page_info` → `node_info`); pass names back verbatim.
+2. **The plugin can refuse you.** Constraints are checked at execution time and return structured errors — plan calls to comply rather than retrying.
+
+> Installing or developing figmamcp? See [README.md](./README.md) (install) and [CONTRIBUTING.md](./CONTRIBUTING.md) (development).

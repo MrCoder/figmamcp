@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP components: build components and variants with AI</title>
+<meta name="description" content="Create components, component sets and properties, and change instances in a live Figma file from Claude Code or Codex, with FigmaMCP and no call quota.">
+<link rel="canonical" href="https://figmamcp.dev/tools/components">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP components: build components and variants with AI">
+<meta property="og:description" content="Create components, component sets and properties, and change instances in a live Figma file from Claude Code or Codex, with FigmaMCP and no call quota.">
+<meta property="og:url" content="https://figmamcp.dev/tools/components">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/tools/components#webpage","url":"https://figmamcp.dev/tools/components","name":"Figma MCP components: build components and variants with AI","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/tools/components#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/tools/components#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://figmamcp.dev/tools"},{"@type":"ListItem","position":3,"name":"Figma MCP components","item":"https://figmamcp.dev/tools/components"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can it build a button with variants?","acceptedAnswer":{"@type":"Answer","text":"Yes: it can create a component set and add properties. Review the result."}},{"@type":"Question","name":"Can it edit a library component?","acceptedAnswer":{"@type":"Answer","text":"Assets from shared libraries are not edited. They are read-only in your file. You can still place instances of them and change their overrides."}},{"@type":"Question","name":"How do I copy text and property changes from one instance to others?","acceptedAnswer":{"@type":"Answer","text":"Ask the agent to read the overrides of the source instance with instance_get_overrides, then apply them to the targets with instance_set_overrides. Each target must be an instance, and its name must match."}},{"@type":"Question","name":"Can it change a layer inside an instance?","acceptedAnswer":{"@type":"Answer","text":"It can set properties and overrides. It cannot delete, group or add layers inside an instance. For those edits, change the main component."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/tools">Tools</a></li><li aria-current="page">Figma MCP components</li></ol></nav>
+<article class="wrap page">
+<h1>Figma MCP components</h1>
+<p class="lede">FigmaMCP lets Claude Code or Codex turn frames into components, combine them into variant sets, add component properties, place instances and copy overrides between instances in the Figma file you have open. You describe the component. The agent picks the tools and passes each layer name back exactly.</p>
+<h2>Component tools</h2>
+<div class="tablewrap"><table><caption class="sr">Component tools</caption>
+<thead><tr><th scope="col">Task</th><th scope="col">Tools</th></tr></thead><tbody>
+<tr><th scope="row">List components</th><td><code>component_list</code></td></tr>
+<tr><th scope="row">Create a component or a set of variants</th><td><code>create_component</code>, <code>create_component_set</code></td></tr>
+<tr><th scope="row">Add or change a property</th><td><code>component_manage_property</code>, <code>component_delete_property</code></td></tr>
+<tr><th scope="row">Place an instance</th><td><code>create_instance</code></td></tr>
+<tr><th scope="row">Change an instance</th><td><code>instance_set_property</code>, <code>instance_set_overrides</code>, <code>instance_get_overrides</code></td></tr>
+</tbody></table></div>
+<h2>Build a button with variants</h2>
+<p class="measure">FigmaMCP builds a variant set in two stages. First <code>create_component</code> converts an existing frame into a main component. It takes the frame&rsquo;s ID and exact name. Then <code>create_component_set</code> combines components into one set.</p>
+<ol>
+<li>Read each frame with <code>node_info</code>. Each one must be unlocked and not inside an instance.</li>
+<li>Convert each frame with <code>create_component</code>.</li>
+<li>Choose property names, for example <code>Size</code>. Give every component one value per property, such as <code>Small</code>.</li>
+<li>Read the parent that will hold the set, then call <code>create_component_set</code> with <code>parentId</code> and <code>parentNodeName</code>.</li>
+</ol>
+<p class="measure">Every combination of values must be unique. A value cannot be empty, and it cannot contain <code>=</code> or <code>,</code>. The parent cannot be one of the components you combine. A component that already sits in another set cannot be combined. If the combine fails halfway, the error can carry <code>details.partialMutation: true</code>. Read that evidence before you retry.</p>
+<h2>Properties and instances</h2>
+<p class="measure">FigmaMCP&rsquo;s <code>component_manage_property</code> adds or edits a property on a main component or a set. The property type is <code>BOOLEAN</code>, <code>TEXT</code> or <code>INSTANCE_SWAP</code>. ADD needs a type and a default value. EDIT can rename the property or change its default. <code>component_delete_property</code> removes a property, and that change reaches every instance.</p>
+<p class="measure"><code>create_instance</code> places an instance from a <code>componentId</code>, or from a <code>componentKey</code> for a library component. It needs <code>x</code>, <code>y</code> and a named parent. Pass a variant, not a component set. <code>instance_set_property</code> sets one property on one instance. <code>instance_get_overrides</code> reads the overrides of a source instance. <code>instance_set_overrides</code> applies them to several target instances. It swaps each target to the source component first.</p>
+<h2>Limits and errors</h2>
+<div class="tablewrap"><table><caption class="sr">Component errors</caption>
+<thead><tr><th scope="col">Error or message</th><th scope="col">Meaning</th><th scope="col">What to do</th></tr></thead><tbody>
+<tr><th scope="row"><code>NAME_MISMATCH</code></th><td>The name you sent is not the layer&rsquo;s current name.</td><td>Read the layer again with <code>node_info</code> and retry.</td></tr>
+<tr><th scope="row"><code>READ_ONLY_MODE</code></th><td>The AI can edit this file switch is off.</td><td>Turn it on in the plugin.</td></tr>
+<tr><th scope="row"><code>Operation Denied</code>: inside a component instance</th><td>Structural edits such as delete or group are blocked inside an instance.</td><td>Edit the main component, or use <code>instance_set_property</code> and overrides.</td></tr>
+<tr><th scope="row"><code>Operation Denied</code>: remote library asset</th><td>Main components from a shared library are read-only in this file.</td><td>Edit them in the source library. Instances of them can still take overrides.</td></tr>
+<tr><th scope="row"><code>Operation Denied</code>: duplicate variant combination</th><td>Two components in a set have the same values.</td><td>Give each component a unique combination.</td></tr>
+</tbody></table></div>
+<p class="measure">FigmaMCP can place an instance of a library component with <code>componentKey</code>. Read the key from an existing instance&rsquo;s main component, and make sure the library is enabled for the file. Locked layers are not edited. See <a href="/tools/design-system">Figma MCP design system</a> for styles and variables.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<p class="measure fine">Related: <a href="/tools">All tools</a> · <a href="/tools/design-system">Design system</a> · <a href="/tools/variables">Variables</a></p>
+<h2>Questions</h2><div class="faq"><details><summary>Can it build a button with variants?</summary><div class="ans">Yes: it can create a component set and add properties. Review the result.</div></details><details><summary>Can it edit a library component?</summary><div class="ans">Assets from shared libraries are not edited. They are read-only in your file. You can still place instances of them and change their overrides.</div></details><details><summary>How do I copy text and property changes from one instance to others?</summary><div class="ans">Ask the agent to read the overrides of the source instance with instance_get_overrides, then apply them to the targets with instance_set_overrides. Each target must be an instance, and its name must match.</div></details><details><summary>Can it change a layer inside an instance?</summary><div class="ans">It can set properties and overrides. It cannot delete, group or add layers inside an instance. For those edits, change the main component.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

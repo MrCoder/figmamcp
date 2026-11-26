@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Is Figma MCP safe? What FigmaMCP checks before it edits</title>
+<meta name="description" content="What can go wrong when an AI edits a Figma file, and the checks FigmaMCP runs first: scope, names, batches, locked layers.">
+<link rel="canonical" href="https://figmamcp.dev/is-figma-mcp-safe">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Is Figma MCP safe? What FigmaMCP checks before it edits">
+<meta property="og:description" content="What can go wrong when an AI edits a Figma file, and the checks FigmaMCP runs first: scope, names, batches, locked layers.">
+<meta property="og:url" content="https://figmamcp.dev/is-figma-mcp-safe">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/is-figma-mcp-safe#webpage","url":"https://figmamcp.dev/is-figma-mcp-safe","name":"Is Figma MCP safe? What FigmaMCP checks before it edits","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/is-figma-mcp-safe#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/is-figma-mcp-safe#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Is Figma MCP safe?","item":"https://figmamcp.dev/is-figma-mcp-safe"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can the agent delete my work?","acceptedAnswer":{"@type":"Answer","text":"Only layers in the file where the plugin is open and its edit switch is on. Locked layers are protected. Use Figma version history as your safety net."}},{"@type":"Question","name":"Can I make it read-only?","acceptedAnswer":{"@type":"Answer","text":"Yes. Turn off AI can edit this file in the plugin and the agent can only read."}},{"@type":"Question","name":"What should I do after a partialMutation error?","acceptedAnswer":{"@type":"Answer","text":"Do not retry at once. Read details.whatChanged and details.before, check the IDs with node_info, and fix that state first."}},{"@type":"Question","name":"Does FigmaMCP send my design to you?","acceptedAnswer":{"@type":"Answer","text":"No. It sends no file name, layer name or design content to us. Your agent passes what it reads to its own model provider."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">Is Figma MCP safe?</li></ol></nav>
+<article class="wrap page">
+<h1>Is Figma MCP safe?</h1>
+<p class="lede">An agent can make a wrong edit, so the safe design is one that limits what it can touch. FigmaMCP runs inside your Figma desktop app, edits only the file you opened, and checks every write before it runs. It cannot know what you meant, so a wrong edit that follows the rules still goes through. Use version history.</p>
+
+<h2>The checks, with examples</h2>
+<div class="tablewrap"><table><caption class="sr">Safety checks and what they stop</caption>
+<thead><tr><th scope="col">Check</th><th scope="col">Example</th><th scope="col">Result</th></tr></thead><tbody>
+<tr><th scope="row">One file only</th><td>Agent targets a file where the plugin is closed</td><td>Refused</td></tr>
+<tr><th scope="row">Edit switch</th><td><em>AI can edit this file</em> is off</td><td>Agent can only read (<code>READ_ONLY_MODE</code>)</td></tr>
+<tr><th scope="row">Name must match</th><td>Agent renames &ldquo;Card&rdquo; but the layer is &ldquo;Card 2&rdquo;</td><td>Refused with a reason</td></tr>
+<tr><th scope="row">Batch checked first</th><td>One of 20 edits is invalid</td><td>None of the 20 change</td></tr>
+<tr><th scope="row">Locked layers</th><td>Agent edits a locked layer</td><td>Left alone</td></tr>
+</tbody></table></div>
+
+<h2>Where the rules are enforced</h2>
+<p class="measure">FigmaMCP enforces its safety rules inside the Figma plugin, not in the agent. The agent is treated as untrusted: it may hold a stale layer ID or invent a name. The plugin checks each command when it runs and returns a structured error if a rule is broken. The agent cannot switch these checks off. Why the checks live in the plugin, and how the server, relay and plugin fit together, is on <a href="/how-figmamcp-is-built">how FigmaMCP is built</a>.</p>
+
+<h2>Scope and the edit switch</h2>
+<p class="measure">FigmaMCP edits only inside the area you allow. The scope is set when the plugin connects and stays fixed for the session. A target outside it is refused, and an agent cannot widen it. Turn off <em>AI can edit this file</em> and every edit fails with <code>READ_ONLY_MODE</code>, while reads still work. Variable and style edits have their own refusals, <code>VARIABLE_EDITS_DISABLED</code> and <code>STYLE_EDITS_DISABLED</code>.</p>
+
+<h2>Name verification</h2>
+<p class="measure">FigmaMCP will not change an existing layer, variable or style unless the agent gives its current name and it matches. The agent must read the name from <code>node_info</code>, <code>page_info</code>, <code>variable_list</code> or <code>style_list</code> and pass it back exactly. This stops an edit on a stale ID. A creator such as <code>create_frame</code> checks the parent&rsquo;s name instead.</p>
+
+<h2>Batches and partial failures</h2>
+<p class="measure">FigmaMCP checks every item in a batch before any edit runs. One invalid item means no change. After a batch starts, there is no general rollback. If an error carries <code>details.partialMutation: true</code>, a change may have survived a failed step. Do not retry yet. Read <code>details.whatChanged</code> and <code>details.before</code>, check the named IDs with <code>node_info</code>, and fix that state first.</p>
+
+<h2>What stays local</h2>
+<p class="measure">The FigmaMCP server runs on your Mac. See <a href="/privacy">what FigmaMCP counts and what it does not</a>. FigmaMCP sends no file name, file key, layer name or design content to us. Your AI agent does read what FigmaMCP returns from your file and passes it to its own model provider, under that provider&rsquo;s terms. For the longer list of what the agent can write, see <a href="/tools/write">Figma MCP write</a>.</p>
+
+<h2>Limits you should know</h2>
+<ul class="plain">
+<li>A wrong edit that follows every rule is not stopped. FigmaMCP checks where and which layer, not whether you wanted the change.</li>
+<li>A layer can change between the check and the edit. If you lock, move or delete it at that moment, the result may differ.</li>
+<li><code>node_export_visual</code> can render a layer outside the edit scope. It only reads.</li>
+<li>Lock layers you must protect before the agent starts. FigmaMCP protects only layers you actually locked.</li></ul><p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<p class="measure fine">Related: <a href="/tools/write">Write tools</a> · <a href="/privacy">Privacy</a> · <a href="/how-figma-mcp-works">How it works</a></p>
+<h2>Questions</h2><div class="faq"><details><summary>Can the agent delete my work?</summary><div class="ans">Only layers in the file where the plugin is open and its edit switch is on. Locked layers are protected. Use Figma version history as your safety net.</div></details><details><summary>Can I make it read-only?</summary><div class="ans">Yes. Turn off AI can edit this file in the plugin and the agent can only read.</div></details><details><summary>What should I do after a partialMutation error?</summary><div class="ans">Do not retry at once. Read details.whatChanged and details.before, check the IDs with node_info, and fix that state first.</div></details><details><summary>Does FigmaMCP send my design to you?</summary><div class="ans">No. It sends no file name, layer name or design content to us. Your agent passes what it reads to its own model provider.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP integrations: Claude Code and Codex on Mac</title>
+<meta name="description" content="The figma mcp integrations FigmaMCP supports today: Claude Code and Codex on macOS. Other clients are not supported yet.">
+<link rel="canonical" href="https://figmamcp.dev/integrations">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP integrations: Claude Code and Codex on Mac">
+<meta property="og:description" content="The figma mcp integrations FigmaMCP supports today: Claude Code and Codex on macOS. Other clients are not supported yet.">
+<meta property="og:url" content="https://figmamcp.dev/integrations">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/integrations#webpage","url":"https://figmamcp.dev/integrations","name":"Figma MCP integrations: Claude Code and Codex on Mac","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/integrations#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/integrations#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Figma MCP integrations","item":"https://figmamcp.dev/integrations"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Which agents does FigmaMCP support?","acceptedAnswer":{"@type":"Answer","text":"Claude Code and Codex. Other clients are not supported yet."}},{"@type":"Question","name":"Do I need a Figma API token?","acceptedAnswer":{"@type":"Answer","text":"No. FigmaMCP works through the Figma desktop app on your Mac, so there is no token to create or paste."}},{"@type":"Question","name":"Do I configure Claude Code or Codex myself?","acceptedAnswer":{"@type":"Answer","text":"No. The Mac app adds the FigmaMCP entry for each agent it finds. If an agent was already running, restart it."}},{"@type":"Question","name":"Can I use Claude Code and Codex on the same file?","acceptedAnswer":{"@type":"Answer","text":"Both can connect to the same plugin. FigmaMCP lets several agent sessions share one plugin, so watch that two agents do not edit the same layers."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">Figma MCP integrations</li></ol></nav>
+<article class="wrap page">
+<h1>Figma MCP integrations</h1>
+<p class="lede">FigmaMCP connects the Figma desktop app on your Mac to your coding agent. Two integrations exist today: Claude Code and Codex. The Mac app adds the Figma plugin and connects both agents, with no API token. Other clients are not supported yet. This page points you to the right guide.</p>
+<h2>Guides</h2>
+<div class="tablewrap"><table><caption class="sr">FigmaMCP integration pages</caption>
+<thead><tr><th scope="col">Page</th><th scope="col">When to read it</th></tr></thead><tbody>
+<tr><th scope="row"><a href="/integrations/claude-code">Claude Code</a></th><td>You use Claude Code and want it to read and edit the file open in Figma</td></tr>
+<tr><th scope="row"><a href="/integrations/codex">Codex</a></th><td>You use Codex and want it to read and edit the file open in Figma</td></tr>
+<tr><th scope="row"><a href="/docs/setup">Setup</a></th><td>You want the install steps for the Mac app and the plugin</td></tr>
+</tbody></table></div>
+<h2>What the Mac app sets up</h2>
+<p class="measure">FigmaMCP&rsquo;s Mac app runs a checklist. It looks for Figma, Claude Code and Codex. Then it installs the plugin and connects the agents it found. You do not edit config files or copy a token.</p>
+<div class="tablewrap"><table><caption class="sr">What the app sets up</caption>
+<thead><tr><th scope="col">Part</th><th scope="col">What happens</th></tr></thead><tbody>
+<tr><th scope="row">Figma plugin</th><td>Added to Figma&rsquo;s development plugins. You find it under Plugins, Development, FigmaMCP. Figma restarts once, and only if it was running and the plugin was missing.</td></tr>
+<tr><th scope="row">Claude Code</th><td>The app adds a user-scope MCP entry named <code>figmamcp</code> and a FigmaMCP skill, if Claude Code is installed.</td></tr>
+<tr><th scope="row">Codex</th><td>The app adds an MCP entry named <code>figmamcp</code> and the same skill, if Codex is installed.</td></tr>
+<tr><th scope="row">Local relay</th><td>A small background process that starts at login. It passes messages between the agent&rsquo;s server and the plugin.</td></tr>
+<tr><th scope="row">Accessibility (optional)</th><td>If you allow it, FigmaMCP can open the plugin for your agent. If you do not, open the plugin once in each file and leave it open.</td></tr>
+</tbody></table></div>
+<p class="measure">Restart Claude Code or Codex if it was already running, so it loads the new tool. The <a href="/docs/setup">setup page</a> lists every file and setting the installer writes, and how to remove them.</p>
+<h2>What both agents get</h2>
+<p class="measure">Both agents use the same FigmaMCP tools. They can read pages, layers, styles, variables, components, annotations and prototype reactions. They can also create shapes, frames, text and components, and edit layers. Edits go only to the open file where the plugin&rsquo;s AI can edit this file switch is on. Each edit names its target layer, and the name must match. Turn the switch off and the agent can read but not edit.</p>
+<h2>If the connection fails</h2>
+<div class="tablewrap"><table><caption class="sr">Connection problems</caption>
+<thead><tr><th scope="col">Error</th><th scope="col">Meaning</th><th scope="col">What to do</th></tr></thead><tbody>
+<tr><th scope="row"><code>PLUGIN_PEER_UNAVAILABLE</code></th><td>No Figma plugin is connected to that channel.</td><td>Open the FigmaMCP plugin in the file, then retry.</td></tr>
+<tr><th scope="row"><code>CHANNEL_NOT_BOUND</code></th><td>The session has no channel. This appears when several files have the plugin open.</td><td>Call <code>channel_join</code> with the plugin&rsquo;s link for the file you want.</td></tr>
+<tr><th scope="row"><code>PLUGIN_DISCONNECTED</code></th><td>The plugin closed, reloaded or was re-scoped while a command ran.</td><td>Check with <code>node_info</code> whether the edit took effect, then retry once the plugin is open.</td></tr>
+<tr><th scope="row"><code>READ_ONLY_MODE</code></th><td>The AI can edit this file switch is off.</td><td>Turn it on in the plugin.</td></tr>
+</tbody></table></div>
+<p class="measure">With one file open, a tool connects by itself on its first call. See <a href="/troubleshooting/not-working">Figma MCP not working</a> for more.</p>
+<h2>Limits</h2>
+<ul>
+<li>macOS 14 or later, on Intel or Apple Silicon.</li>
+<li>The Figma desktop app is required. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin.</li>
+<li>FigmaMCP is independent. It is not made by Figma, Inc.</li>
+</ul>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+
+<h2>Questions</h2><div class="faq"><details><summary>Which agents does FigmaMCP support?</summary><div class="ans">Claude Code and Codex. Other clients are not supported yet.</div></details><details><summary>Do I need a Figma API token?</summary><div class="ans">No. FigmaMCP works through the Figma desktop app on your Mac, so there is no token to create or paste.</div></details><details><summary>Do I configure Claude Code or Codex myself?</summary><div class="ans">No. The Mac app adds the FigmaMCP entry for each agent it finds. If an agent was already running, restart it.</div></details><details><summary>Can I use Claude Code and Codex on the same file?</summary><div class="ans">Both can connect to the same plugin. FigmaMCP lets several agent sessions share one plugin, so watch that two agents do not edit the same layers.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

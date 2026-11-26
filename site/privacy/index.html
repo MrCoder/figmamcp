@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy: what FigmaMCP counts and what it does not</title>
+<meta name="description" content="FigmaMCP counts site visits and plugin loads. The plugin sends its version, a random install ID and tool-call counts. No design content, no file names, no ads.">
+<link rel="canonical" href="https://figmamcp.dev/privacy">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Privacy: what FigmaMCP counts and what it does not">
+<meta property="og:description" content="FigmaMCP counts site visits and plugin loads. The plugin sends its version, a random install ID and tool-call counts. No design content, no file names, no ads.">
+<meta property="og:url" content="https://figmamcp.dev/privacy">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/privacy#webpage","url":"https://figmamcp.dev/privacy","name":"Privacy: what FigmaMCP counts and what it does not","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/privacy#breadcrumb"},"dateModified":"2026-11-26"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/privacy#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Privacy","item":"https://figmamcp.dev/privacy"}]}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">Privacy</li></ol></nav>
+<article class="wrap page"><h1>Privacy</h1>
+<p class="lede">FigmaMCP counts how often the website and the FigmaMCP plugin are used. It uses Google Analytics and a tiny image that Cloudflare counts. The plugin sends its version, a random install ID and counts of tool calls. From version 0.1.24, the FigmaMCP relay on your Mac and the Mac app also send a few usage events to Mixpanel through our own server, without your IP address. We send no file name, file key or design content, and we use no advertising features. An email address is stored only if you choose to join the email list.</p>
+<h2>What we count</h2>
+<ul>
+<li>Website: page views, clicks on links that leave the site, clicks on the Mac download button, and rough location (country) and device type, with Google Analytics 4.</li>
+<li>Plugin: one event each time the FigmaMCP panel opens, with the plugin version and Google&rsquo;s country from the request. The first time the plugin runs, it makes up a random install ID (16 hex digits) and keeps it in Figma&rsquo;s plugin storage on your computer. Each load sends that ID, so we can count how many installs there are. The ID is random: it contains nothing about you, your Figma account or your files. To reset it, remove and re-add the plugin in Figma.</li>
+<li>Both the site and the plugin also request <code>/p.gif</code>, a 1x1 transparent image, which we count by version, country and install ID. On the homepage only, a site visit also sends which locale homepage it was (for example <code>zh</code> or <code>ja</code>), from a fixed list, so we can see which locale homepage is visited; it is not a path or a query string, and it carries no install ID. Since 26 November 2026, the image request for a page view of this website also records the page path (without any query string, cut at 100 characters), the domain of the site that sent you here (for example <code>www.google.com</code>, never the full address; empty if you came from this site or from no site), and the campaign tag from a <code>utm_source</code> link, if the link has one. We use these to see which sites and links bring visitors. They go into the same count, with no cookie, no install ID and no IP address, and they are not sent to Mixpanel.</li>
+<li>Tool-call counts: the plugin counts the AI tool calls it runs and sends the totals in batches to <code>/u.gif</code>: the first call of a plugin session at once, then 15 seconds after the first unsent call and at most once a minute while calls continue, or at once every 20 calls. Totals not yet sent stay in the plugin’s own Figma storage on your computer and are sent the next time the plugin opens. A plugin that is open checks every minute for totals left by a plugin that closed at least 5 minutes ago and sends them. Each batch has the plugin version, the install ID, how many calls worked and how many failed, and how many times each tool was used, by tool name (for example <code>node_info:3</code>). For failed calls it also has the tool name and the error code the plugin returned (for example <code>node_delete:NAME_MISMATCH:1</code>). It never contains file content, layer names, node IDs, text or file names.</li>
+<li>Page speed: Cloudflare Web Analytics, which Cloudflare adds to each page, loads a small script from <code>static.cloudflareinsights.com</code>. It reports the page path, page load timing and Core Web Vitals, and the browser and operating system type, to Cloudflare. It sets no cookies and stores nothing in your browser. It runs even when your browser sends Do Not Track or Global Privacy Control.</li>
+<li>Mac app: each time the FigmaMCP app starts, it also sends one launch count to <code>/p.gif</code> with its version and a random app ID (16 hex digits, made once and kept on your Mac), and no file contents. Every 24 hours the app also asks GitHub whether a newer version exists; that request carries no ID.</li>
+<li>Client-connected count: once per plugin session, when an AI assistant actually connects (even if it never calls a tool), the plugin requests <code>/c.gif</code> with the plugin version, country and install ID &mdash; nothing else.</li>
+<li>Download count: each request to <code>/download</code> adds one count with the country, a bot or human flag (guessed from the browser name, which is not stored) and the host of the site that linked to it, for example <code>news.ycombinator.com</code>. No IP address and no full referring address.</li>
+</ul>
+<h2 id="usage-events">Usage events (Mixpanel)</h2>
+<p class="measure">From version 0.1.24, FigmaMCP also sends usage events to Mixpanel, so we can see which tools work and where people get stuck. The events come from the FigmaMCP relay, the small local program on your Mac that passes messages between your AI assistant and the plugin, and from the Mac app. They go first to <code>figmamcp.dev/mp/track</code>, our Cloudflare Worker. It accepts only the events and fields listed below and refuses everything else. It adds your country (from Cloudflare) and sends the events to Mixpanel with IP collection turned off, so Mixpanel never gets your IP address.</p>
+<ul>
+<li><code>plugin_opened</code>: the plugin panel connected to the relay, with the plugin version.</li>
+<li><code>ai_connected</code>: the first AI assistant connected in this plugin session, with the assistant&rsquo;s name from a fixed list (<code>claude-code</code>, <code>codex</code>, <code>cursor</code>, <code>claude</code> or <code>other</code>). The session title or folder name the panel shows is never sent.</li>
+<li><code>tool_called</code>: one event per tool call, with the tool name (for example <code>node_info</code>), whether it worked, the error code if it failed (for example <code>READ_ONLY_MODE</code>, never the error message) and how long it took in milliseconds.</li>
+<li><code>app_launched</code>: the Mac app started, with the app version. This event uses the app&rsquo;s random app ID instead of the plugin&rsquo;s install ID.</li>
+<li>Every event also has: <code>product</code> (always <code>figmamcp</code>), the relay version, the plugin version, the operating system and its major version (for example <code>macOS 26</code>), the random install ID (or app ID), the time, a random event ID used to remove duplicates, the country code from Cloudflare, and a flag that marks our own test installs.</li>
+<li>Copies of the counts above: from 22 November 2026, each <code>/p.gif</code>, <code>/c.gif</code>, <code>/u.gif</code> and <code>/download</code> count is also sent to Mixpanel as one event (<code>px_plugin_loaded</code>, <code>px_app_launched</code>, <code>px_connected</code>, <code>px_usage</code>, <code>site_visited</code> or <code>download</code>), with the same fields the count already has and without your IP address. A site visit has only the country and the homepage locale code; a download has only the country, the bot or human flag and the referring host. Each site visit and download gets a new random ID, so they cannot be linked to each other or to an install.</li>
+<li>Never sent: file names, file keys, layer or node names, node IDs, text, design content, prompts, folder paths, user names, email addresses or IP addresses.</li>
+<li>If your Mac is offline, the relay keeps up to 1,000 unsent events (at most 1 MB) in <code>~/.figmamcp/telemetry-queue.jsonl</code> and sends them when it can. Events older than five days are deleted without being sent.</li>
+</ul>
+<h3 id="opt-out">Turning usage events off</h3>
+<ul>
+<li>Add <code>"telemetry": false</code> to <code>~/.figmamcp/config.json</code>, for example <code>{"port": 3155, "telemetry": false}</code>. The relay and the Mac app then send no Mixpanel events, and the relay deletes its queue file the next time it would send.</li>
+<li>Or set the environment variable <code>FIGMAMCP_TELEMETRY=0</code> for your AI assistant. The FigmaMCP server it starts tells the relay, and the relay sends no <code>ai_connected</code> or <code>tool_called</code> events for that assistant. The relay itself starts at login, so the config key is the switch that covers everything.</li>
+<li>These switches turn off the relay and Mac app events only. The <code>/p.gif</code>, <code>/c.gif</code> and <code>/u.gif</code> counts above, which the plugin sends from inside Figma, still run, and their copies still reach Mixpanel.</li>
+</ul>
+<h2>Cookies and choices</h2>
+<ul>
+<li>On the website, Google Analytics sets cookies, except for visitors in the EEA, the UK and Switzerland. For them it sets no analytics cookie and gets cookieless pings only.</li>
+<li>If your browser sends Do Not Track or Global Privacy Control, the site does not load Google Analytics at all.</li>
+<li>The plugin sets no cookies. It stores two things in Figma&rsquo;s plugin storage on your computer: a random install ID (16 hex digits) and a flag that records you have seen the first-use example prompt.</li>
+<li>We turn off Google Signals and ad personalisation. Nothing here is used for advertising.</li>
+</ul>
+<h2>What we do not collect</h2>
+<ul>
+<li>No account or device identifier. No email address, unless you choose to give one (see below).</li>
+<li>No file name, file key, layer names or design content.</li>
+<li>FigmaMCP does not store IP addresses. Google Analytics 4 does not log or store IP addresses either. Mixpanel does not get them: our server sends usage events with IP collection turned off.</li>
+</ul>
+<h2 id="email">Email list (optional)</h2>
+<ul>
+<li>If you type your email into a signup form on this site, we store that address, which form you used (for example the download or footer form) and the date and time. Nothing else.</li>
+<li>Signing up is optional. Downloads and every page work without it.</li>
+<li>We use the address only to send FigmaMCP setup tips and news about new tools. We do not sell or share it, and we do not use it for advertising.</li>
+<li>The list is stored in Cloudflare Workers KV. To stop abuse, the form counts attempts per visitor for one hour using a one-way hash of the IP address; the IP address itself is not stored.</li>
+<li>Every email has an unsubscribe link. To have your address deleted at any time, use that link or reply to any email.</li>
+</ul>
+<h2>Google</h2>
+<p>Google processes the Analytics data under its own <a href="https://policies.google.com/privacy">privacy policy</a>.</p>
+<h2>Mixpanel</h2>
+<p class="measure">Mixpanel, Inc. stores the usage events in its United States data center and processes them for us under its own <a href="https://mixpanel.com/legal/privacy-policy/">privacy policy</a>. Our server sends the events with IP collection turned off; the country comes from Cloudflare.</p>
+<h2>Cloudflare</h2>
+<p class="measure">This site is served through Cloudflare. Cloudflare processes every request, including the image request, and handles IP addresses under its own privacy policy. FigmaMCP does not store them. For Cloudflare Web Analytics, Cloudflare says it drops the IP address at the data center that receives the report.</p>
+<h2>Your agent</h2>
+<p class="measure">FigmaMCP sends no design content to us. Your AI agent does read what FigmaMCP returns from your file and passes it to its own model provider, under that provider&rsquo;s terms. Choose your agent with that in mind.</p>
+<h2>Contact</h2>
+<p class="measure">Questions or corrections: open an issue at <a href="https://github.com/MrCoder/figmamcp-releases/issues">github.com/MrCoder/figmamcp-releases/issues</a>.</p>
+<p class="fine">Last updated November 22, 2026.</p>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-26">2026-11-26</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

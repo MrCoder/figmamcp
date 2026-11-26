@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP without Dev Mode: seat needs and a local option</title>
+<meta name="description" content="Figma MCP without Dev Mode or a Dev seat: what the official server needs on each seat, checked 2026-11-13, and a free local tool for Claude Code and Codex.">
+<link rel="canonical" href="https://figmamcp.dev/figma-mcp-without-dev-mode">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP without Dev Mode: seat needs and a local option">
+<meta property="og:description" content="Figma MCP without Dev Mode or a Dev seat: what the official server needs on each seat, checked 2026-11-13, and a free local tool for Claude Code and Codex.">
+<meta property="og:url" content="https://figmamcp.dev/figma-mcp-without-dev-mode">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/figma-mcp-without-dev-mode#webpage","url":"https://figmamcp.dev/figma-mcp-without-dev-mode","name":"Figma MCP without Dev Mode: seat needs and a local option","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/figma-mcp-without-dev-mode#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/figma-mcp-without-dev-mode#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Figma MCP without Dev Mode","item":"https://figmamcp.dev/figma-mcp-without-dev-mode"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do I need Dev Mode to use the Figma MCP server?","acceptedAnswer":{"@type":"Answer","text":"The Figma pages we checked on 2026-11-13 do not say Dev Mode is required. They do say the desktop server requires a Dev or Full seat, and that the remote server is listed for all plans."}},{"@type":"Question","name":"Do I need a Dev seat for the official server?","acceptedAnswer":{"@type":"Answer","text":"For the desktop server, yes: Figma says it requires a Dev or Full seat on Professional, Education, Organization, Government or Enterprise. For the remote server, Figma’s help guide lists all plans, and writing outside your drafts needs a Full seat."}},{"@type":"Question","name":"How do I use FigmaMCP without Dev Mode?","acceptedAnswer":{"@type":"Answer","text":"Install the Mac app, open a file in the Figma desktop app, and start Claude Code or Codex. FigmaMCP works through a plugin in that app, so it does not depend on Dev Mode or a Dev seat. You need your existing access to the file, and edit access to edit it."}},{"@type":"Question","name":"Does FigmaMCP include Dev Mode features?","acceptedAnswer":{"@type":"Answer","text":"No. Features that belong to Figma itself, such as Dev Mode, are not included. FigmaMCP is a separate tool, not made by Figma."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">Figma MCP without Dev Mode</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP without Dev Mode</h1>
+<p class="lede">Can you use a Figma MCP server without Dev Mode or a Dev seat? Figma&rsquo;s remote MCP server is listed for all plans, and the pages we checked do not say that Dev Mode is required. Figma&rsquo;s desktop MCP server does need a Dev or Full seat. This page lists what the official server needs for each seat, then describes a separate free local tool that works through your own Figma desktop app. Checked 2026-11-13.</p>
+
+<h2>What the official server needs, seat by seat</h2>
+<div class="tablewrap"><table>
+<caption class="sr">What Figma&rsquo;s official MCP server allows by seat and plan</caption>
+<thead><tr><th scope="col">Seat or plan</th><th scope="col">What the official server allows</th><th scope="col">Source (checked 2026-11-13)</th></tr></thead>
+<tbody>
+<tr><th scope="row">Remote server, any plan</th><td>Access is listed as &ldquo;All plans&rdquo;, with a supported MCP client</td><td><a href="https://help.figma.com/hc/en-us/articles/32132100833559-Guide-to-the-Figma-MCP-server">Figma help guide to the MCP server</a></td></tr>
+<tr><th scope="row">Desktop server</th><td>Requires a Dev or Full seat on Professional, Education, Organization, Government or Enterprise</td><td><a href="https://developers.figma.com/docs/figma-mcp-server/">server overview</a></td></tr>
+<tr><th scope="row">View or Collab seat, any plan</th><td>Up to 20 read calls per month</td><td><a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">rate limits and access</a></td></tr>
+<tr><th scope="row">Professional, Full or Dev seat</th><td>Up to 200 per day, 10 per minute</td><td><a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">rate limits and access</a></td></tr>
+<tr><th scope="row">Writing to the canvas</th><td>Edit access to the file; a Full seat to write outside your drafts; beta and free for now, planned to become usage-based</td><td><a href="https://developers.figma.com/docs/figma-mcp-server/write-to-canvas">write to canvas</a> and <a href="https://developers.figma.com/docs/figma-mcp-server/">server overview</a></td></tr>
+<tr><th scope="row">Dev Mode</th><td>Figma&rsquo;s docs do not say it is required on the pages we checked</td><td><a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">rate limits and access</a>, <a href="https://developers.figma.com/docs/figma-mcp-server/write-to-canvas">write to canvas</a></td></tr>
+</tbody></table></div>
+<p class="fine">Figma&rsquo;s pages are the authority and they may change. The call limits apply to tools that read data from Figma. Figma says tools that write to Figma files are exempt from that read limit.</p>
+
+<h2>Dev seat and Dev Mode are different things</h2>
+<p class="measure">A Dev seat is a kind of paid seat. Dev Mode is a view inside Figma for inspecting designs. Figma&rsquo;s docs tie the desktop MCP server to a Dev or Full seat. For the remote server, the docs we checked list the plan and the client, and they do not name Dev Mode as a requirement. If a message in your tool mentions a seat, compare it with the table above and with your own seat in Figma.</p>
+
+<h2>A separate free local tool</h2>
+<p class="measure">FigmaMCP is a free Mac app and it is not made by Figma. It works with Claude Code and Codex only. The Mac app adds a plugin to Figma and connects Claude Code and Codex, and it needs no API token.</p>
+<p class="measure">FigmaMCP reads and edits the file you have open in the Figma desktop app, through a local server and that plugin. It does not depend on Dev Mode or on a Dev seat. You need whatever access you already have to the file in Figma, and edit access if you want your agent to edit. FigmaMCP has no call quota of its own.</p>
+<p class="measure">There are guardrails. The plugin has an &ldquo;AI can edit this file&rdquo; switch. Each edit names its target layer. Errors come back in a structured form that your agent can read.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+
+<h2>Read next</h2>
+<ul class="plain">
+<li><a href="/figma-mcp-free-plan">Figma MCP on the free plan</a></li>
+<li><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a></li>
+<li><a href="/compare/official-figma-mcp">Official Figma MCP compared with FigmaMCP</a></li>
+<li><a href="/docs/setup">Setup</a></li>
+</ul>
+<h2>Questions</h2><div class="faq"><details><summary>Do I need Dev Mode to use the Figma MCP server?</summary><div class="ans">The Figma pages we checked on 2026-11-13 do not say Dev Mode is required. They do say the desktop server requires a Dev or Full seat, and that the remote server is listed for all plans.</div></details><details><summary>Do I need a Dev seat for the official server?</summary><div class="ans">For the desktop server, yes: Figma says it requires a Dev or Full seat on Professional, Education, Organization, Government or Enterprise. For the remote server, Figma&rsquo;s help guide lists all plans, and writing outside your drafts needs a Full seat.</div></details><details><summary>How do I use FigmaMCP without Dev Mode?</summary><div class="ans">Install the Mac app, open a file in the Figma desktop app, and start Claude Code or Codex. FigmaMCP works through a plugin in that app, so it does not depend on Dev Mode or a Dev seat. You need your existing access to the file, and edit access to edit it.</div></details><details><summary>Does FigmaMCP include Dev Mode features?</summary><div class="ans">No. Features that belong to Figma itself, such as Dev Mode, are not included. FigmaMCP is a separate tool, not made by Figma.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

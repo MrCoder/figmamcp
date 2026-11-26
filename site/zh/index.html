@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FigmaMCP：让 AI 编辑你打开的 Figma 文件</title>
+<meta name="description" content="免费本地运行。FigmaMCP 让 Claude Code 或 Codex 读取并编辑你打开的 Figma 文件，没有调用配额。目前仅支持 macOS。">
+<link rel="canonical" href="https://figmamcp.dev/zh">
+<link rel="alternate" hreflang="en" href="https://figmamcp.dev/">
+<link rel="alternate" hreflang="zh-CN" href="https://figmamcp.dev/zh">
+<link rel="alternate" hreflang="zh-TW" href="https://figmamcp.dev/zh-hant">
+<link rel="alternate" hreflang="zh-HK" href="https://figmamcp.dev/zh-hant">
+<link rel="alternate" hreflang="ja" href="https://figmamcp.dev/ja">
+<link rel="alternate" hreflang="pl" href="https://figmamcp.dev/pl">
+<link rel="alternate" hreflang="fr" href="https://figmamcp.dev/fr">
+<link rel="alternate" hreflang="de" href="https://figmamcp.dev/de">
+<link rel="alternate" hreflang="ko" href="https://figmamcp.dev/ko">
+<link rel="alternate" hreflang="uk" href="https://figmamcp.dev/uk">
+<link rel="alternate" hreflang="x-default" href="https://figmamcp.dev/">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="FigmaMCP：让 AI 编辑你打开的 Figma 文件">
+<meta property="og:description" content="免费本地运行。FigmaMCP 让 Claude Code 或 Codex 读取并编辑你打开的 Figma 文件，没有调用配额。目前仅支持 macOS。">
+<meta property="og:url" content="https://figmamcp.dev/zh">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FigmaMCP：让 AI 编辑你打开的 Figma 文件">
+<meta name="twitter:description" content="免费本地运行。FigmaMCP 让 Claude Code 或 Codex 读取并编辑你打开的 Figma 文件，没有调用配额。目前仅支持 macOS。">
+<meta name="twitter:image" content="https://figmamcp.dev/og.png">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"一个免费的本地 MCP 服务器和配套应用，让 Claude Code 或 Codex 读取并编辑 Figma 桌面版里打开的文件，没有调用配额。","url":"https://figmamcp.dev/zh","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/zh#webpage","url":"https://figmamcp.dev/zh","name":"FigmaMCP：让 AI 编辑你打开的 Figma 文件","inLanguage":"zh-CN","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/zh#breadcrumb"},"dateModified":"2026-11-26"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/zh#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"FigmaMCP：让 AI 编辑你打开的 Figma 文件","item":"https://figmamcp.dev/zh"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"FigmaMCP 真的免费吗？","acceptedAnswer":{"@type":"Answer","text":"是的。免费，没有付费档。它不调用 Figma 托管的 MCP 服务器，所以 Figma 按座位计算的调用限制不适用于它。你打开的文件仍然受你自己的 Figma 方案和 Figma 条款约束。"}},{"@type":"Question","name":"它和 Figma 官方 MCP 服务器有什么不同？","acceptedAnswer":{"@type":"Answer","text":"Figma 官方服务器由 Figma 自己提供，可配合许多 MCP 客户端使用。在较低档的方案上，它的读取调用有上限，画布写入还处于 beta，并且在草稿之外需要 Full 席位。FigmaMCP 在你的 Mac 上运行，通过你已打开文件里的插件工作，不需要 API 令牌，也没有调用配额。它适用于 Claude Code 和 Codex，仅支持 macOS。详见完整对比。"}},{"@type":"Question","name":"两个人同时打开同一个文件，Agent 编辑的是谁的 Figma？","acceptedAnswer":{"@type":"Answer","text":"是 Agent 所在那台 Mac 上的 Figma 桌面版。Agent 与该应用中的插件通信，所以是以那个人的身份编辑，他需要有该文件的编辑权限。其他人会像看到任何其他编辑一样实时看到改动。如果两个人在同一时刻修改同一个图层，由 Figma 自己的多人同步来解决：修改不同属性时两处改动都保留，修改同一属性时以最后一次改动为准。FigmaMCP 自己不增加任何合并步骤。"}},{"@type":"Question","name":"支持 Windows 或 Linux 吗？","acceptedAnswer":{"@type":"Answer","text":"暂时不支持。FigmaMCP 目前仅支持 macOS。"}},{"@type":"Question","name":"需要 Figma API 令牌吗？","acceptedAnswer":{"@type":"Answer","text":"不需要。FigmaMCP 通过插件 API 和你 Mac 上的 Figma 桌面版通信，没有访问令牌需要创建或粘贴。"}},{"@type":"Question","name":"为什么插件不在 Figma Community 里？","acceptedAnswer":{"@type":"Answer","text":"FigmaMCP 在 Figma Community 之外分发。你不需要手动安装：Mac App 会替你把它注册到 Figma，之后它会出现在 Plugins、Development 下。"}},{"@type":"Question","name":"支持哪些 Agent？","acceptedAnswer":{"@type":"Answer","text":"Claude Code 和 Codex 是经过测试的目标，Mac App 会替你连接它们。"}},{"@type":"Question","name":"Agent 会不会毁掉我的文件？","acceptedAnswer":{"@type":"Answer","text":"改动只会发生在插件已打开、且“AI can edit this file”开关为开的文件里；关掉开关，AI 就只能读取。每次编辑都必须准确指明目标图层，批量编辑在改动前会先检查。它仍然是一个编辑工具：请像检查同事的工作一样检查结果，并用好 Figma 的版本历史。"}},{"@type":"Question","name":"它会向 Figma 的服务器发请求吗？","acceptedAnswer":{"@type":"Answer","text":"不会。FigmaMCP 不调用 Figma 的服务器或 REST API。你的 Agent 和本地的 MCP 服务器通信，MCP 服务器再通过 localhost 和 Figma 桌面版里的插件通信，插件通过 Plugin API 在 App 内读取和编辑文件。你的改动之后会像你自己编辑一样，通过 App 的正常同步到达 Figma 的云端。插件自身发出的请求不带文件内容：每次插件启动时，会向 figmamcp.dev 和 Google Analytics 发送一次加载计数，带上插件版本和一个随机安装 ID；还会把按工具名统计的调用次数批量发送给 figmamcp.dev，不带任何内容。"}},{"@type":"Question","name":"我的设计会离开我的电脑吗？","acceptedAnswer":{"@type":"Answer","text":"FigmaMCP 本身不会把文件内容发送到任何地方。不过你的 Agent 会读取 FigmaMCP 返回的内容，并按它自己模型服务商的条款发送出去，详见隐私页面。"}},{"@type":"Question","name":"这是 Figma 官方做的吗？","acceptedAnswer":{"@type":"Answer","text":"不是。FigmaMCP 与 Figma, Inc. 没有关联，也未获得其认可。FigmaMCP 是 Neo Product LLC 的 figma-edit-mcp 的分支。"}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">对比</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/" hreflang="en" lang="en">English</a></nav></div></header>
+<main id="main">
+<section class="hero"><div class="wrap">
+ <h1>你的 Agent 编辑你已经打开的 Figma 文件。</h1>
+ <p class="fine lang-switch"><strong>语言：</strong> <a href="/" hreflang="en" lang="en">English</a> · 简体中文 · <a href="/zh-hant" hreflang="zh-Hant" lang="zh-Hant">繁體中文</a> · <a href="/ja" hreflang="ja" lang="ja">日本語</a> · <a href="/pl" hreflang="pl" lang="pl">Polski</a> · <a href="/fr" hreflang="fr" lang="fr">Français</a> · <a href="/de" hreflang="de" lang="de">Deutsch</a> · <a href="/ko" hreflang="ko" lang="ko">한국어</a> · <a href="/uk" hreflang="uk" lang="uk">Українська</a></p>
+ <p class="lede">FigmaMCP 是一个免费的本地工具，让 Claude Code 或 Codex 读取并编辑你在 Figma 桌面版中打开的文件。它通过 Figma 的插件 API 在你的 Mac 上运行，所以没有调用次数需要盯着。</p>
+ <p class="cta"><a class="btn" href="/download">下载 Mac 版</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14 及以上 · Intel 和 Apple 芯片 · 约 155 MB</span></p><p class="alt">下载慢或打不开？从 <a href="https://github.com/MrCoder/figmamcp-releases/releases/latest">GitHub 发布页</a>获取 <code>FigmaMCP.dmg</code>。<a href="#verify">校验 SHA-256</a>。</p>
+<div class="after-dl" id="after-download" hidden><p class="after-dl-title"><strong>下载已开始。</strong> 打开 <code>FigmaMCP.dmg</code>，把 App 拖到 Applications 里。<a href="/zh/docs/setup">安装指南</a>。</p><form class="sub" action="/subscribe" method="post" data-sub><label for="sub-email-download">想通过邮件收到设置技巧和新工具吗？（可选）</label><div class="sub-row"><input id="sub-email-download" type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"><input type="hidden" name="source" value="download"><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">订阅</button></div><p class="sub-note">可选。邮件很少，每封都有退订链接。<a href="/privacy#email">隐私</a>。</p><p class="sub-msg" role="status" aria-live="polite"></p></form></div>
+ <p class="fine">目前仅支持 macOS。需要 Figma 桌面版。免费，本地运行。</p>
+ <figure class="demo">
+  <video data-demo width="1600" height="554" muted loop playsinline autoplay preload="none" poster="/assets/figmamcp-demo-poster.webp" aria-label="FigmaMCP 演示：Claude Code 在终端里于 Figma 桌面版中搭建一张价格卡片，为图层命名，并添加自动布局、圆角和阴影"><source data-src="/assets/figmamcp-demo.mp4" type="video/mp4"></video>
+  <figcaption><span>真实录屏，约 4 倍速：Claude Code 通过 FigmaMCP 在打开的 Figma 文件里搭建一张价格卡片。</span> <button type="button" class="demo-toggle" data-demo-toggle data-pause="暂停" data-play="播放" hidden>暂停</button></figcaption>
+ </figure>
+</div></section>
+
+<section class="wrap block" id="see-it-work"><h2>实际效果</h2>
+ <div class="shots">
+  <figure class="shot-narrow"><img src="/assets/figmamcp-plugin-connected.webp" width="800" height="990" loading="lazy" decoding="async" alt="Figma 桌面版中的 FigmaMCP 插件面板：显示“已连接”，“AI 可以编辑此文件”开关已打开，并有 1 个 AI 会话已连接"><figcaption><strong>1. 打开插件。</strong>FigmaMCP 面板显示它连接的文件。一个开关决定 AI 能否编辑这个文件。</figcaption></figure>
+  <figure><img src="/assets/figmamcp-agent-editing.webp" width="1600" height="554" loading="lazy" decoding="async" alt="FigmaMCP 运行中：Figma 里出现一张新的价格卡片，旁边终端里的 Claude Code 正在为卡片的图层重命名"><figcaption><strong>2. 让 Agent 动手。</strong>Claude Code 调用 FigmaMCP 工具，你会看着图层在 Figma 里发生变化。</figcaption></figure>
+  <figure class="shot-mid"><img src="/assets/figmamcp-result.webp" width="1200" height="794" loading="lazy" decoding="async" alt="FigmaMCP 编辑结果：一张带自动布局、圆角和阴影的价格卡片，图层名为 Plan Name、Price、Description 和 CTA Button"><figcaption><strong>3. 检查结果。</strong>一个真实的 Figma 框架，带自动布局和命名好的图层，你可以接着编辑。</figcaption></figure>
+ </div>
+</section>
+
+<section class="wrap block" id="what"><h2>它能做什么</h2>
+ <p class="measure">用日常语言告诉 Agent 你想要什么。它先读取打开文件的结构，再直接在这个文件里改，你可以看着改动发生。</p>
+ <div class="cols">
+  <div><h3>读取</h3><p>页面、画框、图层、文字、组件、变量和样式 —— 来自你眼前这个文件。</p></div>
+  <div><h3>编辑</h3><p>创建和修改画框、文字、形状、组件和实例、自动布局、填充、描边和效果。</p></div>
+  <div><h3>批量应用</h3><p>一次请求里重命名、改样式或改写很多图层，例如把所有提到旧产品名的文字图层一起改掉。</p></div>
+  <div><h3>保持在边界内</h3><p>每次编辑都必须准确指明目标；批量编辑里只要有一项无效，就一项都不会改；插件里的一个开关可以让文件变成只读。</p></div>
+ </div>
+</section>
+
+<section class="wrap block" id="how"><h2>怎么用</h2>
+ <ol class="steps">
+  <li><h3>下载并打开 App</h3><p>下载 Mac 版 FigmaMCP 并打开它。它常驻在菜单栏。</p></li>
+  <li><h3>点击 Add to Figma</h3><p>只有 Figma 正在运行且还没装插件时，才会重启一次。你也可以允许“辅助功能”权限，这样 FigmaMCP 能替你的 Agent 打开插件。</p></li>
+  <li><h3>让 Agent 去改</h3><p>让 Claude Code 或 Codex 修改你打开的文件。不需要导入任何东西，不需要贴代码，也不需要选端口。</p></li>
+ </ol>
+ <aside class="note"><h2>你应该先知道的事</h2><ul>
+<li>目前仅支持 macOS。</li>
+<li>需要 Figma 桌面版，不能在浏览器里运行。</li>
+<li>FigmaMCP 不在 Figma Community 里，Mac App 会替你安装插件。</li>
+<li>如果不允许“辅助功能”，请在每个文件里手动打开一次插件（Plugins、Development、FigmaMCP），并在 Agent 编辑期间保持它打开。</li>
+<li>Dev Mode 等属于 Figma 本身的功能不包含在内。</li></ul></aside>
+</section>
+
+<section class="wrap block" id="start"><h2>开始使用</h2>
+ <ul class="plain">
+<li><a href="/zh/docs/setup">Mac 版 Figma MCP 安装</a>：从下载到第一次编辑。</li>
+<li><a href="/zh/tutorials/edit-figma-with-claude-code">5 分钟用 Claude Code 编辑 Figma 文件</a>：带演示视频的分步教程。</li>
+<li><a href="/zh/what-is-figma-mcp">什么是 Figma MCP 服务器？</a>：4 种服务器类型，以及哪些能编辑。</li>
+<li><a href="/zh/pricing">Figma MCP 价格</a>：FigmaMCP 目前免费，另附 Figma 官方的调用限额。</li>
+<li><a href="/zh/troubleshooting/not-working">Figma MCP 无法使用</a>：按症状和错误码排查。</li></ul>
+</section>
+
+<section class="wrap block" id="compare"><h2>和其他工具比较</h2>
+ <p class="measure">简要版本，来自每个项目自己的说明。详细内容请看它们的 README，这些工具会变化。</p>
+ <div class="tablewrap"><table>
+<caption class="sr">把 AI Agent 接入 Figma 的几种方式对比</caption>
+<thead><tr><th scope="col">工具</th><th scope="col">读取</th><th scope="col">编辑</th><th scope="col">连接方式</th><th scope="col">调用限制</th></tr></thead>
+<tbody>
+<tr class="us"><th scope="row">FigmaMCP</th><td>是</td><td>是</td><td>Mac App 安装本地服务器和插件，用于 Figma 桌面版；不需要 API 令牌</td><td>不调用 Figma 的 MCP 服务器，没有调用配额</td></tr>
+<tr><th scope="row">Figma 的 MCP 服务器</th><td>是</td><td>写入画布（测试版）</td><td>由 Figma 托管，需要登录账号</td><td>按座位和方案限制；限制只针对读取工具，写入工具不受限</td></tr>
+<tr><th scope="row">Framelink</th><td>是</td><td>否，仅只读</td><td>带令牌的 Figma REST API</td><td>Figma REST API 的限制</td></tr>
+<tr><th scope="row">figma-console-mcp</th><td>是</td><td>是</td><td>插件加令牌</td><td>见其 README</td></tr>
+<tr><th scope="row">cursor-talk-to-figma</th><td>是</td><td>是</td><td>中继服务器加频道码</td><td>见其 README</td></tr>
+</tbody></table></div>
+ <p class="fine">Figma 的限制于 2026 年 11 月 22 日在<a href="https://developers.figma.com/docs/figma-mcp-server/rate-limits-access/">Figma 的速率限制页面</a>核实。限制可能会变化。更多细节见<a href="/figma-mcp-alternative">对比页面</a>。各方案的限额以及哪些工具计入限额，见 <a href="/zh/figma-mcp-rate-limit">Figma MCP 速率限制</a>页面。</p>
+</section>
+
+<section class="wrap block" id="faq"><h2>常见问题</h2><div class="faq"><details><summary>FigmaMCP 真的免费吗？</summary><div class="ans">是的。免费，没有付费档。它不调用 Figma 托管的 MCP 服务器，所以 Figma 按座位计算的调用限制不适用于它。你打开的文件仍然受你自己的 Figma 方案和 Figma 条款约束。</div></details><details><summary>它和 Figma 官方 MCP 服务器有什么不同？</summary><div class="ans">Figma 官方服务器由 Figma 自己提供，可配合许多 MCP 客户端使用。在较低档的方案上，它的读取调用有上限，画布写入还处于 beta，并且在草稿之外需要 Full 席位。FigmaMCP 在你的 Mac 上运行，通过你已打开文件里的插件工作，不需要 API 令牌，也没有调用配额。它适用于 Claude Code 和 Codex，仅支持 macOS。详见<a href="/compare/official-figma-mcp">完整对比</a>。</div></details><details><summary>两个人同时打开同一个文件，Agent 编辑的是谁的 Figma？</summary><div class="ans">是 Agent 所在那台 Mac 上的 Figma 桌面版。Agent 与该应用中的插件通信，所以是以那个人的身份编辑，他需要有该文件的编辑权限。其他人会像看到任何其他编辑一样实时看到改动。如果两个人在同一时刻修改同一个图层，由 Figma 自己的多人同步来解决：修改不同属性时两处改动都保留，修改同一属性时以最后一次改动为准。FigmaMCP 自己不增加任何合并步骤。</div></details><details><summary>支持 Windows 或 Linux 吗？</summary><div class="ans">暂时不支持。FigmaMCP 目前仅支持 macOS。</div></details><details><summary>需要 Figma API 令牌吗？</summary><div class="ans">不需要。FigmaMCP 通过插件 API 和你 Mac 上的 Figma 桌面版通信，没有访问令牌需要创建或粘贴。</div></details><details><summary>为什么插件不在 Figma Community 里？</summary><div class="ans">FigmaMCP 在 Figma Community 之外分发。你不需要手动安装：Mac App 会替你把它注册到 Figma，之后它会出现在 Plugins、Development 下。</div></details><details><summary>支持哪些 Agent？</summary><div class="ans">Claude Code 和 Codex 是经过测试的目标，Mac App 会替你连接它们。</div></details><details><summary>Agent 会不会毁掉我的文件？</summary><div class="ans">改动只会发生在插件已打开、且“AI can edit this file”开关为开的文件里；关掉开关，AI 就只能读取。每次编辑都必须准确指明目标图层，批量编辑在改动前会先检查。它仍然是一个编辑工具：请像检查同事的工作一样检查结果，并用好 Figma 的版本历史。</div></details><details><summary>它会向 Figma 的服务器发请求吗？</summary><div class="ans">不会。FigmaMCP 不调用 Figma 的服务器或 REST API。你的 Agent 和本地的 MCP 服务器通信，MCP 服务器再通过 localhost 和 Figma 桌面版里的插件通信，插件通过 Plugin API 在 App 内读取和编辑文件。你的改动之后会像你自己编辑一样，通过 App 的正常同步到达 Figma 的云端。插件自身发出的请求不带文件内容：每次插件启动时，会向 figmamcp.dev 和 Google Analytics 发送一次加载计数，带上插件版本和一个随机安装 ID；还会把按工具名统计的调用次数批量发送给 figmamcp.dev，不带任何内容。</div></details><details><summary>我的设计会离开我的电脑吗？</summary><div class="ans">FigmaMCP 本身不会把文件内容发送到任何地方。不过你的 Agent 会读取 FigmaMCP 返回的内容，并按它自己模型服务商的条款发送出去，详见<a href="/privacy">隐私页面</a>。</div></details><details><summary>这是 Figma 官方做的吗？</summary><div class="ans">不是。FigmaMCP 与 Figma, Inc. 没有关联，也未获得其认可。FigmaMCP 是 Neo Product LLC 的 figma-edit-mcp 的分支。</div></details></div></section>
+
+<section class="wrap block" id="setup-detail"><h2 id="verify">校验下载</h2>
+<p class="measure">App 需要 macOS 14 或更高版本，支持 Intel 和 Apple 芯片的 Mac。磁盘映像约 155 MB。如果 <code>/download</code> 很慢或打不开，请从 <a href="https://github.com/MrCoder/figmamcp-releases/releases/latest">GitHub 发布页</a>下载 <code>FigmaMCP.dmg</code>，或用固定链接：<code>curl -L -O https://github.com/MrCoder/figmamcp-releases/releases/latest/download/FigmaMCP.dmg</code>。发布页在每个文件旁边显示一个 <code>sha256:</code> 值，把它和你下载的文件比较：</p>
+<pre class="sh">shasum -a 256 ~/Downloads/FigmaMCP.dmg</pre>
+<p class="measure">两个值不一致时，删除文件并重新下载。</p>
+
+<h2 id="changes">安装程序会改动什么</h2>
+<p class="measure">App 的清单只写入下面这些位置，已经完成的步骤会跳过。</p>
+<div class="tablewrap"><table>
+<caption class="sr">安装程序写入的文件和设置</caption>
+<thead><tr><th scope="col">位置</th><th scope="col">内容</th></tr></thead>
+<tbody>
+<tr><th scope="row"><code>/Applications/FigmaMCP.app</code></th><td>App 本身。</td></tr>
+<tr><th scope="row"><code>~/.figmamcp/versions/&lt;版本&gt;</code> 和 <code>~/.figmamcp/current</code></th><td>每个版本的 MCP 服务器、中继、插件和 skill。<code>current</code> 是指向当前版本的符号链接。<code>config.json</code> 记录中继端口，<code>logs/</code> 存放中继日志。</td></tr>
+<tr><th scope="row"><code>~/.claude.json</code></th><td>用 <code>claude mcp add</code> 添加的用户级 MCP 条目 <code>figmamcp</code>。只在装了 Claude Code 时添加。</td></tr>
+<tr><th scope="row"><code>~/.codex/config.toml</code></th><td>用 <code>codex mcp add</code> 添加的 MCP 条目 <code>figmamcp</code>。只在装了 Codex 时添加。</td></tr>
+<tr><th scope="row"><code>~/.claude/skills/figmamcp</code> 和 <code>~/.codex/skills/figmamcp</code></th><td>FigmaMCP skill，给 AI 看的使用说明。如果其中一个是指向别处的链接，就不会改动它。</td></tr>
+<tr><th scope="row"><code>~/Library/LaunchAgents/com.figmamcp.relay.plist</code></th><td>登录时启动本地中继的 LaunchAgent。中继监听 <code>localhost</code> 的 3155 端口；被占用时改用 3156 到 3158 中第一个空闲端口。</td></tr>
+<tr><th scope="row">Figma 的插件列表</th><td>把 FigmaMCP 开发插件加入 <code>~/Library/Application Support/Figma/settings.json</code>，原文件保存在旁边的 <code>settings.json.figmamcp-backup</code>。</td></tr>
+</tbody></table></div>
+<p class="measure"><strong>旧的同类配置不会被改动。</strong>如果你以前装过 FigmaMCP 所派生的上游项目，它的 MCP 条目、中继和插件都保持原样。区分方法：FigmaMCP 的工具名以 <code>mcp__figmamcp__</code> 开头，插件在 Plugins → Development → FigmaMCP；其他前缀的工具不属于 FigmaMCP。不想两个并存时，用 <code>claude mcp list</code> 或 <code>codex mcp list</code> 找到旧条目，再用对应的 <code>mcp remove</code> 删掉。</p>
+
+<h2 id="uninstall">卸载或回退</h2>
+<p class="measure"><strong>回退到旧版本：</strong>从<a href="https://github.com/MrCoder/figmamcp-releases/releases">版本列表</a>下载旧版 <code>FigmaMCP.dmg</code>，替换“应用程序”里的 App，打开它并按清单操作，然后重启 Claude Code 或 Codex。装过的旧版本保留在 <code>~/.figmamcp/versions</code> 里。</p>
+<p class="measure"><strong>卸载：</strong>先在 Figma 里选 Plugins → Development → Manage plugins in development，移除 FigmaMCP。然后在终端运行下面的命令。没有用某个 AI 就跳过对应的 <code>claude</code> 或 <code>codex</code> 那一行。最后两行会删除 App 和所有 FigmaMCP 版本，无法撤销。</p>
+<pre class="sh">osascript -e 'quit app "FigmaMCP"'
+launchctl bootout gui/$(id -u)/com.figmamcp.relay
+rm ~/Library/LaunchAgents/com.figmamcp.relay.plist
+claude mcp remove figmamcp -s user
+codex mcp remove figmamcp
+rm -rf ~/.claude/skills/figmamcp ~/.codex/skills/figmamcp
+rm -rf /Applications/FigmaMCP.app ~/.figmamcp</pre>
+<p class="measure">之后重启 Claude Code 或 Codex，让它不再加载这个工具。</p>
+
+<h2>隐私</h2>
+<p class="measure">网站和插件会统计使用情况：网站使用 Google Analytics，插件每次打开发送一个事件，只带插件版本号和一个随机的安装 ID；插件还会分批发送工具调用次数（按工具名统计成功和失败次数），不带文件名、文件密钥、图层名或设计内容。完整说明见<a href="/privacy">隐私页</a>。</p>
+
+<h2>致谢</h2>
+<p class="measure">FigmaMCP 派生自 Neo Product LLC 的 <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a>，最早由 <a href="https://github.com/sonnylazuardi">sonnylazuardi</a> 编写。</p>
+</section>
+
+<section class="wrap block" id="get"><h2>获取 FigmaMCP</h2><p class="measure">免费。无需 FigmaMCP 账号，也无需 Figma API 令牌。你的 Agent 直接编辑你已经打开的文件。</p><p class="cta"><a class="btn" href="/download">下载 Mac 版</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14 及以上 · Intel 和 Apple 芯片 · 约 155 MB</span></p><p class="alt">下载后，打开 <code>FigmaMCP.dmg</code>，把应用拖到“应用程序”文件夹，然后按<a href="/zh/docs/setup">安装步骤</a>操作。</p></section>
+<p class="wrap fine updated">最后更新：<time datetime="2026-11-26">2026-11-26</time></p>
+</main>
+<footer class="foot"><div class="wrap">
+<form class="sub" action="/subscribe" method="post" data-sub><label for="sub-email-footer">通过邮件获取设置技巧和新工具</label><div class="sub-row"><input id="sub-email-footer" type="email" name="email" required maxlength="254" autocomplete="email" placeholder="you@example.com"><input type="hidden" name="source" value="footer"><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button type="submit">订阅</button></div><p class="sub-note">可选。邮件很少，每封都有退订链接。<a href="/privacy#email">隐私</a>。</p><p class="sub-msg" role="status" aria-live="polite"></p></form>
+<p>FigmaMCP 免费。它是 Neo Product LLC 的 <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> 的分支。</p>
+<p>FigmaMCP 不隶属于 Figma，也未获得其认可。Figma 是 Figma, Inc. 的商标。</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/zh/pricing">价格</a><a href="/zh/docs/setup">安装</a><a href="/zh/tutorials/edit-figma-with-claude-code">教程</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/zh/what-is-figma-mcp">什么是 Figma MCP</a><a href="/zh/figma-mcp-rate-limit">速率限制</a><a href="/zh/troubleshooting/not-working">故障排查</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a><a href="/" hreflang="en" lang="en">English</a></p>
+</div></footer>
+<img class="px" src="/p.gif?l=zh" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

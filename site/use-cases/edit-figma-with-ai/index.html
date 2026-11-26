@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Edit Figma with AI: edit a live file in Claude Code or Codex</title>
+<meta name="description" content="Edit Figma designs with AI from Claude Code or Codex: bulk renames, text changes, new layouts, token binding. What works, what to check, and how to start.">
+<link rel="canonical" href="https://figmamcp.dev/use-cases/edit-figma-with-ai">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Edit Figma with AI: edit a live file in Claude Code or Codex">
+<meta property="og:description" content="Edit Figma designs with AI from Claude Code or Codex: bulk renames, text changes, new layouts, token binding. What works, what to check, and how to start.">
+<meta property="og:url" content="https://figmamcp.dev/use-cases/edit-figma-with-ai">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/use-cases/edit-figma-with-ai#webpage","url":"https://figmamcp.dev/use-cases/edit-figma-with-ai","name":"Edit Figma with AI: edit a live file in Claude Code or Codex","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/use-cases/edit-figma-with-ai#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/use-cases/edit-figma-with-ai#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Use cases","item":"https://figmamcp.dev/use-cases"},{"@type":"ListItem","position":3,"name":"Edit Figma with AI, in the file you already have open","item":"https://figmamcp.dev/use-cases/edit-figma-with-ai"}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Does AI replace a designer here?", "acceptedAnswer": {"@type": "Answer", "text": "No. The agent makes the changes you describe. You still judge the result."}}, {"@type": "Question", "name": "Can AI edit a file in the browser version of Figma?", "acceptedAnswer": {"@type": "Answer", "text": "Not with FigmaMCP. It needs the Figma desktop app."}}, {"@type": "Question", "name": "Can I undo what the agent did?", "acceptedAnswer": {"@type": "Answer", "text": "Use Figma version history, and review changes as they appear. Start small so that a wrong change is easy to find."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/use-cases">Use cases</a></li><li aria-current="page">Edit Figma with AI, in the file you already have open</li></ol></nav>
+<article class="wrap page"><h1>Edit Figma with AI, in the file you already have open</h1>
+<p class="lede">To edit a Figma file with AI, connect an agent to the file and describe the change. FigmaMCP connects Claude Code or Codex to the Figma desktop app on your Mac, and the edits appear in your open file.</p>
+
+<h2>Jobs that suit an agent</h2>
+<div class="tablewrap"><table>
+<caption class="sr">Edits to ask an agent for</caption>
+<thead><tr><th scope="col">Job</th><th scope="col">Example request</th><th scope="col">Check afterwards</th></tr></thead>
+<tbody>
+<tr><th scope="row">Clean up layer names</th><td>&ldquo;Rename every Frame 12 to match its heading.&rdquo;</td><td>Names that depended on unclear headings</td></tr>
+<tr><th scope="row">Change copy</th><td>&ldquo;Replace the old product name in this frame.&rdquo;</td><td>Text that overflows its box</td></tr>
+<tr><th scope="row">Build a layout</th><td>&ldquo;Build a pricing card with three tiers using our variables.&rdquo;</td><td>Spacing, hierarchy and visual quality</td></tr>
+<tr><th scope="row">Connect tokens</th><td>&ldquo;Bind these colors to our variables.&rdquo;</td><td>Layers that had no close match</td></tr>
+<tr><th scope="row">Add notes</th><td>&ldquo;Annotate this screen for developers.&rdquo;</td><td>Accuracy of each note</td></tr>
+</tbody></table></div>
+<p class="measure">Tool guides for these jobs: <a href="/tools/auto-layout">auto layout</a> for a layout, <a href="/tools/components">components and variants</a> for parts you reuse, and <a href="/tools/prototype">prototype reactions and annotations</a> for notes and prototype interactions.</p>
+
+<h2>How to start</h2>
+<ol class="steps"><li><h3>Install FigmaMCP</h3><p>Open the Mac app and follow its checklist.</p></li><li><h3>Open your file</h3><p>Use the Figma desktop app. If you did not allow Accessibility, open the plugin yourself.</p></li><li><h3>Describe the change</h3><p>Ask Claude Code or Codex. Name the page or frame, and say what must stay the same.</p></li></ol>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+
+<h2>Keep control</h2>
+<ul class="plain"><li>Turn off AI can edit this file when you want the agent to read only.</li><li>Start with one frame before you ask for a whole page.</li><li>Use Figma version history to go back. A wrong edit that follows the rules still goes through.</li></ul>
+
+<p class="measure">See <a href="/tools/write">every kind of edit</a>, or <a href="/troubleshooting/not-working">fix a connection problem</a>.</p>
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+<h2>Questions</h2><div class="faq"><details><summary>Does AI replace a designer here?</summary><div class="ans">No. The agent makes the changes you describe. You still judge the result.</div></details><details><summary>Can AI edit a file in the browser version of Figma?</summary><div class="ans">Not with FigmaMCP. It needs the Figma desktop app.</div></details><details><summary>Can I undo what the agent did?</summary><div class="ans">Use Figma version history, and review changes as they appear. Start small so that a wrong change is easy to find.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP auto layout: set it with Claude Code or Codex</title>
+<meta name="description" content="Turn on auto layout and set direction, spacing, padding and alignment in a live Figma file from Claude Code or Codex, with FigmaMCP and no call quota.">
+<link rel="canonical" href="https://figmamcp.dev/tools/auto-layout">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP auto layout: set it with Claude Code or Codex">
+<meta property="og:description" content="Turn on auto layout and set direction, spacing, padding and alignment in a live Figma file from Claude Code or Codex, with FigmaMCP and no call quota.">
+<meta property="og:url" content="https://figmamcp.dev/tools/auto-layout">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/tools/auto-layout#webpage","url":"https://figmamcp.dev/tools/auto-layout","name":"Figma MCP auto layout: set it with Claude Code or Codex","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/tools/auto-layout#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/tools/auto-layout#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://figmamcp.dev/tools"},{"@type":"ListItem","position":3,"name":"Figma MCP auto layout","item":"https://figmamcp.dev/tools/auto-layout"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can it convert a whole page to auto layout?","acceptedAnswer":{"@type":"Answer","text":"It can do it frame by frame. The tool changes one frame per call, so a page means many calls. Start with one section and check the picture."}},{"@type":"Question","name":"Can it set different padding on each side?","acceptedAnswer":{"@type":"Answer","text":"Yes. node_set_auto_layout has separate paddingTop, paddingRight, paddingBottom and paddingLeft fields."}},{"@type":"Question","name":"Why was my spacing ignored?","acceptedAnswer":{"@type":"Answer","text":"Two cases. itemSpacing is ignored when the primary axis alignment is SPACE_BETWEEN, because the children are spread evenly. counterAxisSpacing works only when layoutWrap is WRAP."}},{"@type":"Question","name":"Can it bind spacing to a variable?","acceptedAnswer":{"@type":"Answer","text":"Yes, with node_bind_variable. Turn auto layout on first with node_set_auto_layout, or the bind is refused."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/tools">Tools</a></li><li aria-current="page">Figma MCP auto layout</li></ol></nav>
+<article class="wrap page">
+<h1>Figma MCP auto layout</h1>
+<p class="lede">FigmaMCP lets Claude Code or Codex turn auto layout on for a frame and set direction, wrapping, padding, spacing, alignment and sizing, all through one tool: node_set_auto_layout. Each call changes one frame, and the frame&rsquo;s name must match. Ask for a picture afterwards, so the agent can check its own work.</p>
+<h2>Examples</h2>
+<div class="tablewrap"><table><caption class="sr">Auto layout requests</caption>
+<thead><tr><th scope="col">You ask</th><th scope="col">Result</th></tr></thead><tbody>
+<tr><th scope="row">&ldquo;Stack these items vertically with 12px gap&rdquo;</th><td>Vertical auto layout, spacing 12</td></tr>
+<tr><th scope="row">&ldquo;Add 24px padding all round&rdquo;</th><td>Padding 24 on all sides</td></tr>
+<tr><th scope="row">&ldquo;Centre the content&rdquo;</th><td>Alignment set to centre</td></tr>
+</tbody></table></div>
+<h2>Parameters of node_set_auto_layout</h2>
+<p class="measure">FigmaMCP&rsquo;s <code>node_set_auto_layout</code> is one setter. You send <code>nodeId</code>, the frame&rsquo;s exact <code>nodeName</code>, and any of the fields below. Fields you leave out stay as they are.</p>
+<div class="tablewrap"><table><caption class="sr">node_set_auto_layout fields</caption>
+<thead><tr><th scope="col">Field</th><th scope="col">Values</th><th scope="col">Note</th></tr></thead><tbody>
+<tr><th scope="row"><code>layoutMode</code></th><td><code>NONE</code>, <code>HORIZONTAL</code>, <code>VERTICAL</code></td><td><code>NONE</code> turns auto layout off.</td></tr>
+<tr><th scope="row"><code>layoutWrap</code></th><td><code>NO_WRAP</code>, <code>WRAP</code></td><td>Wrapping rows or columns.</td></tr>
+<tr><th scope="row"><code>paddingTop</code>, <code>paddingRight</code>, <code>paddingBottom</code>, <code>paddingLeft</code></th><td>Numbers</td><td>Set each side on its own.</td></tr>
+<tr><th scope="row"><code>itemSpacing</code></th><td>Number</td><td>Ignored when the primary axis uses <code>SPACE_BETWEEN</code>.</td></tr>
+<tr><th scope="row"><code>counterAxisSpacing</code></th><td>Number</td><td>Works only when <code>layoutWrap</code> is <code>WRAP</code>.</td></tr>
+<tr><th scope="row"><code>primaryAxisAlignItems</code></th><td><code>MIN</code>, <code>MAX</code>, <code>CENTER</code>, <code>SPACE_BETWEEN</code></td><td>Along the layout direction.</td></tr>
+<tr><th scope="row"><code>counterAxisAlignItems</code></th><td><code>MIN</code>, <code>MAX</code>, <code>CENTER</code>, <code>BASELINE</code></td><td>Across the layout direction.</td></tr>
+<tr><th scope="row"><code>layoutSizingHorizontal</code>, <code>layoutSizingVertical</code></th><td><code>FIXED</code>, <code>HUG</code>, <code>FILL</code></td><td><code>HUG</code> suits frames and text. <code>FILL</code> suits children of an auto layout frame.</td></tr>
+</tbody></table></div>
+<h2>Turn a stack of frames into auto layout</h2>
+<ol>
+<li>Read the page with <code>page_info</code>, then the frame with <code>node_info</code>. Copy its exact name.</li>
+<li>Call <code>node_set_auto_layout</code> with the direction, spacing and padding you want.</li>
+<li>Export the frame with <code>node_export_visual</code> and look at the picture.</li>
+<li>Repeat for the next frame.</li>
+</ol>
+<p class="measure">The tool takes one frame per call. A whole page therefore means many calls, and each call checks its own name. There is no batch that rolls back. If you ask for a page, ask the agent to do one section first and show you the picture.</p>
+<h2>Auto layout and variables</h2>
+<p class="measure">FigmaMCP can bind padding and spacing to variables with <code>node_bind_variable</code>, for fields such as <code>paddingLeft</code> and <code>itemSpacing</code>. The frame must have auto layout on first. If it does not, the bind fails with a message that auto layout is off. Run <code>node_set_auto_layout</code> with a <code>layoutMode</code>, then bind.</p>
+<h2>When a call is refused</h2>
+<div class="tablewrap"><table><caption class="sr">Auto layout errors</caption>
+<thead><tr><th scope="col">Error or message</th><th scope="col">Meaning</th><th scope="col">What to do</th></tr></thead><tbody>
+<tr><th scope="row"><code>NAME_MISMATCH</code></th><td>The name you sent is not the frame&rsquo;s current name.</td><td>Read the frame again with <code>node_info</code>, then retry.</td></tr>
+<tr><th scope="row"><code>READ_ONLY_MODE</code></th><td>The AI can edit this file switch is off.</td><td>Turn it on in the plugin.</td></tr>
+<tr><th scope="row"><code>OUTSIDE_SCOPE</code></th><td>The frame is outside the editable scope.</td><td>Pick a frame inside the scope.</td></tr>
+<tr><th scope="row"><code>Operation Denied</code>: locked</th><td>The frame or one of its ancestors is locked.</td><td>Unlock it in Figma.</td></tr>
+</tbody></table></div>
+<p class="measure">Ask for a picture after the change: see <a href="/tools/export">Figma MCP export image</a>.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+<p class="measure fine">Related: <a href="/tools">All tools</a> · <a href="/tools/write">Write tools</a> · <a href="/tools/export">Export</a></p>
+<h2>Questions</h2><div class="faq"><details><summary>Can it convert a whole page to auto layout?</summary><div class="ans">It can do it frame by frame. The tool changes one frame per call, so a page means many calls. Start with one section and check the picture.</div></details><details><summary>Can it set different padding on each side?</summary><div class="ans">Yes. node_set_auto_layout has separate paddingTop, paddingRight, paddingBottom and paddingLeft fields.</div></details><details><summary>Why was my spacing ignored?</summary><div class="ans">Two cases. itemSpacing is ignored when the primary axis alignment is SPACE_BETWEEN, because the children are spread evenly. counterAxisSpacing works only when layoutWrap is WRAP.</div></details><details><summary>Can it bind spacing to a variable?</summary><div class="ans">Yes, with node_bind_variable. Turn auto layout on first with node_set_auto_layout, or the bind is refused.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

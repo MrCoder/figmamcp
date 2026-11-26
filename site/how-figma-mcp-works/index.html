@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How Figma MCP works: agent, local server and Figma plugin</title>
+<meta name="description" content="How Figma MCP works, step by step: your agent calls a tool on a local server, and a plugin in the Figma desktop app reads or edits the file you have open.">
+<link rel="canonical" href="https://figmamcp.dev/how-figma-mcp-works">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="How Figma MCP works: agent, local server and Figma plugin">
+<meta property="og:description" content="How Figma MCP works, step by step: your agent calls a tool on a local server, and a plugin in the Figma desktop app reads or edits the file you have open.">
+<meta property="og:url" content="https://figmamcp.dev/how-figma-mcp-works">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/how-figma-mcp-works#webpage","url":"https://figmamcp.dev/how-figma-mcp-works","name":"How Figma MCP works: agent, local server and Figma plugin","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/how-figma-mcp-works#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/how-figma-mcp-works#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"How Figma MCP works, from your request to your file","item":"https://figmamcp.dev/how-figma-mcp-works"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How does Figma MCP work in one sentence?","acceptedAnswer":{"@type":"Answer","text":"Your agent calls tools on a local MCP server, and a plugin inside the Figma desktop app reads or edits your open file and returns the result."}},{"@type":"Question","name":"What does FigmaMCP actually do?","acceptedAnswer":{"@type":"Answer","text":"It reads your file and can create and change layers, components, styles and variables. It does not generate code and it does not import HTML."}},{"@type":"Question","name":"Do I need to learn commands to use it?","acceptedAnswer":{"@type":"Answer","text":"No. You ask your agent in plain words, and the agent picks the tools."}},{"@type":"Question","name":"Does it work outside a Mac, or in the browser?","acceptedAnswer":{"@type":"Answer","text":"No. FigmaMCP supports macOS only for now, and it needs the Figma desktop app."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">How Figma MCP works, from your request to your file</li></ol></nav>
+<article class="wrap page"><h1>How Figma MCP works, from your request to your file</h1>
+<p class="lede">Your agent, Claude Code or Codex, calls tools on a small MCP server on your Mac. The server passes each call to a plugin in the Figma desktop app. The plugin reads or edits the file you have open and sends the result back.</p>
+
+
+<h2>The three parts</h2>
+<svg viewBox="0 0 760 190" role="img" aria-label="Diagram: you ask your agent, which calls a local MCP server, which talks to a plugin inside the Figma desktop app that reads and edits your open file." style="width:100%;height:auto;max-width:48rem;margin:0 auto 1.5rem;display:block">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ink)"/></marker></defs>
+<g font-family="inherit" font-size="15" fill="var(--ink)">
+ <rect x="10" y="60" width="130" height="70" rx="10" fill="var(--panel)" stroke="var(--line)" stroke-width="2"/>
+ <text x="75" y="90" text-anchor="middle" font-weight="700">You</text>
+ <text x="75" y="110" text-anchor="middle" font-size="12">plain words</text>
+
+ <rect x="195" y="50" width="160" height="90" rx="10" fill="var(--layer1)" stroke="var(--line)" stroke-width="2"/>
+ <text x="275" y="85" text-anchor="middle" font-weight="700">Agent</text>
+ <text x="275" y="104" text-anchor="middle" font-size="12">Claude Code</text>
+ <text x="275" y="120" text-anchor="middle" font-size="12">or Codex</text>
+
+ <rect x="410" y="50" width="160" height="90" rx="10" fill="var(--layer2)" stroke="var(--line)" stroke-width="2"/>
+ <text x="490" y="85" text-anchor="middle" font-weight="700">MCP server</text>
+ <text x="490" y="104" text-anchor="middle" font-size="12">on your Mac</text>
+ <text x="490" y="120" text-anchor="middle" font-size="12">(FigmaMCP)</text>
+
+ <rect x="625" y="40" width="125" height="110" rx="10" fill="var(--accent)" stroke="var(--ink)" stroke-width="2"/>
+ <text x="687" y="75" text-anchor="middle" font-weight="700" fill="var(--accent-ink)">Plugin</text>
+ <text x="687" y="94" text-anchor="middle" font-size="12" fill="var(--accent-ink)">in Figma</text>
+ <text x="687" y="110" text-anchor="middle" font-size="12" fill="var(--accent-ink)">desktop app</text>
+ <text x="687" y="126" text-anchor="middle" font-size="12" fill="var(--accent-ink)">(your file)</text>
+
+ <line x1="142" y1="95" x2="192" y2="95" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrow)"/>
+ <line x1="357" y1="95" x2="407" y2="95" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrow)"/>
+ <line x1="572" y1="95" x2="622" y2="95" stroke="var(--ink)" stroke-width="2" marker-end="url(#arrow)"/>
+ <text x="167" y="80" text-anchor="middle" font-size="11">asks</text>
+ <text x="382" y="80" text-anchor="middle" font-size="11">calls tool</text>
+ <text x="597" y="80" text-anchor="middle" font-size="11">localhost</text>
+ <text x="380" y="170" text-anchor="middle" font-size="12">No Figma access token. No call to Figma&rsquo;s own MCP server.</text>
+</g>
+</svg>
+<div class="tablewrap"><table>
+<caption class="sr">The parts of FigmaMCP</caption>
+<thead><tr>
+<th scope="col">Part</th>
+<th scope="col">Where it runs</th>
+<th scope="col">What it does</th>
+</tr></thead>
+<tbody>
+<tr><th scope="row">Your agent</th><td>Claude Code or Codex</td><td>Reads your request and decides which tool to call.</td></tr>
+<tr><th scope="row">The MCP server</th><td>On your Mac</td><td>Offers the tools to the agent and passes each call on.</td></tr>
+<tr><th scope="row">The plugin</th><td>Inside the Figma desktop app</td><td>Reads and edits the file you have open, then returns the result.</td></tr>
+</tbody></table></div>
+<p class="measure">The server talks to the plugin, and the plugin acts in the file through Figma&rsquo;s Plugin API. There is no Figma access token to create or paste.</p>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+
+<h2>One request, step by step</h2>
+<ol class="steps"><li><h3>You ask</h3><p>For example: &ldquo;Rename every layer called Frame 12 to match its heading.&rdquo;</p></li><li><h3>The agent reads first</h3><p>It calls <code>page_info</code> and <code>node_info</code> to find the layers and their exact names.</p></li><li><h3>The agent writes</h3><p>It calls a write tool and passes each current name back. A wrong name is refused.</p></li><li><h3>The plugin checks and acts</h3><p>The plugin checks scope and names. If they pass, it makes the change in your file.</p></li><li><h3>The agent checks</h3><p>It can read the layers again, or export a picture with <code>node_export_visual</code>.</p></li></ol>
+
+<h2>What it can do</h2>
+<div class="tablewrap"><table>
+<caption class="sr">What FigmaMCP does, with examples</caption>
+<thead><tr>
+<th scope="col">Group</th>
+<th scope="col">Examples</th>
+</tr></thead>
+<tbody>
+<tr><th scope="row">Read</th><td>List pages, layers, components, styles and variables. Get a picture of a layer.</td></tr>
+<tr><th scope="row">Create</th><td>Frames, shapes, text, SVG layers, components, variants and instances.</td></tr>
+<tr><th scope="row">Change</th><td>Rename, move, resize, copy, group and delete layers. Set fills, text, effects and auto layout.</td></tr>
+<tr><th scope="row">Design system</th><td>Create and edit variables and styles. Bind variables to layers.</td></tr>
+<tr><th scope="row">Notes and prototypes</th><td>Write annotations and prototype interactions.</td></tr>
+</tbody></table></div>
+<p class="measure">For the full list, see <a href="/tools">all tools</a>. It does not generate code, and it does not import HTML.</p>
+
+<h2>How to use it</h2>
+<ol class="steps"><li><h3>Install</h3><p>Download the Mac app and follow its checklist. See <a href="/docs/setup">Figma MCP setup</a>.</p></li><li><h3>Open a file</h3><p>Use the Figma desktop app.</p></li><li><h3>Ask</h3><p>Ask Claude Code or Codex. Name the page or frame, and say what must stay the same.</p></li><li><h3>Review</h3><p>Look at the result. Use Figma version history to go back.</p></li></ol>
+<p class="measure">Full walkthrough: <a href="/tutorials/edit-figma-with-claude-code">Edit a Figma file with Claude Code in 5 minutes</a>.</p>
+
+<h2>Why it reads before it writes</h2>
+<p class="measure">The file is a live document. You or a teammate may rename or move a layer between two calls. So the agent reads the current names first, and each write passes them back. If a name no longer matches, the plugin refuses the edit, and the agent reads again. This is how a wrong target gets caught before it changes anything.</p>
+<p class="measure">For the parts behind this, including the local relay, the error codes and the bugs we fixed while building it, see <a href="/how-figmamcp-is-built">how FigmaMCP is built</a>.</p>
+
+<h2>What keeps it in bounds</h2>
+<ul class="plain">
+<li>Edits go only to the open file where the plugin&rsquo;s AI can edit this file switch is on. With it off, the agent can only read.</li>
+<li>Each edit names its target, and the name must match.</li>
+<li>Bulk edits are checked first. If one item is invalid, nothing changes.</li>
+<li>A wrong edit that follows the rules still goes through, so review.</li></ul>
+<p class="measure">Your agent sends what it reads to its own model provider, under that provider&rsquo;s terms. FigmaMCP sends no design content to us. For background, see <a href="/what-is-figma-mcp">what is a Figma MCP server</a> and <a href="/use-cases/edit-figma-with-ai">edit Figma with AI</a>.</p>
+
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+
+<h2>Questions</h2><div class="faq"><details><summary>How does Figma MCP work in one sentence?</summary><div class="ans">Your agent calls tools on a local MCP server, and a plugin inside the Figma desktop app reads or edits your open file and returns the result.</div></details><details><summary>What does FigmaMCP actually do?</summary><div class="ans">It reads your file and can create and change layers, components, styles and variables. It does not generate code and it does not import HTML.</div></details><details><summary>Do I need to learn commands to use it?</summary><div class="ans">No. You ask your agent in plain words, and the agent picks the tools.</div></details><details><summary>Does it work outside a Mac, or in the browser?</summary><div class="ans">No. FigmaMCP supports macOS only for now, and it needs the Figma desktop app.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

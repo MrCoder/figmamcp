@@ -1,0 +1,10 @@
+{
+  "name": "figmamcp-site",
+  "compatibility_date": "2026-11-01",
+  "account_id": "8d5fc7ce04adc5096f52485cce7d7b3d",
+  "main": "site-worker/index.js",
+  "assets": { "directory": "./site", "binding": "ASSETS", "not_found_handling": "404-page", "html_handling": "drop-trailing-slash", "run_worker_first": ["/*", "!/llms.txt", "!/robots.txt", "!/sitemap.xml", "!/style.css", "!/app.js", "!/rate-limit-checker.js", "!/favicon.svg", "!/og.png"] },
+  "analytics_engine_datasets": [{ "binding": "LOADS", "dataset": "figmamcp_loads" }],
+  "kv_namespaces": [{ "binding": "SUBSCRIBERS", "id": "9cd9d406f4404d728d9818ed0aceac82" }],
+  "routes": [{ "pattern": "figmamcp.dev", "custom_domain": true }]
+}

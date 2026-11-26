@@ -1,0 +1,20 @@
+node_modules/
+.cursor/
+dist/
+docs/
+.mcp.json
+src/figma_plugin/dist/
+.DS_Store
+
+
+*.mcpb
+*.tgz
+scratch/
+temp/
+scratchpad/
+app/build/
+app/.build/
+dist-bin/
+
+# Local wrangler dev state (miniflare KV/D1/cache), never commit
+.wrangler/

@@ -1,0 +1,6 @@
+{"steps":[
+{"id":"platform","state":"ok","message":"macOS detected."},
+{"id":"figma","state":"fail","message":"Figma is not installed.","fix":"Download it from figma.com"},
+{"id":"agent-claude","state":"skip","message":"not found"},
+{"id":"agent-codex","state":"skip","message":"not found"},
+{"id":"plugin","state":"todo","message":"later"}]}

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP export image: render any layer to PNG, SVG or PDF</title>
+<meta name="description" content="Your agent can export an image of any Figma layer through FigmaMCP: PNG, JPG, SVG or PDF from node_export_visual, at a scale you choose. The export only reads.">
+<link rel="canonical" href="https://figmamcp.dev/tools/export">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP export image: render any layer to PNG, SVG or PDF">
+<meta property="og:description" content="Your agent can export an image of any Figma layer through FigmaMCP: PNG, JPG, SVG or PDF from node_export_visual, at a scale you choose. The export only reads.">
+<meta property="og:url" content="https://figmamcp.dev/tools/export">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/tools/export#webpage","url":"https://figmamcp.dev/tools/export","name":"Figma MCP export image: render any layer to PNG, SVG or PDF","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/tools/export#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/tools/export#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://figmamcp.dev/tools"},{"@type":"ListItem","position":3,"name":"Figma MCP export image: how the agent sees a layer","item":"https://figmamcp.dev/tools/export"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Can Figma MCP export an image of a layer?","acceptedAnswer":{"@type":"Answer","text":"Yes. node_export_visual renders a layer to PNG, JPG, SVG or PDF at a scale you choose. It only reads, so your file does not change."}},{"@type":"Question","name":"Does the export save a file to my computer?","acceptedAnswer":{"@type":"Answer","text":"The tool returns the image data to your agent. If you want a file in your project, the agent writes it with its own file tools."}},{"@type":"Question","name":"Can I export a whole frame, not just one icon?","acceptedAnswer":{"@type":"Answer","text":"Yes. Ask the agent to export the frame. For large frames use a lower scale so the reply stays small."}},{"@type":"Question","name":"Does exporting count against a call quota?","acceptedAnswer":{"@type":"Answer","text":"FigmaMCP has no call quota. See Figma MCP limit reached for Figma’s own limits."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/tools">Tools</a></li><li aria-current="page">Figma MCP export image: how the agent sees a layer</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP export image: how the agent sees a layer</h1>
+<p class="lede">Your agent can render any layer in your open Figma file to PNG, JPG, SVG or PDF with one FigmaMCP tool, <code>node_export_visual</code>. That is how Claude Code or Codex sees your design and checks its own edits. The export only reads, at a scale you choose, and never changes the file.</p>
+
+
+<h2>What node_export_visual returns</h2>
+<div class="tablewrap"><table>
+<caption class="sr">Export formats</caption>
+<thead><tr>
+<th scope="col">Format</th>
+<th scope="col">What comes back</th>
+<th scope="col">Good for</th>
+</tr></thead>
+<tbody>
+<tr><th scope="row">PNG</th><td>A base64 image. Clients that support it show the image inline.</td><td>Checking a layout after an edit, or showing the agent what a design looks like.</td></tr>
+<tr><th scope="row">JPG</th><td>A base64 image, same as PNG.</td><td>A smaller picture of a photo-heavy layer.</td></tr>
+<tr><th scope="row">SVG</th><td>Raw SVG markup the agent can read directly.</td><td>Inspecting the structure of an icon or shape.</td></tr>
+<tr><th scope="row">PDF</th><td>A base64 file, a delivery artifact.</td><td>A PDF of a layer. Prefer PNG or SVG when the agent needs to look.</td></tr>
+</tbody></table></div>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+
+<h2>How the export works</h2>
+<p class="measure">The agent names one layer, a format and a scale. The layer can be a single icon or a whole frame. FigmaMCP renders it in the Figma desktop app.</p>
+<p class="measure">The tool returns the image data to the agent. Saving that data as a file in your project is a step the agent does with its own file tools. FigmaMCP does not save files itself.</p>
+
+<h2>Why the agent exports at all</h2>
+<p class="measure">An agent that only reads layer data cannot see spacing, color or overlap. It reads numbers and names. An exported picture lets it look at the result. A common loop is: the agent changes a frame, exports it, looks, and fixes what it finds. You can also ask for a picture at any time, for example before you approve a change.</p>
+
+<h2>Scale</h2>
+<p class="measure">Use a scale of about 1.0 for a few layers. Use 0.3 to 0.5 for a large group, so the reply stays small. To check a big edit, export one chunk at half scale, fix what you see, then export the whole frame at a low scale for a final look.</p>
+
+<h2>Example requests</h2>
+<div class="tablewrap"><table>
+<caption class="sr">Example export requests</caption>
+<thead><tr>
+<th scope="col">You ask</th>
+<th scope="col">What the agent does</th>
+</tr></thead>
+<tbody>
+<tr><th scope="row">&ldquo;Show me the pricing frame as it looks now.&rdquo;</th><td>Exports the frame as PNG and looks at the image.</td></tr>
+<tr><th scope="row">&ldquo;Export this icon as SVG.&rdquo;</th><td>Exports the layer as SVG and returns the markup. It can then write it to a file if you ask.</td></tr>
+<tr><th scope="row">&ldquo;Check that the new card matches the old one.&rdquo;</th><td>Exports both layers and compares the pictures.</td></tr>
+<tr><th scope="row">&ldquo;Replace the headline, then show me the result.&rdquo;</th><td>Edits the text, then exports the frame at a low scale to verify.</td></tr>
+</tbody></table></div>
+
+<h2>What export does not do</h2>
+<ul class="plain">
+<li>It does not export variables or tokens. For that, see <a href="/tools/variables">Figma MCP variables</a>.</li>
+<li>It does not write code. For code, see <a href="/use-cases/design-to-code">Figma to code with MCP</a>.</li>
+<li>It works on the file open in the Figma desktop app. It does not work in the browser.</li></ul>
+<p class="measure">FigmaMCP has no call quota. For Figma&rsquo;s own limits, see <a href="/figma-mcp-limit-reached">Figma MCP limit reached</a>. For all tools, see the <a href="/tools">tools list</a>.</p>
+
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>macOS only for now.</li>
+<li>It needs the Figma desktop app. It does not run in the browser.</li>
+<li>FigmaMCP is not on Figma Community. The Mac app installs the plugin for you.</li>
+<li>If you do not allow Accessibility, open the plugin once in each file (Plugins, Development, FigmaMCP) and leave it open while your agent edits.</li>
+<li>Features that belong to Figma itself, such as Dev Mode, are not included.</li></ul></aside>
+
+<h2>Questions</h2><div class="faq"><details><summary>Can Figma MCP export an image of a layer?</summary><div class="ans">Yes. node_export_visual renders a layer to PNG, JPG, SVG or PDF at a scale you choose. It only reads, so your file does not change.</div></details><details><summary>Does the export save a file to my computer?</summary><div class="ans">The tool returns the image data to your agent. If you want a file in your project, the agent writes it with its own file tools.</div></details><details><summary>Can I export a whole frame, not just one icon?</summary><div class="ans">Yes. Ask the agent to export the frame. For large frames use a lower scale so the reply stays small.</div></details><details><summary>Does exporting count against a call quota?</summary><div class="ans">FigmaMCP has no call quota. See Figma MCP limit reached for Figma&rsquo;s own limits.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

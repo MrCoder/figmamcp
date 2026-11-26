@@ -1,0 +1,3 @@
+[test]
+# Refuse requests to Mixpanel in every test run (see test-preload.ts).
+preload = ["./test-preload.ts"]

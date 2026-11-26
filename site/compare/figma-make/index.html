@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma Make vs Figma MCP: generating a design or editing one</title>
+<meta name="description" content="Figma Make generates apps and prototypes from prompts inside Figma. Figma MCP connects your own agent to a file. How they differ.">
+<link rel="canonical" href="https://figmamcp.dev/compare/figma-make">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma Make vs Figma MCP: generating a design or editing one">
+<meta property="og:description" content="Figma Make generates apps and prototypes from prompts inside Figma. Figma MCP connects your own agent to a file. How they differ.">
+<meta property="og:url" content="https://figmamcp.dev/compare/figma-make">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/compare/figma-make#webpage","url":"https://figmamcp.dev/compare/figma-make","name":"Figma Make vs Figma MCP: generating a design or editing one","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/compare/figma-make#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/compare/figma-make#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"Compare","item":"https://figmamcp.dev/compare"},{"@type":"ListItem","position":3,"name":"Figma Make vs Figma MCP","item":"https://figmamcp.dev/compare/figma-make"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is Figma MCP the same as Figma Make?","acceptedAnswer":{"@type":"Answer","text":"No. One is a protocol your agent uses to reach a file. The other is a Figma feature."}},{"@type":"Question","name":"Can I use FigmaMCP and Figma’s AI features together?","acceptedAnswer":{"@type":"Answer","text":"Yes. They are separate. You can start a draft with Figma’s tools, then ask your own agent to edit that file through FigmaMCP."}},{"@type":"Question","name":"Does FigmaMCP generate designs from a prompt?","acceptedAnswer":{"@type":"Answer","text":"Your agent can build frames, shapes, text and components from your prompt. The result is only as good as the prompt, so review it."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li><a href="/compare">Compare</a></li><li aria-current="page">Figma Make vs Figma MCP</li></ol></nav>
+<article class="wrap page">
+<h1>Figma Make vs Figma MCP</h1>
+<p class="lede">They answer different questions. Figma&rsquo;s own AI tools generate something new from a prompt inside Figma. An MCP server such as FigmaMCP lets the agent you already use, Claude Code or Codex, read or change a file you already have.</p>
+
+<h2>Which to use</h2>
+<div class="tablewrap"><table><caption class="sr">Figma AI tools and MCP</caption>
+<thead><tr><th scope="col">You want to</th><th scope="col">Use</th></tr></thead><tbody>
+<tr><th scope="row">Start a new design from a prompt, inside Figma</th><td>Figma&rsquo;s own AI features. See Figma&rsquo;s documentation for plans and limits.</td></tr>
+<tr><th scope="row">Change an existing file with your own agent</th><td>An MCP server such as FigmaMCP</td></tr>
+<tr><th scope="row">Keep your design system and code in step</th><td>MCP: your agent sees both sides</td></tr>
+</tbody></table></div>
+<p class="measure">We do not claim anything about how Figma&rsquo;s AI features work beyond what Figma publishes. See <a href="/what-is-figma-mcp">What is Figma MCP</a> and <a href="/compare">all comparisons</a>.</p>
+
+<h2>The two side by side</h2>
+<p class="measure">FigmaMCP is a free Mac app that connects your coding agent to the Figma file open on your screen. The table lists only facts we can support. For Figma&rsquo;s side, we point to Figma&rsquo;s documentation instead of guessing.</p>
+<div class="tablewrap"><table><caption class="sr">Figma&rsquo;s own AI features compared with FigmaMCP</caption>
+<thead><tr><th scope="col"></th><th scope="col">Figma&rsquo;s own AI features</th><th scope="col">FigmaMCP</th></tr></thead><tbody>
+<tr><th scope="row">Starting point</th><td>A prompt, inside Figma</td><td>A file you already have open in the Figma desktop app</td></tr>
+<tr><th scope="row">Who does the work</th><td>Figma&rsquo;s AI</td><td>Your own agent, Claude Code or Codex</td></tr>
+<tr><th scope="row">Plans and limits</th><td>See Figma&rsquo;s documentation</td><td>Free Mac app; no call quota of its own</td></tr>
+<tr><th scope="row">Platform</th><td>See Figma&rsquo;s documentation</td><td>macOS only; needs the Figma desktop app</td></tr>
+<tr><th scope="row">Edit guardrails</th><td>Not covered here</td><td>An <em>AI can edit this file</em> switch; each edit names its target layer and the name must match; batches are checked first</td></tr>
+<tr><th scope="row">Made by</th><td>Figma</td><td>An independent developer, not affiliated with Figma, Inc.</td></tr>
+</tbody></table></div>
+
+<h2>Which one to choose</h2>
+<ul class="plain">
+<li><strong>Figma&rsquo;s own AI features:</strong> you want to start a new design from a prompt without leaving Figma, and you do not need your own agent in the loop.</li>
+<li><strong>FigmaMCP:</strong> you use Claude Code or Codex on a Mac and want it to change a file that already exists, such as renaming layers, rewriting text, binding variables or building components.</li>
+<li><strong>Both:</strong> they do not conflict. You can generate a first draft with Figma&rsquo;s tools, then ask your agent to tidy it through FigmaMCP.</li></ul>
+
+<h2>What FigmaMCP gives your agent</h2>
+<p class="measure">FigmaMCP gives your agent a set of tools that act on the open file. It reads with <code>page_info</code> and <code>node_info</code>. It edits with tools such as <code>create_frame</code>, <code>node_set_auto_layout</code>, <code>text_set_content</code> and <code>variable_manage</code>. A refused edit returns a structured error, for example <code>READ_ONLY_MODE</code> when the edit switch is off. Because the agent sees your code and your file, it can keep a design system and its code in step.</p>
+<p class="measure fine">Related: <a href="/compare">Compare</a> · <a href="/what-is-figma-mcp">What is Figma MCP</a> · <a href="/use-cases/edit-figma-with-ai">Edit Figma with AI</a></p>
+<h2>Questions</h2><div class="faq"><details><summary>Is Figma MCP the same as Figma Make?</summary><div class="ans">No. One is a protocol your agent uses to reach a file. The other is a Figma feature.</div></details><details><summary>Can I use FigmaMCP and Figma&rsquo;s AI features together?</summary><div class="ans">Yes. They are separate. You can start a draft with Figma&rsquo;s tools, then ask your own agent to edit that file through FigmaMCP.</div></details><details><summary>Does FigmaMCP generate designs from a prompt?</summary><div class="ans">Your agent can build frames, shapes, text and components from your prompt. The result is only as good as the prompt, so review it.</div></details></div>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

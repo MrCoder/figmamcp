@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Figma MCP 无法使用？14 种症状和解决办法</title>
+<meta name="description" content="Figma MCP 在 Claude Code 或 Codex 里用不了、连不上？按症状或错误码（如 READ_ONLY_MODE）查原因和解决办法。">
+<link rel="canonical" href="https://figmamcp.dev/zh/troubleshooting/not-working">
+<link rel="alternate" hreflang="en" href="https://figmamcp.dev/troubleshooting/not-working">
+<link rel="alternate" hreflang="ja" href="https://figmamcp.dev/ja/troubleshooting/not-working">
+<link rel="alternate" hreflang="zh-CN" href="https://figmamcp.dev/zh/troubleshooting/not-working">
+<link rel="alternate" hreflang="x-default" href="https://figmamcp.dev/troubleshooting/not-working">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="Figma MCP 无法使用？14 种症状和解决办法">
+<meta property="og:description" content="Figma MCP 在 Claude Code 或 Codex 里用不了、连不上？按症状或错误码（如 READ_ONLY_MODE）查原因和解决办法。">
+<meta property="og:url" content="https://figmamcp.dev/zh/troubleshooting/not-working">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"一个免费的本地 MCP 服务器和配套应用，让 Claude Code 或 Codex 读取并编辑 Figma 桌面版里打开的文件，没有调用次数配额。","url":"https://figmamcp.dev/zh","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/zh/troubleshooting/not-working#webpage","url":"https://figmamcp.dev/zh/troubleshooting/not-working","name":"Figma MCP 无法使用？14 种症状和解决办法","inLanguage":"zh-CN","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"breadcrumb":{"@id":"https://figmamcp.dev/zh/troubleshooting/not-working#breadcrumb"},"dateModified":"2026-11-25"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/zh/troubleshooting/not-working#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://figmamcp.dev/zh"},{"@type":"ListItem","position":2,"name":"故障排查","item":"https://figmamcp.dev/troubleshooting"},{"@type":"ListItem","position":3,"name":"Figma MCP 无法使用：按症状排查","item":"https://figmamcp.dev/zh/troubleshooting/not-working"}]}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/zh" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">对比</a><a href="/zh#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/troubleshooting/not-working" hreflang="en" lang="en">English</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/zh">首页</a></li><li><a href="/troubleshooting">故障排查</a></li><li aria-current="page">Figma MCP 无法使用：按症状排查</li></ol></nav>
+<article class="wrap page"><h1>Figma MCP 无法使用：按症状排查</h1>
+<p class="fine lang-switch"><strong>语言：</strong> <a href="/troubleshooting/not-working" hreflang="en" lang="en">English</a> · 简体中文 · <a href="/ja/troubleshooting/not-working" hreflang="ja" lang="ja">日本語</a></p>
+<p class="lede">FigmaMCP 的问题大多出在三处：Agent 在安装前就已启动，插件没有打开，或者文件被设成了只读。本页只讲 FigmaMCP。Figma 官方服务器的问题请看 <a href="https://developers.figma.com/docs/figma-mcp-server/">Figma 的文档</a>。</p>
+
+<div class="tablewrap"><table>
+<caption class="sr">症状、原因和解决办法</caption>
+<thead><tr><th scope="col">你看到的情况</th><th scope="col">原因</th><th scope="col">解决办法</th></tr></thead>
+<tbody>
+<tr><th scope="row">下载很慢，或 <code>curl</code> 返回 403</th><td><code>/download</code> 跳转到的 GitHub 链接大约一小时后失效</td><td>在浏览器里下载，或运行 <code>curl -L -O https://github.com/MrCoder/figmamcp-releases/releases/latest/download/FigmaMCP.dmg</code>。然后<a href="/zh/docs/setup#verify">校验 SHA-256</a>。</td></tr>
+<tr><th scope="row">Agent 没有 Figma 工具</th><td>它在安装前就已经在运行</td><td>重启 Claude Code 或 Codex。</td></tr>
+<tr><th scope="row">Plugins 菜单里没有 FigmaMCP</th><td>插件没有安装</td><td>打开 FigmaMCP App，点击 Add to Figma。</td></tr>
+<tr><th scope="row"><code>PLUGIN_PEER_UNAVAILABLE</code>，或没有已连接的插件</th><td>这个文件里没有打开插件</td><td>在桌面版中打开文件，然后选择 Plugins › Development › FigmaMCP。想让 App 替你做这一步，就允许辅助功能权限。</td></tr>
+<tr><th scope="row"><code>CHANNEL_NOT_BOUND</code>，或 Agent 问你要用哪个文件</th><td>插件在多个文件里开着</td><td>把目标文件的 Figma 链接发给 Agent，或者在其他文件里关掉插件。</td></tr>
+<tr><th scope="row"><code>READ_ONLY_MODE</code>，或能读取但不能编辑</th><td>“AI can edit this file” 开关是关着的</td><td>在插件里打开这个开关。</td></tr>
+<tr><th scope="row">名称对不上</th><td>Agent 读取之后，图层又被改过</td><td>让 Agent 重新读取这个图层，再试一次。</td></tr>
+<tr><th scope="row">在实例内部编辑被拒绝</th><td>实例内部的结构不能改</td><td>编辑主组件，或者修改实例的属性和覆盖项。</td></tr>
+<tr><th scope="row">库里的资源是只读的</th><td>它属于另一个文件</td><td>到它所在的源库里编辑。</td></tr>
+<tr><th scope="row"><code>channel_join</code> 返回 <code>CONNECTION_NOT_READY</code></th><td>本地中继连接没有及时建立（FigmaMCP App 没在运行，或者 Agent 刚启动）</td><td>打开 FigmaMCP App 和插件，然后重试。先调用一次 <code>page_info</code> 也可以。</td></tr>
+<tr><th scope="row"><code>PLUGIN_DISCONNECTED</code></th><td>命令执行期间插件关闭或重新加载了</td><td>重新打开插件。重复上一次编辑之前，先确认它有没有生效。</td></tr>
+<tr><th scope="row"><code>VERSION_MISMATCH</code></th><td>App 和插件的版本不一致</td><td>下载最新版 FigmaMCP，运行它的检查清单，然后重启 Agent。</td></tr>
+<tr><th scope="row"><code>CHANNEL_IN_USE</code></th><td>使用这个文件的 Agent 会话太多</td><td>结束其他会话中的一个。</td></tr>
+<tr><th scope="row">在浏览器版 Figma 里没有反应</th><td>FigmaMCP 需要桌面版</td><td>在 Figma 桌面版中打开文件。</td></tr>
+</tbody></table></div>
+
+<h2 id="tools-not-loading">工具没有加载</h2>
+<p class="measure">AI App 里看不到 FigmaMCP 的工具，或者它说自己没有 Figma 工具。按下面的顺序逐项检查，工具出现就可以停下。</p>
+<ol class="plain"><li><strong>退出并重新打开 Claude Code 或 Codex。</strong> 正在运行的 App 只在启动时读取 MCP 设置。安装时已经开着的 App，要退出再打开，才能看到 FigmaMCP。</li><li><strong>在 Figma 文件里打开插件。</strong> 在 Figma 桌面版中选择 Plugins › Development › FigmaMCP。如果面板显示 “No AI app has FigmaMCP loaded yet”，说明第 1 步的重启还没生效。如果显示 “FigmaMCP isn’t running”，请打开 FigmaMCP App，插件会自己重新连接。</li><li><strong>确认插件已经安装。</strong> 如果 Plugins 菜单里没有 FigmaMCP，见 <a href="/troubleshooting/plugin-not-showing">plugin not showing</a>（英文）。</li><li><strong>确认你说的是哪个 Figma 工具。</strong> Claude 内置的 Figma 连接器是另一个服务器，见<a href="#claude-figma-connector">下面的连接器部分</a>。</li></ol>
+<p class="measure">如果工具已经列出来了，但调用返回 <code>CHANNEL_NOT_BOUND</code>，说明插件在多个文件里开着。把目标文件的 Figma 链接发给 Agent。</p>
+
+<h2 id="slow-or-stuck">很慢或卡住</h2>
+<p class="measure">调用一直没有返回，插件显示 Connecting…，或者什么都没发生。</p>
+<div class="tablewrap"><table>
+<caption class="sr">很慢或卡住：你看到的情况、原因和解决办法</caption>
+<thead><tr><th scope="col">你看到的情况</th><th scope="col">原因</th><th scope="col">解决办法</th></tr></thead>
+<tbody>
+<tr><th scope="row">插件显示 “Connecting…” 或 “Can’t connect”</th><td>插件在 3155 到 3158 端口上寻找本地服务，每 3 秒重试一次</td><td>打开 FigmaMCP App，等几秒。面板会自己变成 Connected。</td></tr>
+<tr><th scope="row">“The plugin did not respond. Trying again.”</th><td>发出连接请求后 5 秒内，插件没有响应</td><td>等下一次重试。如果一直重复，关闭插件再重新打开。</td></tr>
+<tr><th scope="row">Agent 一直在等，Figma 里没有任何变化</th><td>这个文件里没有打开插件，或者插件在多个文件里开着，或者文件是在浏览器版 Figma 里打开的</td><td>在 Figma 桌面版中打开文件，并在那里打开插件。开了多个文件时，把目标文件的链接发给 Agent。</td></tr>
+<tr><th scope="row">Agent 启动后的第一次调用返回 <code>CONNECTION_NOT_READY</code></th><td>本地连接还没建立</td><td>打开 FigmaMCP App 和插件，然后重试。</td></tr>
+<tr><th scope="row">读取大文件超时（<code>PAGE_LOAD_TIMEOUT</code>）</th><td>某个页面没有及时加载完</td><td>重试一次。如果还是超时，让 Agent 一次只读一个页面或一个图层。</td></tr>
+</tbody></table></div>
+<p class="measure">条件不变，重试的结果也不会变，所以先解决原因。编辑失败时，重复之前先确认它有没有生效。</p>
+
+<h2 id="claude-figma-connector">Claude 的 Figma 连接器无法使用</h2>
+<p class="measure">Claude 内置的 Figma 连接器就是 Figma 官方的远程服务器。它运行在 Figma 的托管服务上，不在你的 Mac 上。FigmaMCP 是另一个工具：一个免费的本地插件服务器，处理的是 Figma 桌面版里打开的文件。两者不共用连接，所以上面的表格解释不了连接器的问题。</p>
+<ul class="plain"><li><strong>方案或席位限额：</strong>官方服务器按方案限制调用次数。View 或 Collab 席位每月 20 次，Pro 方案的 Full 或 Dev 席位每天 200 次。2026 年 11 月 25 日核实。见 <a href="/zh/figma-mcp-rate-limit">Figma MCP 速率限制</a>。</li><li><strong>编辑需要 Full 席位：</strong>远程服务器的写入画布功能还在测试阶段，在草稿以外的文件里需要 Full 席位。可能出现读取正常、编辑失败的情况。</li><li><strong>想用的不是这个服务器：</strong>如果要让 Agent 使用 FigmaMCP，需要先在 Mac 上安装好，并重启 Agent。按<a href="/zh/docs/setup">安装指南</a>操作。</li></ul>
+<p class="measure">官方服务器自身的错误，请看 <a href="https://developers.figma.com/docs/figma-mcp-server/">Figma 的文档</a>。两者有什么区别，见 <a href="/compare/official-figma-mcp">Official Figma MCP vs FigmaMCP</a>（英文）。</p>
+
+<h2>还是解决不了？</h2>
+<p class="measure">到<a href="https://github.com/MrCoder/figmamcp-releases/issues">发布页</a>提交 issue。写明你让 Agent 做了什么、确切的错误信息和 macOS 版本。不要附上私密的设计内容。另见<a href="/zh/docs/setup">安装指南</a>。</p>
+
+<h2>常见问题</h2><div class="faq"><details><summary>为什么 AI App 里看不到 FigmaMCP 的工具？</summary><div class="ans">正在运行的 Claude Code 或 Codex 只在启动时读取 MCP 设置。退出后重新打开，并让插件在 Figma 文件里保持打开。</div></details><details><summary>为什么插件一直显示 Connecting…？</summary><div class="ans">插件在 3155 到 3158 端口上寻找本地服务，每 3 秒重试一次。打开 FigmaMCP App，它就会自己连上。</div></details><details><summary>出了问题需要重装吗？</summary><div class="ans">通常不需要。确认 Agent 已经重启、插件已经打开、开关已经打开。</div></details><details><summary>为什么重试还是同样的错误？</summary><div class="ans">这些错误来自固定的规则。先改变条件，例如打开插件，或者重新读取图层名。</div></details><details><summary>本页适用于 Figma 官方的 MCP 服务器吗？</summary><div class="ans">不适用。本页只讲 FigmaMCP。</div></details></div>
+<p class="measure fine updated">最后更新：<time datetime="2026-11-25">2026-11-25</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP 免费。它是 Neo Product LLC 的 <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> 的分支。</p>
+<p>FigmaMCP 不隶属于 Figma，也未获得其认可。Figma 是 Figma, Inc. 的商标。</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/zh/pricing">价格</a><a href="/zh/docs/setup">安装</a><a href="/zh/tutorials/edit-figma-with-claude-code">教程</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/zh/what-is-figma-mcp">什么是 Figma MCP</a><a href="/zh/figma-mcp-rate-limit">速率限制</a><a href="/zh/troubleshooting/not-working">故障排查</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a><a href="/" hreflang="en" lang="en">English</a></p>
+</div></footer>
+<img class="px" src="/p.gif?l=zh" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

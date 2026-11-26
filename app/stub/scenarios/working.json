@@ -1,0 +1,12 @@
+{"currentFile":"Checkout flow","figmaRunning":true,"pluginOpen":true,
+"openFiles":[{"fileName":"Checkout flow","aiSessions":1,"pluginVersion":"0.1.12","completedCalls":3,"outdated":false}],
+"claude":{"installed":true,"connected":true,"loaded":1},"codex":{"installed":false,"connected":false,"loaded":0},
+"steps":[
+{"id":"platform","state":"ok","message":"macOS detected."},
+{"id":"figma","state":"ok","message":"Found."},
+{"id":"node","state":"ok","message":"ok"},
+{"id":"runtime","state":"ok","message":"ok"},
+{"id":"relay","state":"ok","message":"Running on port 3155."},
+{"id":"agent-claude","state":"ok","message":"Already connected."},
+{"id":"agent-codex","state":"skip","message":"codex was not found."},
+{"id":"plugin","state":"ok","message":"Registered."}]}

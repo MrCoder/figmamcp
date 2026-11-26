@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FigmaMCP architecture: how the MCP server is built</title>
+<meta name="description" content="FigmaMCP architecture for agent builders: a local MCP server, a relay and a Figma plugin, why every write is checked, and the bugs we fixed on the way.">
+<link rel="canonical" href="https://figmamcp.dev/how-figmamcp-is-built">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="FigmaMCP">
+<meta property="og:title" content="FigmaMCP architecture: how the MCP server is built">
+<meta property="og:description" content="FigmaMCP architecture for agent builders: a local MCP server, a relay and a Figma plugin, why every write is checked, and the bugs we fixed on the way.">
+<meta property="og:url" content="https://figmamcp.dev/how-figmamcp-is-built">
+<meta property="og:image" content="https://figmamcp.dev/og.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="FigmaMCP architecture: how the MCP server is built">
+<meta name="twitter:description" content="FigmaMCP architecture for agent builders: a local MCP server, a relay and a Figma plugin, why every write is checked, and the bugs we fixed on the way.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://figmamcp.dev/#organization","name":"FigmaMCP","url":"https://figmamcp.dev/","sameAs":["https://github.com/MrCoder/figmamcp-releases"]},{"@type":"SoftwareApplication","@id":"https://figmamcp.dev/#app","name":"FigmaMCP","applicationCategory":"DeveloperApplication","operatingSystem":"macOS","description":"A free, local MCP server and companion that lets Claude Code or Codex read and edit a live file in the Figma desktop app, with no call quota.","url":"https://figmamcp.dev/","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"softwareVersion":"0.1.25","downloadUrl":"https://figmamcp.dev/download","isAccessibleForFree":true,"featureList":["Read: Pages, frames, layers, text, components, variables and styles from the file in front of you.","Edit: Create and change frames, text, shapes, components and instances, auto layout, fills, strokes and effects.","Apply at scale: Rename, restyle or rewrite many layers in one request, for example every text layer that mentions an old product name.","Stay inside limits: Each edit must name its target exactly, a bulk edit with one invalid item changes nothing, and one switch in the plugin makes the file read-only."],"publisher":{"@id":"https://figmamcp.dev/#organization"}},{"@type":"WebPage","@id":"https://figmamcp.dev/how-figmamcp-is-built#webpage","url":"https://figmamcp.dev/how-figmamcp-is-built","name":"FigmaMCP architecture: how the MCP server is built","inLanguage":"en","publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"mainEntity":{"@id":"https://figmamcp.dev/how-figmamcp-is-built#article"},"breadcrumb":{"@id":"https://figmamcp.dev/how-figmamcp-is-built#breadcrumb"},"dateModified":"2026-11-22"},{"@type":"TechArticle","@id":"https://figmamcp.dev/how-figmamcp-is-built#article","headline":"How FigmaMCP is built: architecture, design choices and fixes","description":"FigmaMCP architecture for agent builders: a local MCP server, a relay and a Figma plugin, why every write is checked, and the bugs we fixed on the way.","inLanguage":"en","url":"https://figmamcp.dev/how-figmamcp-is-built","image":"https://figmamcp.dev/og.png","datePublished":"2026-11-22","dateModified":"2026-11-22","author":{"@id":"https://figmamcp.dev/#organization"},"publisher":{"@id":"https://figmamcp.dev/#organization"},"about":{"@id":"https://figmamcp.dev/#app"},"proficiencyLevel":"Expert"},{"@type":"BreadcrumbList","@id":"https://figmamcp.dev/how-figmamcp-is-built#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://figmamcp.dev/"},{"@type":"ListItem","position":2,"name":"How FigmaMCP is built","item":"https://figmamcp.dev/how-figmamcp-is-built"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is the FigmaMCP code public?","acceptedAnswer":{"@type":"Answer","text":"No. FigmaMCP's code is private. The built Mac app and its release notes are public. The project it forks from, figma-edit-mcp, is public."}},{"@type":"Question","name":"Does FigmaMCP use the Figma REST API or a Figma access token?","acceptedAnswer":{"@type":"Answer","text":"No. Every read and edit goes through the Figma Plugin API inside the desktop app. There is no Figma token to create."}},{"@type":"Question","name":"Can an agent switch to another file in the middle of a session?","acceptedAnswer":{"@type":"Answer","text":"Not by itself. After a plugin reload, the next call rejoins the same file. To work on another file, the agent calls channel_join with a link to it."}},{"@type":"Question","name":"Why not do the safety checks in the MCP server?","acceptedAnswer":{"@type":"Answer","text":"Because a client can talk to the plugin without the server's schemas. The plugin is the only layer every call must pass, so the checks live there."}},{"@type":"Question","name":"Does FigmaMCP call Figma's own MCP server?","acceptedAnswer":{"@type":"Answer","text":"No. It does not call Figma's hosted or desktop MCP server. It works only through the plugin in your open file."}}]}</script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top"><div class="wrap bar"><a class="brand" href="/" aria-label="FigmaMCP home"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".45"/><rect x="6" y="6" width="20" height="20" rx="4" fill="none" stroke="currentColor" stroke-width="2" opacity=".7"/><rect x="10" y="10" width="20" height="20" rx="4" fill="var(--accent)"/></svg><span>FigmaMCP</span></a>
+<nav aria-label="Main"><a href="/integrations/claude-code">Claude Code</a><a href="/figma-mcp-alternative">Compare</a><a href="/#faq">FAQ</a><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a></nav></div></header>
+<main id="main">
+<nav class="crumbs" aria-label="Breadcrumb"><ol class="wrap"><li><a href="/">Home</a></li><li aria-current="page">How FigmaMCP is built</li></ol></nav>
+<article class="wrap page"><h1>How FigmaMCP is built: architecture, design choices and fixes</h1>
+<p class="lede">This page describes the FigmaMCP architecture for people who build or run AI agents. It names the parts, says why each write is checked the way it is, and lists real problems we hit while building it, with the fix for each.</p>
+<p class="measure">If you only want to know what happens when you ask your agent for a change, read <a href="/how-figma-mcp-works">how Figma MCP works</a> instead. That page is the short user view. This one is the build story.</p>
+
+<h2>The FigmaMCP architecture in five parts</h2>
+<p class="measure">A request goes down a chain of five parts. Each hop has one job. The agent never touches the Figma file directly.</p>
+<svg class="diagram" viewBox="0 0 360 572" role="img" aria-labelledby="arch-title arch-desc">
+<title id="arch-title">FigmaMCP architecture diagram</title>
+<desc id="arch-desc">Five boxes in a column. The AI agent calls a tool on the local MCP server over stdio. The server sends the command over a WebSocket to a relay on localhost. The FigmaMCP plugin in the Figma desktop app connects out to the same relay, receives the command, checks scope, names and batches, and then reads or edits the open Figma file through the Figma Plugin API.</desc>
+<defs><marker id="arch-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--ink)"/></marker></defs>
+<g font-family="inherit" font-size="15" fill="var(--ink)" text-anchor="middle">
+ <rect x="30" y="10" width="300" height="72" rx="10" fill="var(--panel)" stroke="var(--line)" stroke-width="2"/>
+ <text x="180" y="40" font-weight="700">AI agent (MCP client)</text>
+ <text x="180" y="62" font-size="13">Claude Code or Codex</text>
+
+ <rect x="30" y="130" width="300" height="72" rx="10" fill="var(--layer1)" stroke="var(--line)" stroke-width="2"/>
+ <text x="180" y="160" font-weight="700">MCP server (figmamcp)</text>
+ <text x="180" y="182" font-size="13">started by your AI app, on your Mac</text>
+
+ <rect x="30" y="250" width="300" height="72" rx="10" fill="var(--layer2)" stroke="var(--line)" stroke-width="2"/>
+ <text x="180" y="280" font-weight="700">Relay</text>
+ <text x="180" y="302" font-size="13">routes commands by channel, localhost</text>
+
+ <rect x="30" y="370" width="300" height="72" rx="10" fill="var(--accent)" stroke="var(--ink)" stroke-width="2"/>
+ <text x="180" y="400" font-weight="700" fill="var(--accent-ink)">FigmaMCP plugin</text>
+ <text x="180" y="422" font-size="13" fill="var(--accent-ink)">checks scope, names and batches</text>
+
+ <rect x="30" y="490" width="300" height="72" rx="10" fill="var(--panel)" stroke="var(--line)" stroke-width="2"/>
+ <text x="180" y="520" font-weight="700">Your open Figma file</text>
+ <text x="180" y="542" font-size="13">in the Figma desktop app</text>
+
+ <line x1="70" y1="84" x2="70" y2="126" stroke="var(--ink)" stroke-width="2" marker-end="url(#arch-arrow)"/>
+ <line x1="70" y1="204" x2="70" y2="246" stroke="var(--ink)" stroke-width="2" marker-end="url(#arch-arrow)"/>
+ <line x1="70" y1="366" x2="70" y2="326" stroke="var(--ink)" stroke-width="2" marker-end="url(#arch-arrow)"/>
+ <line x1="70" y1="444" x2="70" y2="486" stroke="var(--ink)" stroke-width="2" marker-end="url(#arch-arrow)"/>
+ <g font-size="12" text-anchor="start">
+  <text x="86" y="110">tool call over stdio</text>
+  <text x="86" y="230">WebSocket</text>
+  <text x="86" y="350">plugin connects out (WebSocket)</text>
+  <text x="86" y="470">Figma Plugin API</text>
+ </g>
+</g>
+</svg>
+<div class="tablewrap"><table>
+<caption class="sr">The five parts of the FigmaMCP architecture</caption>
+<thead><tr>
+<th scope="col">Part</th>
+<th scope="col">Where it runs</th>
+<th scope="col">Its job</th>
+</tr></thead>
+<tbody>
+<tr><th scope="row">AI agent</th><td>Claude Code or Codex</td><td>Reads your request, picks tools, reads before it writes.</td></tr>
+<tr><th scope="row">MCP server</th><td>A process your AI app starts, talking stdio</td><td>Lists the tools, checks the shape of each input, and forwards the call.</td></tr>
+<tr><th scope="row">Relay</th><td>A small local service that the Mac app keeps running</td><td>Holds a channel per open file and routes each command and its answer between one plugin and its AI sessions.</td></tr>
+<tr><th scope="row">Plugin</th><td>Inside the Figma desktop app</td><td>Runs every safety check, then reads or edits the file.</td></tr>
+<tr><th scope="row">Your file</th><td>Figma desktop app</td><td>The live document. You and teammates can change it at any time.</td></tr>
+</tbody></table></div>
+
+<h2>Why a relay sits in the middle</h2>
+<p class="measure">A Figma plugin cannot listen on a port. It can only connect out. The MCP server cannot connect to the plugin, so both connect to a third process, the relay, on localhost. Each channel is named after the file key. The relay keeps one plugin per channel and lets up to four AI sessions share it when the plugin allows that (FigmaMCP allows it by default). The relay checks that the server and plugin are from the same release line before it routes anything.</p>
+<p class="measure">The relay is a separate process that the Mac app keeps running with launchd. Each AI app starts its own MCP server process, and all of them reach the one plugin for a file through the relay.</p>
+
+<h2>Design choices and why we made them</h2>
+<p class="measure">FigmaMCP is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC. The plugin-side safety model, scope lock, name checks and batch checks, comes from that project, and we kept all of it. FigmaMCP added the installer and Mac app, a new way to connect to the plugin, and different defaults. The table shows which is which.</p>
+<div class="tablewrap"><table>
+<caption class="sr">Which design choices FigmaMCP kept and which it added</caption>
+<thead><tr>
+<th scope="col">Choice</th>
+<th scope="col">Origin</th>
+<th scope="col">Why</th>
+</tr></thead>
+<tbody>
+<tr><th scope="row">Checks run in the plugin</th><td>Kept from upstream</td><td>The plugin is the only layer every call must pass.</td></tr>
+<tr><th scope="row">Scope locked at connect time</th><td>Kept; FigmaMCP changed the default to the whole file</td><td>The agent cannot widen what it may edit.</td></tr>
+<tr><th scope="row">Name check on every write</th><td>Kept from upstream</td><td>Catches stale or invented layer IDs.</td></tr>
+<tr><th scope="row">Batches checked before any change</th><td>Kept from upstream</td><td>One bad item stops the batch before it starts.</td></tr>
+<tr><th scope="row">Bind to the open plugin, no code to copy</th><td>Added in FigmaMCP</td><td>The only step left for a person is to open the plugin.</td></tr>
+<tr><th scope="row">Patch versions work together</th><td>Added in FigmaMCP</td><td>An update must not break a running AI session.</td></tr>
+</tbody></table></div>
+
+<h3>The plugin is the trust boundary</h3>
+<p class="measure">The agent is not trusted to judge whether an edit is safe. It may hold an old node ID or guess a name. So the plugin checks mechanical facts it can prove: where the target is, which layer it is, what type it is and whether it is locked. The MCP server also validates input shapes, but that is only for clear early errors. A client that skips the server still meets every check in the plugin.</p>
+
+<h3>Scope lock</h3>
+<p class="measure">Scope is fixed when the plugin connects and stays fixed for the session. In FigmaMCP a blank link means the whole file is editable. Pages and the document root still cannot be deleted, moved or copied, and locked layers are protected. When you turn off the plugin&rsquo;s AI can edit this file switch, the session is read-only and any write returns <code>READ_ONLY_MODE</code>. A write to a node outside a narrower scope returns <code>OUTSIDE_SCOPE</code>. Variables and styles have their own permission switches.</p>
+
+<h3>Name verification</h3>
+<p class="measure">Every write against an existing object carries that object&rsquo;s current name, read from <code>node_info</code>, <code>page_info</code>, <code>variable_list</code> or <code>style_list</code>. The plugin looks up the object by ID and refuses the write if the name differs, with <code>NAME_MISMATCH</code>. Creation checks the parent&rsquo;s name in the same way. It works like a text editor tool that refuses an edit when the old text no longer matches: the agent reads again and retries with fresh data. In a shared file someone can rename a layer between two calls, and this catches it.</p>
+
+<h3>Batch validation</h3>
+<p class="measure">Batch tools such as <code>text_set_content</code> and <code>annotation_set</code> check every item first: does it exist, is it in scope, does its name match, is it the right type. If one item fails, nothing changes. After the batch starts, items run in order and each gets its own result row. (<code>node_delete</code> gets the same first check, then deletes in parallel chunks.) We do not claim rollback: a failure in the middle returns <code>partial_success</code> with one row per item, and any change the plugin could not undo is reported as a partial mutation.</p>
+
+<h3>Structured error codes</h3>
+<p class="measure">An agent cannot recover from a vague message. So each refusal carries a code that says what to do next. Every error result is also marked as an error in the MCP response, so a client does not read it as success.</p>
+<div class="tablewrap"><table>
+<caption class="sr">Examples of FigmaMCP error codes and the next step for the agent</caption>
+<thead><tr>
+<th scope="col">Code</th>
+<th scope="col">Meaning</th>
+<th scope="col">What the agent should do</th>
+</tr></thead>
+<tbody>
+<tr><th scope="row"><code>NAME_MISMATCH</code></th><td>The name sent does not match the layer.</td><td>Read the layer again, then retry with its real name.</td></tr>
+<tr><th scope="row"><code>OUTSIDE_SCOPE</code></th><td>The target is outside the editable scope.</td><td>Pick another target, or ask the user to reconnect.</td></tr>
+<tr><th scope="row"><code>READ_ONLY_MODE</code></th><td>The edit switch in the plugin is off.</td><td>Tell the user. Only reads work.</td></tr>
+<tr><th scope="row"><code>CHANNEL_NOT_BOUND</code></th><td>The session has no file yet, for example because several files have the plugin open.</td><td>Call <code>channel_join</code> with a link to the right file.</td></tr>
+<tr><th scope="row"><code>CONNECTION_NOT_READY</code></th><td>The relay connection did not open in time.</td><td>Ask the user to open the Mac app and the plugin, then retry once.</td></tr>
+<tr><th scope="row"><code>VERSION_MISMATCH</code></th><td>Server and plugin are from different release lines.</td><td>Tell the user which side is older: reconnect the AI session, or reopen the plugin.</td></tr>
+</tbody></table></div>
+
+<h3>Binding to the open plugin</h3>
+<p class="measure">Upstream paired the agent and the plugin with a short channel code that the user copied from the plugin. FigmaMCP drops that step. The plugin names its channel after the file key, and any tool call binds to the open plugin when only one file has it open. If several files are open, the call returns <code>CHANNEL_NOT_BOUND</code> with the list of open files, and the agent calls <code>channel_join</code> with a link. After a plugin reload, the next call rejoins the same file with the same scope. It never moves a session to another file.</p>
+
+<h2>What went wrong on the way</h2>
+<p class="measure">These are real problems from FigmaMCP&rsquo;s own commits and release notes, each with the fix that shipped.</p>
+<ol class="steps">
+<li><h3>An early channel_join failed with no code</h3><p>A fresh MCP server opens its relay socket in the background. A <code>channel_join</code> sent before the socket was open came back as <code>UNKNOWN_ERROR</code> &ldquo;Not connected to Figma.&rdquo; A tester reported it on 0.1.11.</p><p>Fix (2026-11-17): <code>channel_join</code> now waits up to 5 seconds for the socket, the same wait <code>page_info</code> already used. If it still is not open, it fails with the coded error <code>CONNECTION_NOT_READY</code>. The same change marks every error result as an error.</p></li>
+<li><h3>A patch update broke running AI sessions</h3><p>After an update, the plugin reloads the new version, but an AI session keeps the server process it started with. The relay refused any pair of unequal versions, so every call failed with <code>VERSION_MISMATCH</code>. The message told users to reinstall the plugin, which could not help.</p><p>Fix (2026-11-11): patch releases share one wire contract, so the relay now admits the same major and minor version. A refusal names the older side and the step that fixes it.</p></li>
+<li><h3>Upgrading over a running relay failed</h3><p>Setup stops the old relay with launchd and starts the new one. <code>launchctl bootout</code> returns before the old service is gone, so starting the new one failed with &ldquo;Bootstrap error 5&rdquo; until the user ran setup again.</p><p>Fix (2026-11-09): setup retries the start while launchd removes the old relay.</p></li>
+<li><h3>The plugin said &ldquo;Connected&rdquo; when no agent was there</h3><p>In 0.1.20 the plugin showed its first-run hint as soon as the plugin reached the relay. It said &ldquo;Connected&rdquo; even when no AI app had FigmaMCP loaded, so a new user could wait for an agent that was not there.</p><p>Fix (0.1.21, 2026-11-21): the plugin waits 4 seconds for the relay&rsquo;s notice that an AI session is present. Without it, the plugin tells the user to quit Claude Code or Codex and open it again.</p></li>
+</ol>
+
+<h2>What this means if you build agents</h2>
+<ul class="plain">
+<li>Read before you write, and pass names back exactly as read. A stale name is refused, not guessed.</li>
+<li>Treat a refusal as a stop signal with a next step, not as a prompt to retry the same call.</li>
+<li>After a partial mutation, read the reported state before you retry.</li>
+<li>Know what is not checked: a wrong edit that follows every rule still goes through. See <a href="/is-figma-mcp-safe">is Figma MCP safe</a> for the limits.</li>
+</ul>
+
+<aside class="note"><h2>What you should know first</h2><ul>
+<li>FigmaMCP&rsquo;s own code is private. The built app and release notes are public. See <a href="/figma-mcp-source">FigmaMCP&rsquo;s source</a>.</li>
+<li>macOS only for now, and it needs the Figma desktop app.</li>
+<li>No Figma access token is used. Every call goes through the Plugin API.</li>
+<li>The full list of tools is on the <a href="/tools">tools page</a>. For a first run, start with <a href="/docs/setup">Figma MCP setup</a> and the <a href="/tutorials">tutorials</a>.</li></ul></aside>
+<p class="cta"><a class="btn" href="/download">Download for Mac</a> <span class="ver">Version 0.1.25</span> <span class="ver">macOS 14+ · Intel &amp; Apple Silicon · ~155 MB</span></p>
+
+<h2>Questions</h2><div class="faq"><details><summary>Is the FigmaMCP code public?</summary><div class="ans">No. FigmaMCP&rsquo;s code is private. The built Mac app and its release notes are public. The project it forks from, figma-edit-mcp, is public.</div></details><details><summary>Does FigmaMCP use the Figma REST API or a Figma access token?</summary><div class="ans">No. Every read and edit goes through the Figma Plugin API inside the desktop app. There is no Figma token to create.</div></details><details><summary>Can an agent switch to another file in the middle of a session?</summary><div class="ans">Not by itself. After a plugin reload, the next call rejoins the same file. To work on another file, the agent calls channel_join with a link to it.</div></details><details><summary>Why not do the safety checks in the MCP server?</summary><div class="ans">Because a client can talk to the plugin without the server&rsquo;s schemas. The plugin is the only layer every call must pass, so the checks live there.</div></details><details><summary>Does FigmaMCP call Figma&rsquo;s own MCP server?</summary><div class="ans">No. It does not call Figma&rsquo;s hosted or desktop MCP server. It works only through the plugin in your open file.</div></details></div>
+<p class="measure fine">Related: <a href="/how-figma-mcp-works">How Figma MCP works</a> · <a href="/is-figma-mcp-safe">Is Figma MCP safe</a> · <a href="/changelog">Changelog</a> · <a href="/tools">Tools</a></p>
+<p class="measure fine updated">Last updated: <time datetime="2026-11-22">2026-11-22</time></p>
+</article></main>
+<footer class="foot"><div class="wrap">
+<p>FigmaMCP is free. It is a fork of <a href="https://github.com/neozhehan/figma-edit-mcp">figma-edit-mcp</a> by Neo Product LLC.</p>
+<p>Not affiliated with or endorsed by Figma, Inc. Figma is a trademark of Figma, Inc.</p>
+<p class="links"><a href="https://github.com/MrCoder/figmamcp-releases/issues">Issues</a><a href="/figma-mcp-limit-reached">Figma MCP limit reached</a><a href="/figma-mcp-free-plan">Free plan</a><a href="/pricing">Pricing</a><a href="/docs/setup">Setup</a><a href="/integrations/codex">Codex</a><a href="/tools/write">Write tools</a><a href="/tools">Tools</a><a href="/what-is-figma-mcp">What is Figma MCP</a><a href="/troubleshooting">Troubleshooting</a><a href="/use-cases">Use cases</a><a href="/compare/official-figma-mcp">Official MCP</a><a href="/how-figma-mcp-works">How it works</a><a href="/compare">Compare</a><a href="/integrations">Integrations</a><a href="/changelog">Changelog</a><a href="/figma-mcp-source">Source code</a><a href="/privacy">Privacy</a><a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+<img class="px" src="/p.gif" width="1" height="1" alt="" aria-hidden="true" referrerpolicy="no-referrer" decoding="async">
+<script src="/app.js" defer></script>
+</body></html>

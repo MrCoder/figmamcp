@@ -1,0 +1,23 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.MrCoder/figmamcp",
+  "description": "Claude Code or Codex read and edit your open Figma file. Needs the free FigmaMCP Mac app.",
+  "repository": {
+    "url": "https://github.com/MrCoder/figmamcp-releases",
+    "source": "github"
+  },
+  "version": "0.1.25",
+  "packages": [
+    {
+      "registryType": "mcpb",
+      "identifier": "https://github.com/MrCoder/figmamcp-releases/releases/download/v0.1.25/figmamcp-0.1.25-darwin.mcpb",
+      "version": "0.1.25",
+      "fileSha256": "6a75729804a3f303eacf189f47308697a5b8f9d12f17cb0323f303f14f0bc540",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ],
+  "title": "FigmaMCP",
+  "websiteUrl": "https://figmamcp.dev"
+}
